@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class VrayasOmni extends OpMode {
+public class VrayasDriverControl2021 extends OpMode {
 
     DcMotor vert1;
     DcMotor vert2;
@@ -40,8 +40,13 @@ public class VrayasOmni extends OpMode {
         hor2.setPower(gamepad1.right_stick_x);
 
 
-        //Rotate
-        hor1.setPower(gamepad1.left_stick_x);
-        hor2.setPower(-gamepad1.left_stick_x);
+        //Rotate right
+        hor1.setPower(gamepad1.right_trigger);
+        hor2.setPower(-gamepad1.right_trigger);
+
+        //Rotate left
+        hor1.setPower(-gamepad1.left_trigger);
+        hor2.setPower(gamepad1.left_trigger);
+
     }
 }
