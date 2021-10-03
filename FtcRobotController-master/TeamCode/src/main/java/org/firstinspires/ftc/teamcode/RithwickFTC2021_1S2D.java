@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp
-public class RithwickFTC2021_1D2D extends OpMode {
+public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor leftvertical;
     DcMotor rightvertical;
     DcMotor lefthorizontal;
