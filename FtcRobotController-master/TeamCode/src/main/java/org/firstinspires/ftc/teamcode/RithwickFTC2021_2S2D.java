@@ -41,10 +41,10 @@ public class RithwickFTC2021_2S2D extends OpMode {
         leftvertical.setPower(gamepad1.left_trigger);
         rightvertical.setPower(-gamepad1.left_trigger);
 
-        lefthorizontal.setPower(-gamepad1.left_trigger);
-        righthorzontal.setPower(gamepad1.left_trigger);
-        leftvertical.setPower(-gamepad1.left_trigger);
-        rightvertical.setPower(gamepad1.left_trigger);
+        lefthorizontal.setPower(-gamepad1.right_trigger);
+        righthorzontal.setPower(gamepad1.right_trigger);
+        leftvertical.setPower(-gamepad1.right_trigger);
+        rightvertical.setPower(gamepad1.right_trigger);
 
         /*if(gamepad1.b == true) {
 
