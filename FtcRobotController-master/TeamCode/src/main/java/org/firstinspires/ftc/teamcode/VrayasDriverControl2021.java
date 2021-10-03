@@ -9,44 +9,46 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class VrayasDriverControl2021 extends OpMode {
 
-    DcMotor vert1;
-    DcMotor vert2;
-    DcMotor hor1;
-    DcMotor hor2;
+    DcMotor vertFront;
+    DcMotor vertBack;
+    DcMotor horFront;
+    DcMotor horBack;
 
     public void init() {
-        vert1 = hardwareMap.dcMotor.get("lr");
-        vert2 = hardwareMap.dcMotor.get("rr");
-        hor1 = hardwareMap.dcMotor.get("lf");
-        hor2 = hardwareMap.dcMotor.get("rf");
+        //Motors
+        vertFront = hardwareMap.dcMotor.get("lr");
+        vertBack = hardwareMap.dcMotor.get("rf");
+        horFront = hardwareMap.dcMotor.get("lf");
+        horBack = hardwareMap.dcMotor.get("rr");
 
-        vert1.setDirection(DcMotorSimple.Direction.REVERSE);
-        vert2.setDirection(DcMotorSimple.Direction.REVERSE);
+        //
+        vertFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        vertBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        hor1.setDirection(DcMotorSimple.Direction.REVERSE);
-        hor2.setDirection(DcMotorSimple.Direction.REVERSE);
+        horFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        horBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
     }
 
     public void loop() {
 
         // Forward & Backwards
-        vert1.setPower(gamepad1.right_stick_y);
-        vert2.setPower(gamepad1.right_stick_y);
+        vertFront.setPower(gamepad1.right_stick_y);
+        vertBack.setPower(gamepad1.right_stick_y);
 
 
         //Left & Right
-        hor1.setPower(gamepad1.left_stick_x);
-        hor2.setPower(gamepad1.left_stick_x);
+        horFront.setPower(gamepad1.left_stick_x);
+        horBack.setPower(gamepad1.left_stick_x);
 
 
         //Rotate right
-        hor1.setPower(gamepad1.right_trigger);
-        hor2.setPower(-gamepad1.right_trigger);
+        horFront.setPower(gamepad1.right_trigger);
+        horBack.setPower(-gamepad1.right_trigger);
 
         //Rotate left
-        hor1.setPower(-gamepad1.left_trigger);
-        hor2.setPower(gamepad1.left_trigger);
+        horFront.setPower(-gamepad1.left_trigger);
+        horBack.setPower(gamepad1.left_trigger);
 
     }
 }
