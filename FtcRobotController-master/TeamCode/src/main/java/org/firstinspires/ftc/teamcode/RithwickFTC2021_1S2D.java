@@ -16,10 +16,10 @@ public class RithwickFTC2021_1S2D extends OpMode {
 //1S2D
 
     public void init() {
-        leftvertical = hardwareMap.dcMotor.get("lr");
+        leftvertical = hardwareMap.dcMotor.get("lf");
         rightvertical= hardwareMap.dcMotor.get("rr");
-        lefthorizontal = hardwareMap.dcMotor.get("rf");
-        righthorzontal= hardwareMap.dcMotor.get("lf");
+        lefthorizontal = hardwareMap.dcMotor.get("lr");
+        righthorzontal= hardwareMap.dcMotor.get("rf");
         //Front = hardwareMap.servo.get("blocker");//
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
