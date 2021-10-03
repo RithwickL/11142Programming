@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,11 +17,4 @@ public void main ()
 {   vert1 = hardwareMap.dcMotor.get("vert1");
     vert2 = hardwareMap.dcMotor.get("vert2");
     hor1 = hardwareMap.dcMotor.get("hor1");
-    hor2 = hardwareMap.dcMotor.get("hor2");
-
-
-}
-
-
-
-}
+    hor2 = hardwareMap.dcMotor.get("hor2");*/
