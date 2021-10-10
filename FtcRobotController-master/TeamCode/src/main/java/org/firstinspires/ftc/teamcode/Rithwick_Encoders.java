@@ -16,9 +16,9 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
     DcMotor RH;
 
     public void runOpMode() {   //Pull Configure
-        LV = hardwareMap.dcMotor.get("LV");
+        LV = hardwareMap.dcMotor.get("lr");
         RV = hardwareMap.dcMotor.get("rf");
-        LH = hardwareMap.dcMotor.get("LV");
+        LH = hardwareMap.dcMotor.get("lf");
         RH = hardwareMap.dcMotor.get("rr");
         //Reverse inputs for left motors
         LV.setDirection(DcMotorSimple.Direction.REVERSE);
