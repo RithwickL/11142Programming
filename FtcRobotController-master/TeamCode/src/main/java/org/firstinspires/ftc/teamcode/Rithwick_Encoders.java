@@ -4,106 +4,94 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
-@Autonomous(name="Drive Encoder", group="Exercises")
-//@Disabled
+@Autonomous(name="Rithwick_E")
 public class Rithwick_Encoders extends LinearOpMode
-{
-    DcMotor leftvertical;
-    DcMotor rightvertical;
-    DcMotor lefthorizontal;
-    DcMotor righthorzontal;
+{ // Define motors
+    DcMotor LV;
+    DcMotor RV;
+    DcMotor LH;
+    DcMotor RH;
+    public void runOpMode()
+    {   //Pull Configure
+        LV = hardwareMap.dcMotor.get("LV");
+        RV = hardwareMap.dcMotor.get("rf");
+        LH = hardwareMap.dcMotor.get("LV");
+        RH = hardwareMap.dcMotor.get("rr");
+        //Reverse inputs for left motors
+        LV.setDirection(DcMotorSimple.Direction.REVERSE);
+        RH.setDirection(DcMotorSimple.Direction.REVERSE);
 
-    @Override
-    public void runOpMode() throws InterruptedException
-    {
-        leftvertical = hardwareMap.dcMotor.get("lr");
-        rightvertical = hardwareMap.dcMotor.get("rf");
-        rightvertical.setDirection(DcMotor.Direction.REVERSE);
-
-        // reset encoder count kept by left motor.
-        leftvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        // set left motor to run to target encoder position and stop with brakes on.
-        leftvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        // set right motor to run without regard to an encoder.
-        rightvertical.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        telemetry.addData("Mode", "waiting");
-        telemetry.update();
-
-        // wait for start button.
+        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        LH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
-        telemetry.addData("Mode", "running");
-        telemetry.update();
+        if (opModeIsActive()){
+            DriveFB(0.5, 72);
+            DriveSTS(0.5, 12);
+            DriveFB(0.5, -72);
 
-        // set left motor to run for 5000 encoder counts.
-
-        leftvertical.setTargetPosition(-5000);
-
-        // set both motors to 25% power. Movement will start.
-
-        leftvertical.setPower(-0.25);
-        rightvertical.setPower(-0.25);
-
-        // wait while opmode is active and left motor is busy running to position.
-
-        while (opModeIsActive() && leftvertical.isBusy())
-        {
-            telemetry.addData("encoder-fwd", leftvertical.getCurrentPosition() + "  busy=" + leftvertical.isBusy());
-            telemetry.update();
-            idle();
         }
+    }
 
-        // set motor power to zero to turn off motors. The motors stop on their own but
-        // power is still applied so we turn off the power.
+    public void DriveFB(double power, int distance)
+    {   //Reset Encoders
+        LV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        leftvertical.setPower(0.0);
-        rightvertical.setPower(0.0);
+        //Set Position
+        LV.setTargetPosition(distance * 31);
+        RV.setTargetPosition(distance * 31);
 
-        // wait 5 sec to you can observe the final encoder position.
+        //Movement
+        LV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        resetStartTime();
+        LV.setPower(power);
+        RV.setPower(power);
 
-        while (opModeIsActive() && getRuntime() < 5)
-        {
-            telemetry.addData("encoder-fwd-end", leftvertical.getCurrentPosition() + "  busy=" + leftvertical.isBusy());
-            telemetry.update();
-            idle();
+        while(LV.isBusy() && RV.isBusy()){
         }
+        //Resets all input data
+        StopDriving();
+        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    public void DriveSTS(double power, int distance)
+    {   //Reset Encoders
+        LH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        // set position for back up to starting point. In this example instead of
-        // having the motor monitor the encoder we will monitor the encoder ourselves.
+        //Set Position
+        LH.setTargetPosition(distance * 31);
+        RH.setTargetPosition(distance * 31);
 
-        leftvertical.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //Movement
+        LH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        leftvertical.setTargetPosition(0);
+        LH.setPower(power);
+        RH.setPower(power);
 
-        leftvertical.setPower(0.25);
-        rightvertical.setPower(0.25);
-
-        while (opModeIsActive() && leftvertical.getCurrentPosition() < leftvertical.getTargetPosition())
-        {
-            telemetry.addData("encoder-back", leftvertical.getCurrentPosition());
-            telemetry.update();
-            idle();
+        while(LV.isBusy() && RV.isBusy()){
         }
-
-        // set motor power to zero to stop motors.
-
-        leftvertical.setPower(0.0);
-        rightvertical.setPower(0.0);
-
-        resetStartTime();
-
-        while (opModeIsActive() && getRuntime() < 5)
-        {
-            telemetry.addData("encoder-back-end", leftvertical.getCurrentPosition());
-            telemetry.update();
-            idle();
-        }
+        //Resets all input data
+        StopDriving();
+        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+    public void StopDriving()
+    {
+        //Stops motors
+        LV.setPower(0);
+        RV.setPower(0);
+        RH.setPower(0);
+        LH.setPower(0);
     }
 }
