@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
@@ -24,6 +25,8 @@ public class VrayasAutomonous2021 extends LinearOpMode
         vertBack = hardwareMap.dcMotor.get("rf");
         horFront = hardwareMap.dcMotor.get("lf");
         horBack = hardwareMap.dcMotor.get("rr");
+        vertBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        horBack.setDirection(DcMotorSimple.Direction.REVERSE);
 
         vertFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         vertBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -40,10 +43,7 @@ public class VrayasAutomonous2021 extends LinearOpMode
         int distance;
         int power;
 
-        horFront.setPower(1);
-        horBack.setPower(1);
-        vertFront.setPower(1);
-        vertBack.setPower(1);
+
 
         //Reset Encoders
         vertFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -59,6 +59,8 @@ public class VrayasAutomonous2021 extends LinearOpMode
         vertFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         vertBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        vertFront.setPower(0.5);
+        vertBack.setPower(0.5);
 
 
 
