@@ -49,7 +49,7 @@ public class VrayasAutomonous2021 extends LinearOpMode
         }
     }
 
-
+    public void DriveRight
 /*
 this method will used to drive left.
  */
