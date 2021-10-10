@@ -48,22 +48,16 @@ public class VrayasAutomonous2021 extends LinearOpMode
         //Reset Encoders
         vertFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         vertBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        horFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        horBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         //Set Postion
         vertFront.setTargetPosition(1000);
         vertBack.setTargetPosition(1000);
-        horFront.setTargetPosition(1000);
-        horBack.setTargetPosition(1000);
 
         //Movement
 
         vertFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         vertBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        horFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        horBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
 
