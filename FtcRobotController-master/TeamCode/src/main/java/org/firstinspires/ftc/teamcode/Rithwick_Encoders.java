@@ -2,72 +2,108 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
+@Autonomous(name="Drive Encoder", group="Exercises")
+//@Disabled
+public class Rithwick_Encoders extends LinearOpMode
+{
+    DcMotor leftvertical;
+    DcMotor rightvertical;
+    DcMotor lefthorizontal;
+    DcMotor righthorzontal;
 
-@Autonomous
-public abstract class Rithwick_Encoders extends OpMode {
-    DcMotor leftvertical = null;
-    DcMotor rightvertical = null;
-    DcMotor lefthorizontal = null;
-    DcMotor righthorzontal = null;
-    /*Servo Front;
-    DcMotor Intake;*/
-//1S2D
+    @Override
+    public void runOpMode() throws InterruptedException
+    {
+        leftvertical = hardwareMap.dcMotor.get("lr");
+        rightvertical = hardwareMap.dcMotor.get("rf");
+        rightvertical.setDirection(DcMotor.Direction.REVERSE);
 
-    public void init() {
-        leftvertical = hardwareMap.dcMotor.get("lf");
-        rightvertical = hardwareMap.dcMotor.get("rr");
-        lefthorizontal = hardwareMap.dcMotor.get("lr");
-        righthorzontal = hardwareMap.dcMotor.get("rf");
-        //Front = hardwareMap.servo.get("blocker");//
-        leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
-        lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        //Intake = hardwareMap.dcMotor.get("intake");//
-        //Runs withouth encoders but still reads info
-        //lefthorizontal.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
-        //Uses encoderes
-        //lefthorizontal.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        //Goes to a postion
-        //lefthorizontal.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        //Resets/Callabrates encoders
-        //lefthorizontal.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        leftvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lefthorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        righthorzontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //Gets position
-        //leftvertical.getCurrentPosition();
-        //Set a postion to go to
-        //leftvertical.setTargetPosition();
-        //CHecks to see is motor is moving
-        //leftvertical.isBusy();
-    }
+        // reset encoder count kept by left motor.
+        leftvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-    public void DriveFBD(int distance) {
-        lefthorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
-        righthorzontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        // set left motor to run to target encoder position and stop with brakes on.
+        leftvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        lefthorizontal.setTargetPosition(10);
-        righthorzontal.setTargetPosition(10);
+        // set right motor to run without regard to an encoder.
+        rightvertical.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        lefthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        righthorzontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        telemetry.addData("Mode", "waiting");
+        telemetry.update();
 
-        while (lefthorizontal.isBusy() || righthorzontal.isBusy()) {
+        // wait for start button.
 
+        waitForStart();
+
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+
+        // set left motor to run for 5000 encoder counts.
+
+        leftvertical.setTargetPosition(-5000);
+
+        // set both motors to 25% power. Movement will start.
+
+        leftvertical.setPower(-0.25);
+        rightvertical.setPower(-0.25);
+
+        // wait while opmode is active and left motor is busy running to position.
+
+        while (opModeIsActive() && leftvertical.isBusy())
+        {
+            telemetry.addData("encoder-fwd", leftvertical.getCurrentPosition() + "  busy=" + leftvertical.isBusy());
+            telemetry.update();
+            idle();
         }
-        lefthorizontal.setMode(RunMode.RUN_USING_ENCODER);
-        righthorzontal.setMode(RunMode.RUN_USING_ENCODER);
-    }
 
+        // set motor power to zero to turn off motors. The motors stop on their own but
+        // power is still applied so we turn off the power.
 
-        public void loop() {
+        leftvertical.setPower(0.0);
+        rightvertical.setPower(0.0);
 
+        // wait 5 sec to you can observe the final encoder position.
+
+        resetStartTime();
+
+        while (opModeIsActive() && getRuntime() < 5)
+        {
+            telemetry.addData("encoder-fwd-end", leftvertical.getCurrentPosition() + "  busy=" + leftvertical.isBusy());
+            telemetry.update();
+            idle();
+        }
+
+        // set position for back up to starting point. In this example instead of
+        // having the motor monitor the encoder we will monitor the encoder ourselves.
+
+        leftvertical.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        leftvertical.setTargetPosition(0);
+
+        leftvertical.setPower(0.25);
+        rightvertical.setPower(0.25);
+
+        while (opModeIsActive() && leftvertical.getCurrentPosition() < leftvertical.getTargetPosition())
+        {
+            telemetry.addData("encoder-back", leftvertical.getCurrentPosition());
+            telemetry.update();
+            idle();
+        }
+
+        // set motor power to zero to stop motors.
+
+        leftvertical.setPower(0.0);
+        rightvertical.setPower(0.0);
+
+        resetStartTime();
+
+        while (opModeIsActive() && getRuntime() < 5)
+        {
+            telemetry.addData("encoder-back-end", leftvertical.getCurrentPosition());
+            telemetry.update();
+            idle();
         }
     }
+}
