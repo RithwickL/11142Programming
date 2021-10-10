@@ -27,7 +27,6 @@ public abstract class Rithwick_Autonomus extends OpMode {
 public void DriveFB(double power,int time){
     leftvertical.setPower(power);
     rightvertical.setPower(power);
-    Thread.sleep(time);
 }
 
 

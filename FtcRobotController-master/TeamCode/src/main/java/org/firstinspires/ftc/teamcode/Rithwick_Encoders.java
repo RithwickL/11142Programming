@@ -1,15 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
 
 @Autonomous
-public class Rithwick_Encoders extends OpMode {
+public abstract class Rithwick_Encoders extends OpMode {
     DcMotor leftvertical = null;
     DcMotor rightvertical = null;
     DcMotor lefthorizontal = null;
@@ -35,10 +37,10 @@ public class Rithwick_Encoders extends OpMode {
         //lefthorizontal.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
         //Resets/Callabrates encoders
         //lefthorizontal.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        leftvertical.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        rightvertical.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        lefthorizontal.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        righthorzontal.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        leftvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lefthorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        righthorzontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         //Gets position
         //leftvertical.getCurrentPosition();
         //Set a postion to go to
@@ -47,25 +49,25 @@ public class Rithwick_Encoders extends OpMode {
         //leftvertical.isBusy();
     }
 
-    public void DriveFBD(double power, int distance) {
-        lefthorizontal.setMode(DcMotorController.RunMode.RESET_ENCODERS);
-        righthorzontal.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+    public void DriveFBD(int distance) {
+        lefthorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        righthorzontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
-        lefthorizontal.setTargetPosition(distance);
-        righthorzontal.setTargetPosition(distance);
+        lefthorizontal.setTargetPosition(10);
+        righthorzontal.setTargetPosition(10);
 
-        lefthorizontal.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        righthorzontal.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
+        lefthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        righthorzontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         while (lefthorizontal.isBusy() || righthorzontal.isBusy()) {
 
         }
-        lefthorizontal.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        righthorzontal.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
+        lefthorizontal.setMode(RunMode.RUN_USING_ENCODER);
+        righthorzontal.setMode(RunMode.RUN_USING_ENCODER);
     }
+
 
         public void loop() {
 
         }
     }
-}
