@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
-@Autonomous
+@Autonomous(name="vryasAuto")
 public class VrayasAutomonous2021 extends LinearOpMode
 {
 
@@ -33,15 +33,17 @@ public class VrayasAutomonous2021 extends LinearOpMode
         horFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         horBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        waitForStart();
+
         if (opModeIsActive()){
-            Driveforward();
+            Driveforward(0.5, 12);
+
         }
     }
 
-    public void Driveforward()
+    public void Driveforward(double power, int distance)
     {
-        int distance;
-        int power;
+
 
 
 
@@ -51,17 +53,35 @@ public class VrayasAutomonous2021 extends LinearOpMode
 
 
         //Set Postion
-        vertFront.setTargetPosition(1000);
-        vertBack.setTargetPosition(1000);
+        vertFront.setTargetPosition(distance * 31);
+        vertBack.setTargetPosition(distance * 31);
+
 
         //Movement
 
         vertFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         vertBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        vertFront.setPower(0.5);
-        vertBack.setPower(0.5);
+        vertFront.setPower(power);
+        vertBack.setPower(power);
 
+        while(vertFront.isBusy() && vertBack.isBusy()){
+
+        }
+
+        StopDriving();
+        vertFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        vertBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+    }
+    public void StopDriving()
+    {
+
+        vertFront.setPower(0);
+        vertBack.setPower(0);
+        horBack.setPower(0);
+        horFront.setPower(0);
 
 
     }
