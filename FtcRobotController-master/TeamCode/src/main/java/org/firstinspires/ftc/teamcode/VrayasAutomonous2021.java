@@ -1,12 +1,14 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
 @Autonomous(name="VrayasAuto")
+@Disabled
 public class VrayasAutomonous2021 extends LinearOpMode
 {
 
@@ -52,7 +54,7 @@ public class VrayasAutomonous2021 extends LinearOpMode
     public void DriveRight
 /*
 this method will used to drive left.
- */
+
     public void DriveLeft(double power, int distance)
     {
         //
@@ -146,4 +148,4 @@ this method will used to drive left.
 
 
     }
-}
+}*/
