@@ -34,9 +34,9 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         if (opModeIsActive()) {
 
                 DriveFB(0.5, 72);
-                DriveSTS(0.5, 12);
+                DriveSTS(0.5, 72);
                 DriveFB(0.5, -72);
-            
+
             /*
                 DriveFB(0.5, 12);
                 DriveSLR(0.5, 24);
@@ -74,13 +74,13 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void DriveSTS(double power, int distance) {   //Reset Encoders
+    public void DriveSTS(double power, int distance2) {   //Reset Encoders
         LH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Set Position
-        LH.setTargetPosition(distance * 31);
-        RH.setTargetPosition(distance * 31);
+        LH.setTargetPosition(distance2 * 31);
+        RH.setTargetPosition(distance2 * 31);
 
         //Movement
         LH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -97,17 +97,17 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void DriveSLR(double power, int distance) {   //Reset Encoders
+    public void DriveSLR(double power, int distance3) {   //Reset Encoders
         LV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         LH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Set Position
-        LV.setTargetPosition(distance * 31);
-        RV.setTargetPosition(distance * 31);
-        LH.setTargetPosition(distance * 31);
-        RH.setTargetPosition(distance * 31);
+        LV.setTargetPosition(distance3 * 31);
+        RV.setTargetPosition(distance3 * 31);
+        LH.setTargetPosition(distance3 * 31);
+        RH.setTargetPosition(distance3 * 31);
 
         //Movement
         LV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
