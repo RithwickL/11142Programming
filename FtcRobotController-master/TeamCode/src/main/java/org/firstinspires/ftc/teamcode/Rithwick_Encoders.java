@@ -32,12 +32,12 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         waitForStart();
 
         if (opModeIsActive()) {
-            if (gamepad1.a == true) {
+
                 DriveFB(0.5, 72);
                 DriveSTS(0.5, 12);
                 DriveFB(0.5, -72);
-            }
-            if (gamepad1.b == true) {
+            
+            /*
                 DriveFB(0.5, 12);
                 DriveSLR(0.5, 24);
                 DriveSTS(0.5, -12);
@@ -46,8 +46,8 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
                 DriveSLR(0.5, 5);
                 DriveSLR(0.5, -5);
                 DriveSTS(0.5, -1);
-                DriveFB(0.5, -108);
-            }
+                DriveFB(0.5, -108);*/
+
         }
     }
 
