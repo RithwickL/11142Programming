@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 
 @Autonomous(name = "Rithwick_E")
-public class Rithwick_Encoders extends LinearOpMode { // Define motors
+public class Hi extends LinearOpMode { // Define motors
     DcMotor LV;
     DcMotor RV;
     DcMotor LH;
@@ -21,7 +21,7 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         RV = hardwareMap.dcMotor.get("rf");
         LH = hardwareMap.dcMotor.get("lf");
         RH = hardwareMap.dcMotor.get("rr");
-        TOP = hardwareMap.dcMotor.get("RUN");
+        RH = hardwareMap.dcMotor.get("rr");
         //Reverse inputs for left motors
         LV.setDirection(DcMotorSimple.Direction.REVERSE);
         RH.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -35,9 +35,9 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
 
         if (opModeIsActive()) {
 
-                DriveFB(0.5, 40);
-                DriveTW(0.5,10);
-                DriveFB(0.5, -40);
+
+            DriveTW(0.5,10);
+
 
             /*
                 DriveFB(0.5, 12);
