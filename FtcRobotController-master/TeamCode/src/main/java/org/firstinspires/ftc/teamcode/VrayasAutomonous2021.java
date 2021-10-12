@@ -44,7 +44,6 @@ public class VrayasAutomonous2021 extends LinearOpMode
 
             DriveLeft(0.5, 50);
 
-            DriveBackwards(0.5, 50);
 
 
         }
@@ -123,8 +122,6 @@ public class VrayasAutomonous2021 extends LinearOpMode
 
     public void Driveforward(double power, int distance)
     {
-
-
 
 
         //Reset Encoders
