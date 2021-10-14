@@ -13,13 +13,13 @@ public class RithwickFTC2021_2S2D extends OpMode {
     DcMotor righthorzontal;
     /*Servo Front;
     DcMotor Intake;*/
-//Code 2S2D
+//1S2D
 
     public void init() {
-        leftvertical = hardwareMap.dcMotor.get("lr");
+        leftvertical = hardwareMap.dcMotor.get("lf");
         rightvertical= hardwareMap.dcMotor.get("rr");
-        lefthorizontal = hardwareMap.dcMotor.get("rf");
-        righthorzontal= hardwareMap.dcMotor.get("lf");
+        lefthorizontal = hardwareMap.dcMotor.get("lr");
+        righthorzontal= hardwareMap.dcMotor.get("rf");
         //Front = hardwareMap.servo.get("blocker");//
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -29,17 +29,17 @@ public class RithwickFTC2021_2S2D extends OpMode {
 
     public void loop() {
         //Left and Right - right stick - Right/Left
-        leftvertical.setPower(gamepad1.right_stick_x);
-        rightvertical.setPower(gamepad1.right_stick_x);
+        leftvertical.setPower(gamepad2.right_stick_x);
+        rightvertical.setPower(gamepad2.right_stick_x);
         //Forward and Backward - left stick - up/down
-        lefthorizontal.setPower(gamepad1.left_stick_y);
-        righthorzontal.setPower(gamepad1.left_stick_y);
+        lefthorizontal.setPower(gamepad2.right_stick_y);
+        righthorzontal.setPower(gamepad2.right_stick_y);
 
         //Spin from center orign2 - Left stick- Left/right
-        lefthorizontal.setPower(gamepad1.left_trigger);
-        righthorzontal.setPower(-gamepad1.left_trigger);
-        leftvertical.setPower(gamepad1.left_trigger);
-        rightvertical.setPower(-gamepad1.left_trigger);
+        lefthorizontal.setPower(gamepad2.left_trigger);
+        righthorzontal.setPower(-gamepad2.left_trigger);
+        leftvertical.setPower(gamepad2.left_trigger);
+        rightvertical.setPower(-gamepad2.left_trigger);
 
         lefthorizontal.setPower(-gamepad1.right_trigger);
         righthorzontal.setPower(gamepad1.right_trigger);
@@ -121,10 +121,5 @@ public class RithwickFTC2021_2S2D extends OpMode {
         else {
             Intake.setPower(0);
         }*/
-
-
-
-
-
     }
 }
