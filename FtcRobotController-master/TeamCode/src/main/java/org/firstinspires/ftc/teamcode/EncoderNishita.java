@@ -35,7 +35,10 @@ public void runOpMode() { //code will run once only
     waitForStart();
 
     if (opModeIsActive()) {
-        DriveForward(0.5, 12);
+        DriveForward(0.5, 50);
+        DriveSide(0.5, 50);
+        DriveBack(0.5, -50);
+        SideReverse(0.5, -50);
     }
 }
     public void DriveForward (double power, int distance) {
@@ -47,16 +50,17 @@ public void runOpMode() { //code will run once only
         Fvertical.setTargetPosition(distance * 31);
         Bvertical.setTargetPosition(distance * 31);
 
+        Fvertical.setMode(RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(RunMode.RUN_TO_POSITION);
+
         //set power
         Fvertical.setPower(power);
         Bvertical.setPower(power);
 
-        while (Fvertical.isBusy() && Bvertical.isBusy()) {
+        while (Fvertical.isBusy() && Bvertical.isBusy()){
 
         }
-        if (opModeIsActive()) {
-            DriveForward(0.5, 12);
-        }
+
     }
     public void DriveSide (double power, int distance){
        //reset
@@ -67,16 +71,16 @@ public void runOpMode() { //code will run once only
       Fhorizontal.setTargetPosition(distance * 31);
       Bhorizontal.setTargetPosition(distance * 31);
 
+      Fhorizontal.setMode(RunMode.RUN_TO_POSITION);
+      Bhorizontal.setMode(RunMode.RUN_TO_POSITION);
+
       //set power
         Fhorizontal.setPower(power);
         Bhorizontal.setPower(power);
 
-        while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
+       while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
 
-        }
-        if (opModeIsActive()) {
-            DriveForward(0.5, 12);
-        }
+       }
     }
     public void DriveBack (double power, int distance){
     //reset
@@ -84,8 +88,11 @@ public void runOpMode() { //code will run once only
         Bvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
     //target position
-        Fvertical.setTargetPosition(-distance*31);
-        Bvertical.setTargetPosition(-distance*31);
+        Fvertical.setTargetPosition(distance*31);
+        Bvertical.setTargetPosition(distance*31);
+
+        Fvertical.setMode(RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(RunMode.RUN_TO_POSITION);
 
     //set power
         Fvertical.setPower(power);
@@ -94,9 +101,6 @@ public void runOpMode() { //code will run once only
         while (Fvertical.isBusy() && Bvertical.isBusy()) {
 
         }
-        if (opModeIsActive()) {
-            DriveForward(0.5, 12);
-        }
     }
     public void SideReverse (double power, int distance){
     //reset
@@ -104,8 +108,11 @@ public void runOpMode() { //code will run once only
         Bhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
     //target position
-        Fhorizontal.setTargetPosition(-distance*31);
-        Bhorizontal.setTargetPosition(-distance*31);
+        Fhorizontal.setTargetPosition(distance*31);
+        Bhorizontal.setTargetPosition(distance*31);
+
+        Fhorizontal.setMode(RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(RunMode.RUN_TO_POSITION);
 
     //set power
         Fhorizontal.setPower(power);
