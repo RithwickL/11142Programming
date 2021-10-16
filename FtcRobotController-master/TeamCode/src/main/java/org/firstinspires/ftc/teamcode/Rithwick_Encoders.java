@@ -19,17 +19,17 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
     public void runOpMode() {   //Pull Configure
         LV = hardwareMap.dcMotor.get("lr");
         RV = hardwareMap.dcMotor.get("rf");
-        LH = hardwareMap.dcMotor.get("lf");
-        RH = hardwareMap.dcMotor.get("rr");
-        TOP = hardwareMap.dcMotor.get("RUN");
+        //LH = hardwareMap.dcMotor.get("lf");
+        //RH = hardwareMap.dcMotor.get("rr");
+        TOP = hardwareMap.dcMotor.get("TOP");
         //Reverse inputs for left motors
         LV.setDirection(DcMotorSimple.Direction.REVERSE);
         RH.setDirection(DcMotorSimple.Direction.REVERSE);
 
         LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //LH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //RH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
@@ -93,7 +93,7 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         TOP.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void DriveSTS(double power, int distance2) {   //Reset Encoders
+    /*public void DriveSTS(double power, int distance2) {   //Reset Encoders
         LH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         RH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -147,7 +147,7 @@ public class Rithwick_Encoders extends LinearOpMode { // Define motors
         RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         LH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         RH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
+    }*/
 
     public void StopDriving() {
         //Stops motors
