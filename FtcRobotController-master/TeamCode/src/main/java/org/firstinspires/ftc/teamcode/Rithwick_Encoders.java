@@ -1,160 +1,160 @@
 package org.firstinspires.ftc.teamcode;
 
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorController;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name = "Rithwick_E")
-public class Rithwick_Encoders extends LinearOpMode { // Define motors
-    DcMotor LV;
-    DcMotor RV;
-    DcMotor LH;
-    DcMotor RH;
-    DcMotor TOP;
+@Autonomous(name="Rithwick_E")
+class Rithwick_Encoders extends LinearOpMode {    //Declare motors
+    DcMotor Fvertical;
+    DcMotor Fhorizontal;
+    DcMotor Bvertical;
+    DcMotor Bhorizontal;
+    DcMotor Top;
 
-    public void runOpMode() {   //Pull Configure
-        LV = hardwareMap.dcMotor.get("lr");
-        RV = hardwareMap.dcMotor.get("rf");
-        //LH = hardwareMap.dcMotor.get("lf");
-        //RH = hardwareMap.dcMotor.get("rr");
-        TOP = hardwareMap.dcMotor.get("TOP");
-        //Reverse inputs for left motors
-        LV.setDirection(DcMotorSimple.Direction.REVERSE);
-        RH.setDirection(DcMotorSimple.Direction.REVERSE);
+    public void runOpMode() { //code will run once only
 
-        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //LH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //RH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //initilize motors
+        Fvertical = hardwareMap.dcMotor.get("lr");
+        Bvertical = hardwareMap.dcMotor.get("rf");
+        Fhorizontal = hardwareMap.dcMotor.get("lf");
+        Bhorizontal = hardwareMap.dcMotor.get("rr");
+        Top = hardwareMap.dcMotor.get("TOP");
+
+        Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+        Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        //set modes
+        Fvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
         if (opModeIsActive()) {
+            DriveForward(0.5, 50);
+            DriveSide(0.5, 50);
+            DriveBack(0.5, -50);
+            SideReverse(0.5, -50);
+            Spin(0.5,5);
+        }
+    }
+    public void DriveForward (double power, int distance) {
+        //reset encoder
+        Fvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
-                DriveFB(0.5, 40);
-                DriveTW(0.5,10);
-                DriveFB(0.5, -40);
+        //set target position
+        Fvertical.setTargetPosition(distance * 31);
+        Bvertical.setTargetPosition(distance * 31);
 
-            /*
-                DriveFB(0.5, 12);
-                DriveSLR(0.5, 24);
-                DriveSTS(0.5, -12);
-                DriveFB(0.5, 108);
-                DriveSTS(0.5, 1);
-                DriveSLR(0.5, 5);
-                DriveSLR(0.5, -5);
-                DriveSTS(0.5, -1);
-                DriveFB(0.5, -108);*/
+        Fvertical.setMode(RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
+
+        while (Fvertical.isBusy() && Bvertical.isBusy()){
+
+        }
+
+    }
+    public void DriveSide (double power, int distance){
+        //reset
+        Fhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        Fhorizontal.setTargetPosition(distance * 31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fhorizontal.setMode(RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+
+        while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
 
         }
     }
+    public void DriveBack (double power, int distance){
+        //reset
+        Fvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
-    public void DriveFB(double power, int distance) {   //Reset Encoders
-        LV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //target position
+        Fvertical.setTargetPosition(distance*31);
+        Bvertical.setTargetPosition(distance*31);
 
-        //Set Position
-        LV.setTargetPosition(distance * 31);
-        RV.setTargetPosition(distance * 31);
+        Fvertical.setMode(RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(RunMode.RUN_TO_POSITION);
 
-        //Movement
-        LV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
 
-        LV.setPower(power);
-        RV.setPower(power);
+        while (Fvertical.isBusy() && Bvertical.isBusy()) {
 
-        while (LV.isBusy() && RV.isBusy()) {
         }
-        //Resets all input data
-        StopDriving();
-        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void DriveTW(double power, int distance) {   //Reset Encoders
-        TOP.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void Spin(double power, int distance) {
+        //reset encoder
+        Top.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
-        //Set Position
-        TOP.setTargetPosition(distance * 31);
+        //set target position
+        Top.setTargetPosition(distance * 31);
+        Top.setMode(RunMode.RUN_TO_POSITION);
 
-        //Movement
-        TOP.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //set power
+        Top.setPower(power);
 
-        TOP.setPower(power);
+        while (Top.isBusy()){
 
-        while (TOP.isBusy()) {
         }
-        //Resets all input data
-        StopDriving();
-        TOP.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
     }
+    public void SideReverse (double power, int distance){
+        //reset
+        Fhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
-    /*public void DriveSTS(double power, int distance2) {   //Reset Encoders
-        LH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //target position
+        Fhorizontal.setTargetPosition(distance*31);
+        Bhorizontal.setTargetPosition(distance*31);
 
-        //Set Position
-        LH.setTargetPosition(distance2 * 31);
-        RH.setTargetPosition(distance2 * 31);
+        Fhorizontal.setMode(RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(RunMode.RUN_TO_POSITION);
 
-        //Movement
-        LH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //set power
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
 
-        LH.setPower(power);
-        RH.setPower(power);
+        while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
 
-        while (LV.isBusy() && RV.isBusy()) {
         }
-        //Resets all input data
+
         StopDriving();
-        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        Fvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Fhorizontal.setMode(RunMode.RUN_WITHOUT_ENCODER);
+        Bhorizontal.setMode(RunMode.RUN_USING_ENCODER);
+
     }
+    public void StopDriving(){
 
-    public void DriveSLR(double power, int distance3) {   //Reset Encoders
-        LV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RV.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        LH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        RH.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Set Position
-        LV.setTargetPosition(distance3 * 31);
-        RV.setTargetPosition(distance3 * 31);
-        LH.setTargetPosition(distance3 * 31);
-        RH.setTargetPosition(distance3 * 31);
-
-        //Movement
-        LV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RV.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        LH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        RH.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        LV.setPower(power);
-        RV.setPower(power);
-        LH.setPower(power);
-        RH.setPower(power);
-
-        while (LV.isBusy() && RV.isBusy() && LV.isBusy() && RV.isBusy()) {
-        }
-        //Resets all input data
-        StopDriving();
-        LV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RV.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        LH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        RH.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }*/
-
-    public void StopDriving() {
-        //Stops motors
-        LV.setPower(0);
-        RV.setPower(0);
-        RH.setPower(0);
-        LH.setPower(0);
-        TOP.setPower(0);
+        Fvertical.setPower(0);
+        Fhorizontal.setPower(0);
+        Bvertical.setPower(0);
+        Bhorizontal.setPower(0);
     }
 }

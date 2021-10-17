@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name="EncoderNishita")
-public class EncoderNishita extends LinearOpMode {    //Declare motors
+class EncoderNishita extends LinearOpMode {    //Declare motors
 DcMotor Fvertical;
 DcMotor Fhorizontal;
 DcMotor Bvertical;
