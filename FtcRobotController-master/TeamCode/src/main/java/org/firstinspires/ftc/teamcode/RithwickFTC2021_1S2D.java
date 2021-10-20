@@ -11,6 +11,9 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor rightvertical;
     DcMotor lefthorizontal;
     DcMotor righthorzontal;
+    DcMotor Top;
+    DcMotor Spin;
+    DcMotor Spin2;
     /*Servo Front;
     DcMotor Intake;*/
 //1S2D
@@ -20,6 +23,9 @@ public class RithwickFTC2021_1S2D extends OpMode {
         rightvertical= hardwareMap.dcMotor.get("rr");
         lefthorizontal = hardwareMap.dcMotor.get("lr");
         righthorzontal= hardwareMap.dcMotor.get("rf");
+        Top= hardwareMap.dcMotor.get("Top");
+        Spin= hardwareMap.dcMotor.get("Spin");
+        Spin2= hardwareMap.dcMotor.get("Spin2");
         //Front = hardwareMap.servo.get("blocker");//
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -46,84 +52,31 @@ public class RithwickFTC2021_1S2D extends OpMode {
         leftvertical.setPower(-gamepad1.right_trigger);
         rightvertical.setPower(gamepad1.right_trigger);
 
-        /*if(gamepad1.b == true) {
-
+        if(gamepad1.b == true) {
+         Spin.setPower(0.75);
         }
         else{
-
+            Spin.setPower(0);
         }
 
         if(gamepad1.y == true) {
-
+            Spin2.setPower(0.75);
         }
         else{
-
+            Spin2.setPower(0);
         }
 
         if(gamepad1.a == true) {
-
+            Top.setPower(1);
         }
         else{
-
+            Top.setPower(0);
         }
 
-        if(gamepad1.x == true) {
+        /*if(gamepad1.x == true) {
 
         }
-        else{
-
-        }*/
-
-        /*if(gamepad1.dpad_down == true && gamepad1.dpad_right == true) {
-            lefthorizontal.setPower(1);
-            rightvertical.setPower(gamepad1.left_trigger);
-        }
-
-
-        //Horizontal top left - Left trigger
-        lefthorizontal.setPower(-gamepad1.left_trigger);
-        rightvertical.setPower(gamepad1.left_trigger);
-
-        //Horizontal top right - right trigger
-        lefthorizontal.setPower(-gamepad1.right_trigger);
-        rightvertical.setPower(gamepad1.right_trigger);
-
-        //Horizontal top left - Left bummper
-        lefthorizontal.setPower(-gamepad1.);
-        rightvertical.setPower(gamepad1.left_stick_x);
-
-        //Horizontal top left - Left trigger
-        lefthorizontal.setPower(-gamepad1.left_stick_x);
-        rightvertical.setPower(gamepad1.left_stick_x);*/
-
-
-
-        /*//Spin from center orign - Left stick- Left/right
-        leftvertical.setPower(-gamepad1.left_stick_x);
-        rightvertical.setPower(gamepad1.left_stick_x);*/
-
-
-
-        /*Front.setPostion(0);
-        //Front Servo for Blocker use x to open
-        if (gamepad1.x) {
-            Front.setPostion(1);
-        }
-        //Front Servo for Blocker use b to close
-        if (gamepad1.b) {
-            Front.setPostion(0);
-        }*/
-        //Intaker Motor for intake use y to run
-        /*if (gamepad1.y) {
-            Intake.setPower(- 1);
-        }
-        //Intaker Motor for intake use nothing to stop
-        else {
-            Intake.setPower(0);
-        }*/
-
-
-
+        else{*/
 
 
     }

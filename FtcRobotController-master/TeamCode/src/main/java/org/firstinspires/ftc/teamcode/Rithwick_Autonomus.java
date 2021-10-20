@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name="Rithwick_Autonomus")
-class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
+public class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
     DcMotor Fvertical;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
@@ -38,12 +38,8 @@ class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
         waitForStart();
 
         if (opModeIsActive()) {
-            DriveForward(0.5, 50);
-            DriveSide(0.5, 50);
-            DriveBack(0.5, -50);
-            SideReverse(0.5, -50);
-            Spin(0.5,5);
-        }
+
+            Spin(0.2,25);        }
     }
     public void DriveForward (double power, int distance) {
         //reset encoder
