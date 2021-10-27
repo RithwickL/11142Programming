@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp
 public class RithwickFTC2021_1S2D extends OpMode {
@@ -12,25 +13,21 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor lefthorizontal;
     DcMotor righthorzontal;
     DcMotor Top;
-    DcMotor Spin;
-    DcMotor Spin2;
-    /*Servo Front;
-    DcMotor Intake;*/
-//1S2D
+    DcMotor Arm1;
+    DcMotor Arm2;
+    //Servo Claw;
 
     public void init() {
         leftvertical = hardwareMap.dcMotor.get("lf");
-        rightvertical= hardwareMap.dcMotor.get("rr");
+        rightvertical = hardwareMap.dcMotor.get("rr");
         lefthorizontal = hardwareMap.dcMotor.get("lr");
-        righthorzontal= hardwareMap.dcMotor.get("rf");
-        Top= hardwareMap.dcMotor.get("Top");
-        Spin= hardwareMap.dcMotor.get("Spin");
-        Spin2= hardwareMap.dcMotor.get("Spin2");
-        //Front = hardwareMap.servo.get("blocker");//
+        righthorzontal = hardwareMap.dcMotor.get("rf");
+        //Claw = hardwareMap.servo.get("Claw");
+        Arm1 = hardwareMap.dcMotor.get("Spin1");
+        Arm2 = hardwareMap.dcMotor.get("Spin2");
+        Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        //Intake = hardwareMap.dcMotor.get("intake");//
-
     }
 
     public void loop() {
@@ -42,42 +39,50 @@ public class RithwickFTC2021_1S2D extends OpMode {
         righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin from center orign2 - Left stick- Left/right
-        lefthorizontal.setPower(gamepad1.left_trigger);
-        righthorzontal.setPower(-gamepad1.left_trigger);
-        leftvertical.setPower(gamepad1.left_trigger);
-        rightvertical.setPower(-gamepad1.left_trigger);
+        lefthorizontal.setPower(gamepad1.left_trigger / 2);
+        righthorzontal.setPower(-gamepad1.left_trigger / 2);
+        leftvertical.setPower(gamepad1.left_trigger / 2);
+        rightvertical.setPower(-gamepad1.left_trigger / 2);
 
-        lefthorizontal.setPower(-gamepad1.right_trigger);
-        righthorzontal.setPower(gamepad1.right_trigger);
-        leftvertical.setPower(-gamepad1.right_trigger);
-        rightvertical.setPower(gamepad1.right_trigger);
+        lefthorizontal.setPower(-gamepad1.right_trigger / 2);
+        righthorzontal.setPower(gamepad1.right_trigger / 2);
+        leftvertical.setPower(-gamepad1.right_trigger / 2);
+        rightvertical.setPower(gamepad1.right_trigger / 2);
 
-        if(gamepad1.b == true) {
-         Spin.setPower(0.75);
-        }
-        else{
-            Spin.setPower(0);
-        }
-
-        if(gamepad1.y == true) {
-            Spin2.setPower(0.75);
-        }
-        else{
-            Spin2.setPower(0);
+        if (gamepad1.b == true) {
+            Arm1.setPower(0.75);
+        } else {
+            Arm1.setPower(0);
         }
 
-        if(gamepad1.a == true) {
+        if (gamepad1.y == true) {
+            Arm2.setPower(-0.75);
+        } else {
+            Arm2.setPower(0);
+        }
+
+        if (gamepad1.a == true) {
             Top.setPower(1);
-        }
-        else{
+        } else {
             Top.setPower(0);
         }
 
-        /*if(gamepad1.x == true) {
+        /*if (gamepad1.x == true) {
+
+        } else {
+
+        }*/
+
+        if (gamepad1.x == true) {
+            //Claw.setPosition(90);
+        } else {
+            //Claw.setPosition(0);
 
         }
-        else{*/
+        /*if (gamepad1.right_bumper == true) {
 
+        } else {
 
+        }*/
     }
 }
