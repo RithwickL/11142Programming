@@ -144,7 +144,7 @@ public class VrayasAutomonous2021 extends LinearOpMode
 
         while(vertFront.isBusy() && vertBack.isBusy())
         {
-
+            
         }
 
 
