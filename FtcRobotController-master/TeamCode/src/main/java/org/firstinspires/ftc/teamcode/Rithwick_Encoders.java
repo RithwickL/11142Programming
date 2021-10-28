@@ -42,10 +42,13 @@ public class Rithwick_Encoders extends LinearOpMode {    //Declare motors
 
             DriveForward(0.2, -42);
             Spin(0.2, 25);
-            DriveForward(0.5, 42);
-            DriveSide(0.5,-10);
-            RobotSpin(0.5,10);
-
+            DriveSide(0.5,-20);
+            DriveForward(0.2, 23);
+            RobotSpin(0.5, -15);
+            DriveForward(0.2, 28);
+            DriveForward(0.2, -2);
+            RobotSpin(0.5, -2);
+            DriveSide(0.5,-130);
         }
     }
     public void DriveForward (double power, int distance) {
