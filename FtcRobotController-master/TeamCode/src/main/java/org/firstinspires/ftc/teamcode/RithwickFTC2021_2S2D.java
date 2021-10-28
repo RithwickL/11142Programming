@@ -11,6 +11,7 @@ public class RithwickFTC2021_2S2D extends OpMode {
     DcMotor rightvertical;
     DcMotor lefthorizontal;
     DcMotor righthorzontal;
+    DcMotor Top;
     /*Servo Front;
     DcMotor Intake;*/
 //1S2D
@@ -20,6 +21,7 @@ public class RithwickFTC2021_2S2D extends OpMode {
         rightvertical= hardwareMap.dcMotor.get("rr");
         lefthorizontal = hardwareMap.dcMotor.get("lr");
         righthorzontal= hardwareMap.dcMotor.get("rf");
+        Top = hardwareMap.dcMotor.get("TOP");
         //Front = hardwareMap.servo.get("blocker");//
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -28,23 +30,25 @@ public class RithwickFTC2021_2S2D extends OpMode {
     }
 
     public void loop() {
+        Top.setPower(gamepad1.left_stick_y);
+
         //Left and Right - right stick - Right/Left
-        leftvertical.setPower(gamepad2.right_stick_x);
-        rightvertical.setPower(gamepad2.right_stick_x);
+        leftvertical.setPower(gamepad1.right_stick_x);
+        rightvertical.setPower(gamepad1.right_stick_x);
         //Forward and Backward - left stick - up/down
-        lefthorizontal.setPower(gamepad2.right_stick_y);
-        righthorzontal.setPower(gamepad2.right_stick_y);
+        lefthorizontal.setPower(gamepad1.right_stick_y);
+        righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin from center orign2 - Left stick- Left/right
-        lefthorizontal.setPower(gamepad2.left_trigger);
-        righthorzontal.setPower(-gamepad2.left_trigger);
-        leftvertical.setPower(gamepad2.left_trigger);
-        rightvertical.setPower(-gamepad2.left_trigger);
+        lefthorizontal.setPower(gamepad1.left_trigger);
+        righthorzontal.setPower(-gamepad1.left_trigger);
+        leftvertical.setPower(gamepad1.left_trigger);
+        rightvertical.setPower(-gamepad1.left_trigger);
 
-        lefthorizontal.setPower(-gamepad1.right_trigger);
-        righthorzontal.setPower(gamepad1.right_trigger);
-        leftvertical.setPower(-gamepad1.right_trigger);
-        rightvertical.setPower(gamepad1.right_trigger);
+        lefthorizontal.setPower(-gamepad2.right_trigger);
+        righthorzontal.setPower(gamepad2.right_trigger);
+        leftvertical.setPower(-gamepad2.right_trigger);
+        rightvertical.setPower(gamepad2.right_trigger);
 
         /*if(gamepad1.b == true) {
 
