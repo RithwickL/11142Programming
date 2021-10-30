@@ -40,14 +40,14 @@ public class Rithwick_Encoders extends LinearOpMode {    //Declare motors
         if (opModeIsActive()) {
 
 
-            DriveForward(0.2, -42);
-            Spin(0.2, 25);
+            DriveForward(0.1, -39);
+            Spin(0.1, 25);
             DriveSide(0.5,-20);
             DriveForward(0.2, 23);
             RobotSpin(0.5, -15);
             DriveForward(0.2, 28);
             DriveForward(0.2, -2);
-            RobotSpin(0.5, -2);
+            //RobotSpin(0.5, -2);
             DriveSide(0.5,-130);
         }
     }

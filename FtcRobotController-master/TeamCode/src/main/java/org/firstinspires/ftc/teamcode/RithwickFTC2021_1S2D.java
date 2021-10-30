@@ -4,6 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="1Driver")
@@ -17,7 +20,9 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor Arm2;
     //Servo Claw;
 
+
     public void init() {
+
         leftvertical = hardwareMap.dcMotor.get("lf");
         rightvertical = hardwareMap.dcMotor.get("rr");
         lefthorizontal = hardwareMap.dcMotor.get("lr");
@@ -31,6 +36,7 @@ public class RithwickFTC2021_1S2D extends OpMode {
     }
 
     public void loop() {
+
         //Left and Right - right stick - Right/Left
         leftvertical.setPower(gamepad1.right_stick_x);
         rightvertical.setPower(gamepad1.right_stick_x);

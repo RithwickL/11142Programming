@@ -39,15 +39,16 @@ public class VrayasFTC2021_2S2D extends OpMode {
         righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin from center orign2 - Left stick- Left/right
-        lefthorizontal.setPower(gamepad1.right_trigger  / 2);
-        righthorzontal.setPower(-gamepad1.right_trigger  / 2);
-        leftvertical.setPower(gamepad1.right_trigger  / 2);
-        rightvertical.setPower(-gamepad1.right_trigger / 2);
+        lefthorizontal.setPower(gamepad1.left_trigger / 2);
+        righthorzontal.setPower(-gamepad1.left_trigger / 2);
+        leftvertical.setPower(gamepad1.left_trigger / 2);
+        rightvertical.setPower(-gamepad1.left_trigger / 2);
 
-        lefthorizontal.setPower(-gamepad1.left_trigger / 2);
-        righthorzontal.setPower(gamepad1.left_trigger / 2);
-        leftvertical.setPower(-gamepad1.left_trigger / 2);
-        rightvertical.setPower(gamepad1.left_trigger / 2);
+        lefthorizontal.setPower(-gamepad1.right_trigger / 2);
+        righthorzontal.setPower(gamepad1.right_trigger / 2);
+        leftvertical.setPower(-gamepad1.right_trigger / 2);
+        rightvertical.setPower(gamepad1.right_trigger / 2);
+
 
         if (gamepad2.b == true) {
             Arm1.setPower(0.75);
