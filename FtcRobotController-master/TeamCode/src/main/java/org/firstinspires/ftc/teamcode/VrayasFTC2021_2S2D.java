@@ -15,7 +15,9 @@ public class VrayasFTC2021_2S2D extends OpMode {
     DcMotor Top;
     DcMotor Arm1;
     DcMotor Arm2;
-    //Servo Claw;
+    Servo Finger1;
+    Servo Finger2;
+
 
     public void init() {
         leftvertical = hardwareMap.dcMotor.get("lf");
@@ -28,6 +30,8 @@ public class VrayasFTC2021_2S2D extends OpMode {
         Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+        Finger1 = hardwareMap.servo.get("");
+        Finger2 = hardwareMap.servo.get("");
     }
 
     public void loop() {
@@ -39,15 +43,23 @@ public class VrayasFTC2021_2S2D extends OpMode {
         righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin from center orign2 - Left stick- Left/right
-        lefthorizontal.setPower(gamepad1.left_trigger / 2);
-        righthorzontal.setPower(-gamepad1.left_trigger / 2);
-        leftvertical.setPower(gamepad1.left_trigger / 2);
-        rightvertical.setPower(-gamepad1.left_trigger / 2);
+        lefthorizontal.setPower(gamepad1.right_trigger  / 2);
+        righthorzontal.setPower(-gamepad1.right_trigger  / 2);
+        leftvertical.setPower(gamepad1.right_trigger  / 2);
+        rightvertical.setPower(-gamepad1.right_trigger / 2);
 
-        lefthorizontal.setPower(-gamepad1.right_trigger / 2);
-        righthorzontal.setPower(gamepad1.right_trigger / 2);
-        leftvertical.setPower(-gamepad1.right_trigger / 2);
-        rightvertical.setPower(gamepad1.right_trigger / 2);
+        lefthorizontal.setPower(-gamepad1.left_trigger / 2);
+        righthorzontal.setPower(gamepad1.left_trigger / 2);
+        leftvertical.setPower(-gamepad1.left_trigger / 2);
+        rightvertical.setPower(gamepad1.left_trigger / 2);
+
+        if (gamepad2.right_bumper){
+            Finger1.setPosition(70);
+            Finger2.setPosition(70);
+        } else {
+            Finger1.setPosition(0);
+            Finger2.setPosition(0);
+        }
 
 
         if (gamepad2.b == true) {
