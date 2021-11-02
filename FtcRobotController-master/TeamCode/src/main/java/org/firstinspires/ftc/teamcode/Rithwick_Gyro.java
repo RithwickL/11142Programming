@@ -13,23 +13,22 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 public class Rithwick_Gyro extends LinearOpMode {
    BNO055IMU imu;
-
    Orientation angles;
     @Override
     public void runOpMode() throws InterruptedException {
 BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
 parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
 
-imu = hardwareMap.get(BNO055IMU.class, deviceName:"imu");
+imu = hardwareMap.get(BNO055IMU.class,  "imu");
 imu.initialize(parameters);
 
 waitForStart();
 
 while (opModeIsActive()){
     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-    telemetry.addData("Target Zone", devicename);
-    telemetry.addData("Target Zone", angles.secondAngle);
-    telemetry.addData("Target Zone", angles.thirdAngle);
+    telemetry.addData("Heading", angles.firstAngle);
+    telemetry.addData("Role", angles.secondAngle);
+    telemetry.addData("Pitch", angles.thirdAngle);
     telemetry.update();
 }
     }

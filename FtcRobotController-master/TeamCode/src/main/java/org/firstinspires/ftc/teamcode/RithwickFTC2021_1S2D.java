@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +10,12 @@ import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Gyroscope;
 import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name="1Driver")
 public class RithwickFTC2021_1S2D extends OpMode {
@@ -19,9 +27,15 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor Arm1;
     //DcMotor Arm2;
     //Servo Claw;
-
+    BNO055IMU imu;
+    Orientation angles;
 
     public void init() {
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+
+        imu = hardwareMap.get(BNO055IMU.class,  "imu");
+        imu.initialize(parameters);
 
         leftvertical = hardwareMap.dcMotor.get("lf");
         rightvertical = hardwareMap.dcMotor.get("rr");
@@ -36,6 +50,12 @@ public class RithwickFTC2021_1S2D extends OpMode {
     }
 
     public void loop() {
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        telemetry.addData("Heading", angles.firstAngle);
+        //telemetry.addData("Role", angles.secondAngle);
+        //telemetry.addData("Pitch", angles.thirdAngle);
+        telemetry.update();
+        if (angles == 0){}
 
         //Left and Right - right stick - Right/Left
         leftvertical.setPower(gamepad1.right_stick_x);

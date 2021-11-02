@@ -51,7 +51,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  */
 @TeleOp(name = "Concept: TensorFlow Object Detection", group = "Concept")
 public class Tensor extends LinearOpMode {
-    private static final String TFOD_MODEL_ASSET = "UltimateGoal.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_unquant.tfile";
     private static final String LABEL_FIRST_ELEMENT = "A";
     private static final String LABEL_SECOND_ELEMENT = "B";
     private static final String LABEL_THIRD_ELEMENT = "C";
