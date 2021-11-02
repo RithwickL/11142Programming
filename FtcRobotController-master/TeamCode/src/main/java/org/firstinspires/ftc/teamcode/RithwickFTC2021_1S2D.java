@@ -17,7 +17,7 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor righthorzontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Arm2;
+    //DcMotor Arm2;
     //Servo Claw;
 
 
@@ -29,7 +29,7 @@ public class RithwickFTC2021_1S2D extends OpMode {
         righthorzontal = hardwareMap.dcMotor.get("rf");
         //Claw = hardwareMap.servo.get("Claw");
         Arm1 = hardwareMap.dcMotor.get("Spin1");
-        Arm2 = hardwareMap.dcMotor.get("Spin2");
+        //Arm2 = hardwareMap.dcMotor.get("Spin2");
         Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -56,15 +56,16 @@ public class RithwickFTC2021_1S2D extends OpMode {
         rightvertical.setPower(gamepad1.right_trigger / 2);
 
         if (gamepad1.b == true) {
-            Arm1.setPower(0.75);
+            Arm1.setPower(-0.25);
+
         } else {
-            Arm1.setPower(0);
+            Arm1.setPower(0.25);
+            Arm1.setPower(-0.25);
         }
 
         if (gamepad1.y == true) {
-            Arm2.setPower(-0.75);
-        } else {
-            Arm2.setPower(0);
+            Arm1.setPower(0.25);
+
         }
 
         if (gamepad1.a == true) {

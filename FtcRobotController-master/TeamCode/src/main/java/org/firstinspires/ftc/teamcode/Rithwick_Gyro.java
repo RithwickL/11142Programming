@@ -1,4 +1,4 @@
-/*package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode;
 
 import android.graphics.drawable.GradientDrawable;
 
@@ -27,10 +27,10 @@ waitForStart();
 
 while (opModeIsActive()){
     angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-    telemetry.addData(caption: "Heading", angles.firstAngle);
-    telemetry.addData(caption: "Heading", angles.secondAngle);
-    telemetry.addData(caption: "Heading", angles.thirdAngle);
+    telemetry.addData("Target Zone", devicename);
+    telemetry.addData("Target Zone", angles.secondAngle);
+    telemetry.addData("Target Zone", angles.thirdAngle);
     telemetry.update();
 }
     }
-}*/
+}
