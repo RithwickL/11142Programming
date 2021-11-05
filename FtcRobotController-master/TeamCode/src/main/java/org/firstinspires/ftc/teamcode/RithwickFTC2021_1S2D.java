@@ -1,21 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
-
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @TeleOp(name="1Driver")
 public class RithwickFTC2021_1S2D extends OpMode {
@@ -25,17 +13,8 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor righthorzontal;
     DcMotor Top;
     DcMotor Arm1;
-    //DcMotor Arm2;
-    //Servo Claw;
-    BNO055IMU imu;
-    Orientation angles;
 
     public void init() {
-        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-        parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-
-        imu = hardwareMap.get(BNO055IMU.class,  "imu");
-        imu.initialize(parameters);
 
         leftvertical = hardwareMap.dcMotor.get("lf");
         rightvertical = hardwareMap.dcMotor.get("rr");
@@ -50,12 +29,6 @@ public class RithwickFTC2021_1S2D extends OpMode {
     }
 
     public void loop() {
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        telemetry.addData("Heading", angles.firstAngle);
-        //telemetry.addData("Role", angles.secondAngle);
-        //telemetry.addData("Pitch", angles.thirdAngle);
-        telemetry.update();
-        if (angles == 0){}
 
         //Left and Right - right stick - Right/Left
         leftvertical.setPower(gamepad1.right_stick_x);
@@ -75,7 +48,7 @@ public class RithwickFTC2021_1S2D extends OpMode {
         leftvertical.setPower(-gamepad1.right_trigger / 2);
         rightvertical.setPower(gamepad1.right_trigger / 2);
 
-        if (gamepad1.b == true) {
+        if (gamepad1.b) {
             Arm1.setPower(-0.25);
 
         } else {
@@ -83,12 +56,11 @@ public class RithwickFTC2021_1S2D extends OpMode {
             Arm1.setPower(-0.25);
         }
 
-        if (gamepad1.y == true) {
+        if (gamepad1.y) {
             Arm1.setPower(0.25);
-
         }
 
-        if (gamepad1.a == true) {
+        if (gamepad1.a) {
             Top.setPower(0.5);
         } else {
             Top.setPower(0);
