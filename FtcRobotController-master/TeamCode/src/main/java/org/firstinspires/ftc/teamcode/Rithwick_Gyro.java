@@ -1,35 +1,58 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.graphics.drawable.GradientDrawable;
-
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.GyroSensor;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-public class Rithwick_Gyro extends LinearOpMode {
-   BNO055IMU imu;
-   Orientation angles;
-    @Override
-    public void runOpMode() throws InterruptedException {
-BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+@Disabled
+public class Rithwick_Gyro {
+    //gyro init
+    BNO055IMU imu;
+    Orientation angles;
 
-imu = hardwareMap.get(BNO055IMU.class,  "imu");
-imu.initialize(parameters);
+    HardwareMap hard;
 
-waitForStart();
+    double last_angle_error;
+    double motorPower;
+    double angle_error;
+    double motorPowerCorrection;
 
-while (opModeIsActive()){
-    angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-    telemetry.addData("Heading", angles.firstAngle);
-    telemetry.addData("Role", angles.secondAngle);
-    telemetry.addData("Pitch", angles.thirdAngle);
-    telemetry.update();
-}
+    public void initGyro(HardwareMap hw) {
+        hard = hw;
+
+        // Set up the parameters with which we will use our IMU. Note that integration
+        // algorithm here just reports accelerations to the logcat log; it doesn't actually
+        // provide positional information.
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = com.qualcomm.hardware.bosch.BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = com.qualcomm.hardware.bosch.BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+
+        imu = hard.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+    }
+
+
+    Orientation getAngles() {
+        return (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES));
+    }
+    public void hi() {
+        angles = getAngles();
     }
 }
