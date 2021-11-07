@@ -39,10 +39,10 @@ public class PID_2 extends OpMode {
         rightvertical = hardwareMap.dcMotor.get("rr");
         lefthorizontal = hardwareMap.dcMotor.get("lr");
         righthorzontal = hardwareMap.dcMotor.get("rf");
-        Arm1 = hardwareMap.dcMotor.get("Spin1");
+        Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
-        Arm1 = hardwareMap.dcMotor.get("Slide");
-        Top = hardwareMap.dcMotor.get("Pick");
+        Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.dcMotor.get("Pick");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
     }
@@ -74,7 +74,7 @@ public class PID_2 extends OpMode {
         }
         //Intake
         if (gamepad2.x) {
-            Pick.setPower(0.5);
+            Pick.setPower(1);
         } else {
             Pick.setPower(0);
         }
