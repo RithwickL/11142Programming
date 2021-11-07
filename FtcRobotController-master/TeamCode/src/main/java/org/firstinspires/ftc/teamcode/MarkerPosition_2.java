@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name="MarkerPosition")
-public class MarkerPosition extends LinearOpMode {    //Declare motors
+@Autonomous(name="MarkerPosition_2")
+public class MarkerPosition_2 extends LinearOpMode {    //Declare motors
     DcMotor Fvertical;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
