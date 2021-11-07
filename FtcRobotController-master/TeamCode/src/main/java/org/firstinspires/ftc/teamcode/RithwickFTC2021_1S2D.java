@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DigitalChannel;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
-import com.qualcomm.robotcore.hardware.Gyroscope;
-import com.qualcomm.robotcore.hardware.Servo;
-
-@TeleOp(name="1Driver")
+@Disabled
+@TeleOp(name="Driver1", group = "Default")
 public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor leftvertical;
     DcMotor rightvertical;
@@ -17,9 +14,6 @@ public class RithwickFTC2021_1S2D extends OpMode {
     DcMotor righthorzontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Arm2;
-    //Servo Claw;
-
 
     public void init() {
 
@@ -29,7 +23,7 @@ public class RithwickFTC2021_1S2D extends OpMode {
         righthorzontal = hardwareMap.dcMotor.get("rf");
         //Claw = hardwareMap.servo.get("Claw");
         Arm1 = hardwareMap.dcMotor.get("Spin1");
-        Arm2 = hardwareMap.dcMotor.get("Spin2");
+        //Arm2 = hardwareMap.dcMotor.get("Spin2");
         Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -55,19 +49,19 @@ public class RithwickFTC2021_1S2D extends OpMode {
         leftvertical.setPower(-gamepad1.right_trigger / 2);
         rightvertical.setPower(gamepad1.right_trigger / 2);
 
-        if (gamepad1.b == true) {
-            Arm1.setPower(0.75);
+        if (gamepad1.b) {
+            Arm1.setPower(-0.25);
+
         } else {
-            Arm1.setPower(0);
+            Arm1.setPower(0.25);
+            Arm1.setPower(-0.25);
         }
 
-        if (gamepad1.y == true) {
-            Arm2.setPower(-0.75);
-        } else {
-            Arm2.setPower(0);
+        if (gamepad1.y) {
+            Arm1.setPower(0.25);
         }
 
-        if (gamepad1.a == true) {
+        if (gamepad1.a) {
             Top.setPower(0.5);
         } else {
             Top.setPower(0);

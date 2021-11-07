@@ -57,7 +57,6 @@ android {
         minSdkVersion 23
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
-        multiDexEnabled true
 
         /**
          * We keep the versionCode and versionName of robot controller applications in sync with
@@ -68,7 +67,7 @@ android {
          * We accomplish this with the help of a funky little Groovy script that maintains that
          * correspondence automatically.
          *
-         * <a href="http://developer.android.com/tools/publishing/versioning.html">Versioning Your App</a>
+         *
          */
         def manifestFile = project(':FtcRobotController').file('src/main/AndroidManifest.xml');
         def manifestText = manifestFile.getText()
@@ -86,44 +85,24 @@ android {
         versionCode vCode
         versionName vName
     }
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/license.txt'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'META-INF/notice.txt'
-        exclude 'META-INF/ASL2.0'
-        pickFirst 'androidsupportmultidexversion.txt'
-        pickFirst 'META-INF/native-image/android-x86/jnijavacpp/jni-config.json'
-        pickFirst 'META-INF/native-image/android-x86/jnijavacpp/reflect-config.json'
 
-        pickFirst 'META-INF/native-image/android-x86_64/jnijavacpp/jni-config.json'
-        pickFirst 'META-INF/native-image/android-x86_64/jnijavacpp/reflect-config.json'
-
-        pickFirst 'META-INF/native-image/android-arm64/jnijavacpp/jni-config.json'
-        pickFirst 'META-INF/native-image/android-arm64/jnijavacpp/reflect-config.json'
-
-        pickFirst 'META-INF/native-image/android-arm/jnijavacpp/jni-config.json'
-        pickFirst 'META-INF/native-image/android-arm/jnijavacpp/reflect-config.json'
-
-        exclude 'META-INF/services/javax.annotation.processing.Processor'
-        pickFirst  'META-INF/maven/org.bytedeco.javacpp-presets/opencv/pom.properties'
-        pickFirst  'META-INF/maven/org.bytedeco.javacpp-presets/opencv/pom.xml'
-        pickFirst  'META-INF/maven/org.bytedeco.javacpp-presets/ffmpeg/pom.properties'
-        pickFirst  'META-INF/maven/org.bytedeco.javacpp-presets/ffmpeg/pom.xml'
-    }
     // Advanced user code might just want to use Vuforia directly, so we set up the libs as needed
     // http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.BuildType.html
     buildTypes {
         release {
             signingConfig signingConfigs.release
+
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
         }
         debug {
             debuggable true
             jniDebuggable true
             renderscriptDebuggable true
+            ndk {
+                abiFilters "armeabi-v7a"
+            }
         }
     }
 
@@ -146,7 +125,5 @@ repositories {
     flatDir {
         dirs rootProject.file('libs')
     }
-
     mavenCentral()
 }
-
