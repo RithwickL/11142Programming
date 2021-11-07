@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="Claw")
+@Autonomous(name="Blue Claw")
 public class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
     DcMotor Fvertical;
     DcMotor Fhorizontal;
