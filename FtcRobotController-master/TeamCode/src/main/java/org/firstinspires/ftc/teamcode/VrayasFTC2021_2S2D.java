@@ -1,11 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-
+@Disabled
 @TeleOp(name="2Driver")
 public class VrayasFTC2021_2S2D extends OpMode {
     DcMotor leftvertical;
@@ -53,16 +54,19 @@ public class VrayasFTC2021_2S2D extends OpMode {
         leftvertical.setPower(-gamepad1.left_trigger / 2);
         rightvertical.setPower(gamepad1.left_trigger / 2);
 
-        if (gamepad2.right_bumper){
+        if (gamepad2.right_bumper)
+        {
             Finger1.setPosition(70);
             Finger2.setPosition(70);
-        } else {
+        } else
+            {
             Finger1.setPosition(0);
             Finger2.setPosition(0);
         }
 
 
-        if (gamepad2.b == true) {
+        if (gamepad2.b == true)
+        {
             Arm1.setPower(0.75);
         } else {
             Arm1.setPower(0);

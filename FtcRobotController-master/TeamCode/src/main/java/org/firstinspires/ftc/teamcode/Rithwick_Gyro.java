@@ -54,5 +54,7 @@ public class Rithwick_Gyro {
     }
     public void hi() {
         angles = getAngles();
+
     }
+
 }
