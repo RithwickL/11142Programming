@@ -4,22 +4,28 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="PID" , group="Main")
-public class PID extends OpMode {
+@TeleOp(name="REALDRIVER", group = "Default")
+public class PID_2 extends OpMode {
+    private double liftPosScale = 50, liftPowScale = 0.0025;
+    private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
+    private double integrater = 0.001, intpower = 0.00075;
+
+
+
+    double multiplier = 1, speedK = 1;
+    boolean turtle = false, sloth = false;
+    double rotPos = 0, foundPos = 1;
+    int shootPos = 0;
+
     DcMotor leftvertical;
     DcMotor rightvertical;
     DcMotor lefthorizontal;
     DcMotor righthorzontal;
-    //DcMotor Top;
+    DcMotor Top;
     DcMotor Arm1;
-    double integral = 0;
-    ElapsedTime PIDTimer = new ElapsedTime();
 
     public void init() {
-        //Rithwick_Gyro rg =  new Rithwick_Gyro();
-        //rg.getAngles();
 
         leftvertical = hardwareMap.dcMotor.get("lf");
         rightvertical = hardwareMap.dcMotor.get("rr");
@@ -28,33 +34,13 @@ public class PID extends OpMode {
         //Claw = hardwareMap.servo.get("Claw");
         Arm1 = hardwareMap.dcMotor.get("Spin1");
         //Arm2 = hardwareMap.dcMotor.get("Spin2");
-        //Top = hardwareMap.dcMotor.get("TOP");
+        Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    void Arm_1(double targetPosition){
-         double error = Arm1.getCurrentPosition();
-         double lastError = 0;
-        double Kp = 0;
-        double Ki = 0;
-        double Kd = 0;
-        while(Math.abs(error) <= 145){
-            error = Arm1.getCurrentPosition() - targetPosition;
-            double changeInError = lastError - error;
-            integral += changeInError * PIDTimer.time();
-            double derivative = changeInError / PIDTimer.time();
-            double P = Kp * error;
-            double I = Ki * integral;
-            double D = Kd * derivative;
-            Arm1.setPower(P+I+D);
-            error = lastError;
-            PIDTimer.reset();
-        }
-    }
-
     public void loop() {
-        double Arm1PS = Arm1.getCurrentPosition();
+
         //Left and Right - right stick - Right/Left
         leftvertical.setPower(gamepad1.right_stick_x);
         rightvertical.setPower(gamepad1.right_stick_x);
@@ -75,23 +61,23 @@ public class PID extends OpMode {
 
         if (gamepad1.b) {
             Arm1.setPower(-0.25);
-        }
-        else {
-            Arm_1(Arm1PS);
+
+        } else {
+            Arm1.setPower(0.25);
+            Arm1.setPower(-0.25);
         }
 
         if (gamepad1.y) {
             Arm1.setPower(0.25);
-
         }
 
-        if (gamepad1.a) {
-            //Top.setPower(0.5);
+        /*if (gamepad1.a) {
+            Top.setPower(0.5);
         } else {
-            //Top.setPower(0);
+            Top.setPower(0);
         }
 
-        /*if (gamepad1.x == true) {
+        if (gamepad1.x == true) {
 
         } else {
 
@@ -101,12 +87,15 @@ public class PID extends OpMode {
             //Claw.setPosition(90);
         } else {
             //Claw.setPosition(0);
-
         }
-        /*if (gamepad1.right_bumper == true) {
+        liftPosCurrent = Arm1.getCurrentPosition();
 
-        } else {
-
-        }*/
+        liftPosDes += speedK*liftPosScale*gamepad1.left_stick_y;                //input scale factor
+        liftPosError = liftPosDes - liftPosCurrent;
+//        integrater += liftPosError;                                           //unnecessary
+        liftPow = Math.min(Math.max(liftPowScale*liftPosError, -1.00), 1.00);   //proportional gain
+        if(liftPow >= 1){ liftPosDes = liftPosCurrent+(1/liftPowScale); }       //AntiWindup Code
+        if(liftPow <= -1) {liftPosDes = liftPosCurrent-(1/liftPowScale); }      //AntiWindup Code
+        Arm1.setPower(liftPow);
     }
 }
