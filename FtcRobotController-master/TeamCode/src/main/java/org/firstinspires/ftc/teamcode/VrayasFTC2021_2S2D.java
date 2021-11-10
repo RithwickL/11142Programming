@@ -31,8 +31,7 @@ public class VrayasFTC2021_2S2D extends OpMode {
         Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        Finger1 = hardwareMap.servo.get("");
-        Finger2 = hardwareMap.servo.get("");
+        Finger1 = hardwareMap.servo.get("Claw");
     }
 
     public void loop() {
@@ -56,10 +55,8 @@ public class VrayasFTC2021_2S2D extends OpMode {
 
         if (gamepad2.right_bumper){
             Finger1.setPosition(70);
-            Finger2.setPosition(70);
         } else {
             Finger1.setPosition(0);
-            Finger2.setPosition(0);
         }
 
 

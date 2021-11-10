@@ -48,18 +48,18 @@ public class Hardware {
         hardwareMap = hwMap;
 
         // Find Motors in phone config
-        frontRightMotor = hardwareMap.get(DcMotor.class, "frontRight");
-        frontLeftMotor = hardwareMap.get(DcMotor.class, "frontLeft");
-        backRightMotor = hardwareMap.get(DcMotor.class, "backRight");
-        backLeftMotor = hardwareMap.get(DcMotor.class, "backLeft");
-        middleLeftMotor = hardwareMap.get(DcMotor.class, "middleLeft");
+        frontRightMotor = hardwareMap.get(DcMotor.class, "lr");
+        frontLeftMotor = hardwareMap.get(DcMotor.class, "lf");
+        backRightMotor = hardwareMap.get(DcMotor.class, "rr");
+        backLeftMotor = hardwareMap.get(DcMotor.class, "rf");
+        /*middleLeftMotor = hardwareMap.get(DcMotor.class, "middleLeft");
         middleRightMotor = hardwareMap.get(DcMotor.class, "middleRight");
         sliderLift = hardwareMap.get(DcMotor.class, "sliderLift");
-        carouselSpinner = hardwareMap.get(DcMotor.class, "carouselSpinner");
+        carouselSpinner = hardwareMap.get(DcMotor.class, "carouselSpinner");*/
 
         // Find Servos in phone config
-        claw = hardwareMap.get(Servo.class,"claw");
-        joint = hardwareMap.get(CRServo.class,"joint");
+        /*claw = hardwareMap.get(Servo.class,"claw");
+        joint = hardwareMap.get(CRServo.class,"joint");*/
 
 
         //Find Sensors in phone config
