@@ -88,14 +88,14 @@ public class actualColorCode extends LinearOpMode{
 
 
 
-            /*
+
             telemetry.addData("Frame Count", webcam.getFrameCount());
             telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
             telemetry.addData("Total frame time ms", webcam.getTotalFrameTimeMs());
             telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
             telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
-            */
+
 
             telemetry.update();
 
@@ -134,13 +134,13 @@ public class actualColorCode extends LinearOpMode{
         static final Scalar GOLD = new Scalar(255, 215, 0);
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 70);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
         static final int REGION1_WIDTH = 105;
         static final int REGION1_HEIGHT = 105;
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,70);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
         static final int REGION2_WIDTH = 105;
         static final int REGION2_HEIGHT = 105;
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,70);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
         static final int REGION3_WIDTH = 105;
         static final int REGION3_HEIGHT = 105;
 
