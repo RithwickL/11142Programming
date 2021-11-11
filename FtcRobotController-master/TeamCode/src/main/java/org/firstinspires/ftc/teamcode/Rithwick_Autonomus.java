@@ -6,16 +6,25 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name="Blue Claw")
 public class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
+    private double liftPosScale = 50, liftPowScale = 0.0025;
+    private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
+    private double integrater = 0.001, intpower = 0.00075;
+    double multiplier = 1, speedK = 1;
+    boolean turtle = false, sloth = false;
+    double rotPos = 0, foundPos = 1;
+    int shootPos = 0;
     DcMotor Fvertical;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
     DcMotor Bhorizontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Arm2;
+    //DcMotor Slide;
+    Servo Pick;
 
 
     public void runOpMode() { //code will run once only
@@ -25,9 +34,10 @@ public class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
         Bvertical = hardwareMap.dcMotor.get("rf");
         Fhorizontal = hardwareMap.dcMotor.get("lf");
         Bhorizontal = hardwareMap.dcMotor.get("rr");
-        Arm1 = hardwareMap.dcMotor.get("Spin1");
-        Arm2 = hardwareMap.dcMotor.get("Spin2");
+        Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
+        //Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.servo.get("Pick");
 
         Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
         Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -38,12 +48,18 @@ public class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
         Bvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Fhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Arm2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
 
         waitForStart();
+        liftPosCurrent = Arm1.getCurrentPosition();
+        liftPosDes += speedK*liftPosScale*gamepad2.left_stick_y/2;                //input scale factor
+        liftPosError = liftPosDes - liftPosCurrent;
+//      integrater += liftPosError;                                             //unnecessary
+        liftPow = Math.min(Math.max(liftPowScale*liftPosError, -1.00), 1.00);   //proportional gain
+        if(liftPow >= 1){ liftPosDes = liftPosCurrent+(1/liftPowScale); }       //AntiWindup Code
+        if(liftPow <= -1) {liftPosDes = liftPosCurrent-(1/liftPowScale); }      //AntiWindup Code
+        Arm1.setPower(liftPow);
 
         if (opModeIsActive()) {
 
@@ -145,6 +161,10 @@ public class Rithwick_Autonomus extends LinearOpMode {    //Declare motors
 
         }
         StopDriving();
+
+    }
+    public void Camera () {
+
 
     }
     public void StopDriving(){

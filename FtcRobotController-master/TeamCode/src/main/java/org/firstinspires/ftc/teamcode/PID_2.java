@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="REALDRIVER", group = "Default")
 public class PID_2 extends OpMode {
@@ -30,8 +31,9 @@ public class PID_2 extends OpMode {
     DcMotor righthorzontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Slide;
-    DcMotor Pick;
+    //DcMotor Slide;
+    Servo Pick;
+
 
     public void init() {
 
@@ -41,8 +43,8 @@ public class PID_2 extends OpMode {
         righthorzontal = hardwareMap.dcMotor.get("rf");
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
-        Slide = hardwareMap.dcMotor.get("Slide");
-        Pick = hardwareMap.dcMotor.get("Pick");
+        //Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.servo.get("Pick");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
     }
@@ -74,20 +76,16 @@ public class PID_2 extends OpMode {
         }
         //Intake
         if (gamepad2.x) {
-            Pick.setPower(1);
-        } else {
-            Pick.setPower(0);
+            Pick.setPosition(90);
         }
         //Push out intake
         if (gamepad2.b) {
-            Pick.setPower(-0.5);
-        } else {
-            Pick.setPower(0);
+            Pick.setPosition(0);
         }
 
         //PID for Arm1
         liftPosCurrent = Arm1.getCurrentPosition();
-        liftPosDes += speedK*liftPosScale*gamepad2.left_stick_y;                //input scale factor
+        liftPosDes += speedK*liftPosScale*gamepad2.left_stick_y/2;                //input scale factor
         liftPosError = liftPosDes - liftPosCurrent;
 //      integrater += liftPosError;                                             //unnecessary
         liftPow = Math.min(Math.max(liftPowScale*liftPosError, -1.00), 1.00);   //proportional gain
@@ -96,13 +94,13 @@ public class PID_2 extends OpMode {
         Arm1.setPower(liftPow);
 
         // PID for Slide
-        liftPosCurrent2 = Slide.getCurrentPosition();
+        /*liftPosCurrent2 = Slide.getCurrentPosition();
         liftPosDes2 += speedK2*liftPosScale2*gamepad2.right_stick_x;                //input scale factor
         liftPosError2 = liftPosDes2 - liftPosCurrent2;
 //      integrater2 += liftPosError2;                                              //unnecessary
         liftPow2 = Math.min(Math.max(liftPowScale2*liftPosError2, -1.00), 1.00);   //proportional gain
         if(liftPow2 >= 1){ liftPosDes2 = liftPosCurrent2+(1/liftPowScale2); }       //AntiWindup Code
         if(liftPow2 <= -1) {liftPosDes2 = liftPosCurrent2-(1/liftPowScale2); }      //AntiWindup Code
-        Slide.setPower(liftPow2);
+        Slide.setPower(liftPow2);*/
     }
 }
