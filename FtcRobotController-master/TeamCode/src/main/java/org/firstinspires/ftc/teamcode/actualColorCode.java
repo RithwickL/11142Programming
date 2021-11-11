@@ -1,16 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -57,7 +52,7 @@ public class actualColorCode extends LinearOpMode{
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
             @Override
             public void onOpened() {
-                webcam.startStreaming(320, 240, OpenCvCameraRotation.UPRIGHT);
+                webcam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
             }
 
             @Override
@@ -134,15 +129,16 @@ public class actualColorCode extends LinearOpMode{
         static final Scalar GOLD = new Scalar(255, 215, 0);
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
-        static final int REGION1_WIDTH = 105;
-        static final int REGION1_HEIGHT = 105;
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
-        static final int REGION2_WIDTH = 105;
-        static final int REGION2_HEIGHT = 105;
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
-        static final int REGION3_WIDTH = 105;
-        static final int REGION3_HEIGHT = 105;
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(1000, 150);
+        static final int REGION1_WIDTH = 275;
+        static final int REGION1_HEIGHT = 275;
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(475,150);
+        static final int REGION2_WIDTH = 275;
+        static final int REGION2_HEIGHT = 275;
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(0,150);
+
+        static final int REGION3_WIDTH = 275;
+        static final int REGION3_HEIGHT = 275;
 
 
         Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);

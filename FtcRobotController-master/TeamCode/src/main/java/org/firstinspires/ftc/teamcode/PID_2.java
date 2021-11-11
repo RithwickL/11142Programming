@@ -55,8 +55,8 @@ public class PID_2 extends OpMode {
         leftvertical.setPower(gamepad1.right_stick_x);
         rightvertical.setPower(gamepad1.right_stick_x);
         //Forward and Backward - left stick - up/down
-        lefthorizontal.setPower(gamepad1.right_stick_y);
-        righthorzontal.setPower(gamepad1.right_stick_y);
+        lefthorizontal.setPower(gamepad1.right_stick_y* 1.5);
+        righthorzontal.setPower(gamepad1.right_stick_y* 1.5);
 
         //Spin
         lefthorizontal.setPower(gamepad1.left_trigger / 2);
@@ -76,11 +76,11 @@ public class PID_2 extends OpMode {
         }
         //Intake
         if (gamepad2.x) {
-            Pick.setPosition(90);
+            Pick.setPosition(0.5);
         }
         //Push out intake
         if (gamepad2.b) {
-            Pick.setPosition(0);
+            Pick.setPosition(-0.3);
         }
 
         //PID for Arm1
