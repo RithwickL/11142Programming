@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
-@Disabled
+
 @TeleOp(name="2Driver")
 public class VrayasFTC2021_2S2D extends OpMode {
     DcMotor leftvertical;
@@ -27,7 +27,7 @@ public class VrayasFTC2021_2S2D extends OpMode {
         righthorzontal = hardwareMap.dcMotor.get("rf");
         //Claw = hardwareMap.servo.get("Claw");
         Arm1 = hardwareMap.dcMotor.get("Spin1");
-        Arm2 = hardwareMap.dcMotor.get("Spin2");
+        //Arm2 = hardwareMap.dcMotor.get("Spin2");
         Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
