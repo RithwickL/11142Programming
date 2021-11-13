@@ -44,17 +44,19 @@ public class Red_C extends LinearOpMode {    //Declare motors
         waitForStart();
 
         if (opModeIsActive()) {
-
+            //DriveSide(0.5,20);
+            //RobotSpin(0.5,30);
+            //DriveSide(0.5,20);
+            DriveForward(0.1, -30);
             Arm(0.5, 20);
-            DriveForward(0.1, 39);
             Spin(0.1, -25);
-            DriveSide(0.5,-20);
+            DriveSide(0.5,20);
             Arm(0.5, -20);
-            DriveForward(0.2, -23);
+            DriveForward(0.2, 23);
             RobotSpin(0.5, 15);
-            DriveForward(0.2, -28);
-            DriveForward(0.2, 2);
-            DriveSide(0.2,130);
+            DriveForward(0.2, 28);
+            DriveForward(0.2, -2);
+            DriveSide(0.2,120);
         }
     }
     public void DriveForward (double power, int distance) {
