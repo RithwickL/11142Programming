@@ -55,7 +55,7 @@ public class Blue_C extends LinearOpMode {    //Declare motors
             DriveForward(0.2, 28);
             DriveForward(0.2, -2);
             DriveSide(0.4,-110);
-            DriveSide(1,-35);
+            DriveSide(1,-30);
         }
     }
     public void DriveForward (double power, int distance) {
