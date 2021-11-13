@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -22,7 +23,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@TeleOp
+@Autonomous
 public class actualColorCode extends LinearOpMode{
 
     OpenCvCamera webcam;
@@ -42,12 +43,6 @@ public class actualColorCode extends LinearOpMode{
         double bRight;
         double max;
 
-        TIseBot.init(hardwareMap);
-
-        TIseBot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        TIseBot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        TIseBot.backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        TIseBot.backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -99,27 +94,10 @@ public class actualColorCode extends LinearOpMode{
 
             telemetry.update();
 
-            drive = gamepad1.left_stick_y; //Between -1 and 1
-            turn = gamepad1.right_stick_x;
-            strafe = gamepad1.dpad_left? -1:gamepad1.dpad_right? 1: gamepad1.left_stick_x;
 
-            fLeft = -.7*drive + .8*strafe - .75*turn;
-            fRight = -.7*drive - .8*strafe + .75*turn;
-            bRight = -.7*drive + .8*strafe + .75*turn;
-            bLeft = -.7*drive - .8*strafe - .75*turn;
 
-            max = Math.max(Math.max(Math.abs(fLeft), Math.abs(fRight)), Math.max(Math.abs(bLeft), Math.abs(bRight)));
-            if (max > 1.0) {
-                fLeft /= max;
-                fRight /= max;
-                bLeft /= max;
-                bRight /= max;
-            }
 
-            TIseBot.frontRightMotor.setPower(fRight);
-            TIseBot.frontLeftMotor.setPower(fLeft);
-            TIseBot.backRightMotor.setPower(bRight);
-            TIseBot.backLeftMotor.setPower(bLeft);
+
 
             sleep(20);
         }
@@ -134,13 +112,13 @@ public class actualColorCode extends LinearOpMode{
         static final Scalar GOLD = new Scalar(255, 215, 0);
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 70);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
         static final int REGION1_WIDTH = 105;
         static final int REGION1_HEIGHT = 105;
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,70);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
         static final int REGION2_WIDTH = 105;
         static final int REGION2_HEIGHT = 105;
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,70);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
         static final int REGION3_WIDTH = 105;
         static final int REGION3_HEIGHT = 105;
 
@@ -163,7 +141,8 @@ public class actualColorCode extends LinearOpMode{
          * This function takes the RGB frame, converts to YCrCb,
          * and extracts the Cb channel to the 'Cb' variable
          */
-        void inputToG(Mat input) {
+        void inputToG(Mat input)
+        {
             Imgproc.cvtColor(input, BGR, Imgproc.COLOR_RGB2BGR);
             Core.extractChannel(BGR, G, 1);
         }
