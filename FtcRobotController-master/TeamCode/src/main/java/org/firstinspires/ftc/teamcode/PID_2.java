@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="REALDRIVER", group = "Default")
 public class PID_2 extends OpMode {
@@ -32,7 +31,7 @@ public class PID_2 extends OpMode {
     DcMotor Top;
     DcMotor Arm1;
     //DcMotor Slide;
-    Servo Pick;
+    DcMotor Pick;
 
 
     public void init() {
@@ -44,7 +43,7 @@ public class PID_2 extends OpMode {
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
         //Slide = hardwareMap.dcMotor.get("Slide");
-        Pick = hardwareMap.servo.get("Pick");
+        Pick = hardwareMap.dcMotor.get("Pick");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
     }
@@ -55,8 +54,8 @@ public class PID_2 extends OpMode {
         leftvertical.setPower(gamepad1.right_stick_x);
         rightvertical.setPower(gamepad1.right_stick_x);
         //Forward and Backward - left stick - up/down
-        lefthorizontal.setPower(gamepad1.right_stick_y* 1.5);
-        righthorzontal.setPower(gamepad1.right_stick_y* 1.5);
+        lefthorizontal.setPower(gamepad1.right_stick_y);
+        righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin
         lefthorizontal.setPower(gamepad1.left_trigger / 2);
@@ -76,11 +75,15 @@ public class PID_2 extends OpMode {
         }
         //Intake
         if (gamepad2.x) {
-            Pick.setPosition(0.5);
+            Pick.setPower(1);
+        } else {
+        Pick.setPower(0);
         }
         //Push out intake
         if (gamepad2.b) {
-            Pick.setPosition(-0.3);
+            Pick.setPower(-0.65);
+        } else {
+            Pick.setPower(0);
         }
 
         //PID for Arm1

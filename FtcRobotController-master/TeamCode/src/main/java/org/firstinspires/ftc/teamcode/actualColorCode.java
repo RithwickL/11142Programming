@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -36,13 +35,6 @@ public class actualColorCode extends LinearOpMode{
         double bLeft;
         double bRight;
         double max;
-
-        TIseBot.init(hardwareMap);
-
-        TIseBot.frontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        TIseBot.frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        TIseBot.backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        TIseBot.backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -111,10 +103,7 @@ public class actualColorCode extends LinearOpMode{
                 bRight /= max;
             }
 
-            TIseBot.frontRightMotor.setPower(fRight);
-            TIseBot.frontLeftMotor.setPower(fLeft);
-            TIseBot.backRightMotor.setPower(bRight);
-            TIseBot.backLeftMotor.setPower(bLeft);
+
 
             sleep(20);
         }

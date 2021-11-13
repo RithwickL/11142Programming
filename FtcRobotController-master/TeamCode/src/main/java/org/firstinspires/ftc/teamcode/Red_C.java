@@ -7,13 +7,16 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="Blue Carousel")
-public class Rithwick_Encoders extends LinearOpMode {    //Declare motors
+@Autonomous(name="Red Carousel")
+public class Red_C extends LinearOpMode {    //Declare motors
     DcMotor Fvertical;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
     DcMotor Bhorizontal;
     DcMotor Top;
+    DcMotor Arm1;
+    //DcMotor Slide;
+    DcMotor Pick;
 
     public void runOpMode() { //code will run once only
 
@@ -22,7 +25,10 @@ public class Rithwick_Encoders extends LinearOpMode {    //Declare motors
         Bvertical = hardwareMap.dcMotor.get("rf");
         Fhorizontal = hardwareMap.dcMotor.get("lf");
         Bhorizontal = hardwareMap.dcMotor.get("rr");
+        Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
+        //Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.dcMotor.get("Pick");
 
         Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
         Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -39,16 +45,17 @@ public class Rithwick_Encoders extends LinearOpMode {    //Declare motors
 
         if (opModeIsActive()) {
 
-
+            Arm(0.5, 20);
             DriveForward(0.1, -39);
             Spin(0.1, 25);
             DriveSide(0.5,-20);
+            Arm(0.5, -20);
             DriveForward(0.2, 23);
             RobotSpin(0.5, -15);
             DriveForward(0.2, 28);
             DriveForward(0.2, -2);
             //RobotSpin(0.5, -2);
-            DriveSide(0.5,-130);
+            DriveSide(0.2,-130);
         }
     }
     public void DriveForward (double power, int distance) {
@@ -68,6 +75,28 @@ public class Rithwick_Encoders extends LinearOpMode {    //Declare motors
         Bvertical.setPower(power);
 
         while (Fvertical.isBusy() && Bvertical.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+    public void Arm (double power, int distance) {
+        //reset encoder
+        Arm1.setMode(RunMode.STOP_AND_RESET_ENCODER);
+
+
+        //set target position
+        Arm1.setTargetPosition(distance * 31);
+
+
+        Arm1.setMode(RunMode.RUN_TO_POSITION);
+
+
+        //set power
+        Arm1.setPower(power);
+
+
+        while (Arm1.isBusy()){
 
         }
         StopDriving();
