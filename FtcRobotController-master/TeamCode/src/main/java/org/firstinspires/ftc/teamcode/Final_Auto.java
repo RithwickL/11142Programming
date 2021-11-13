@@ -138,15 +138,15 @@ public class Final_Auto extends LinearOpMode
             final Scalar GOLD = new Scalar(255, 215, 0);
             final Scalar CYAN = new Scalar(0, 139, 139);
 
-            final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
-            static final int REGION1_WIDTH = 105;
-            static final int REGION1_HEIGHT = 105;
-            final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
-            static final int REGION2_WIDTH = 105;
-            static final int REGION2_HEIGHT = 105;
-            final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
-            static final int REGION3_WIDTH = 105;
-            static final int REGION3_HEIGHT = 105;
+             final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
+            static final int REGION1_WIDTH = 275;
+            static final int REGION1_HEIGHT = 275;
+             final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
+            static final int REGION2_WIDTH = 275;
+            static final int REGION2_HEIGHT = 275;
+             final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
+            static final int REGION3_WIDTH = 275;
+            static final int REGION3_HEIGHT = 275;
 
 
             Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);
