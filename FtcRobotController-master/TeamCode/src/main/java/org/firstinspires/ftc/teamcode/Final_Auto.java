@@ -61,7 +61,7 @@ public class Final_Auto extends LinearOpMode
         {
             Camera();
             Response();
-            Drive_Backword(0.5,2);
+            DriveBackword(0.5,2);
             DriveSide(0.5,8);
             RobotSpin(0.5,20);
             DriveSide(0.5,-15);
@@ -74,7 +74,7 @@ public class Final_Auto extends LinearOpMode
 
 
 
-    public void Drive_Backword(double power, int distance)
+    public void DriveBackword(double power, int distance)
     {
         Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -100,10 +100,22 @@ public class Final_Auto extends LinearOpMode
         telemetry.addData("Region 2", pipeline.region2Avg());
         telemetry.addData("Region 3", pipeline.region3Avg());
 
-        if ((pipeline.region1Avg() > pipeline.region2Avg()) && (pipeline.region1Avg() > pipeline.region3Avg())) telemetry.addLine("Bottom");
-        if ((pipeline.region2Avg() > pipeline.region1Avg()) && (pipeline.region2Avg() > pipeline.region3Avg())) telemetry.addLine("Middle");
-        if ((pipeline.region3Avg() > pipeline.region1Avg()) && (pipeline.region3Avg() > pipeline.region2Avg())) telemetry.addLine("Top");
+        if ((pipeline.region1Avg() > pipeline.region2Avg()) && (pipeline.region1Avg() > pipeline.region3Avg())) {
+           DriveForward(0.5,5);
 
+            telemetry.addLine("Bottom");
+        }
+        if ((pipeline.region2Avg() > pipeline.region1Avg()) && (pipeline.region2Avg() > pipeline.region3Avg())){
+            DriveSide(0.5, 5);
+
+            telemetry.addLine("Middle");
+        }
+        if ((pipeline.region3Avg() > pipeline.region1Avg()) && (pipeline.region3Avg() > pipeline.region2Avg())){
+
+            Spin(0.5,20);
+
+            telemetry.addLine("Top");
+        }
 
 
             /*
@@ -120,6 +132,7 @@ public class Final_Auto extends LinearOpMode
         sleep(20);
         class RingPipeline extends OpenCvPipeline
         {
+
 
             /** Most important section of the code: Colors **/
             final Scalar CRIMSON = new Scalar(220, 20, 60);
@@ -198,12 +211,15 @@ public class Final_Auto extends LinearOpMode
             public int region2Avg() {
                 return avg2;
             }
-            public int region3Avg() {
+            public int region3Avg(){
                 return avg3;
             }
 
+
+
         }
     }
+
 
 
     public void Response() {
