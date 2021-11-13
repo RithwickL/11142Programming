@@ -42,25 +42,28 @@ public class Final_Auto extends LinearOpMode
 
 
 
-    DcMotor leftvertical;
-    DcMotor rightvertical;
-    DcMotor lefthorizontal;
-    DcMotor righthorizontal;
+    DcMotor Fvertical;
+    DcMotor Fhorizontal;
+    DcMotor Bvertical;
+    DcMotor Bhorizontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Finger1;
+    //DcMotor Slide;
+    DcMotor Pick;
 
     public void runOpMode()
     {
-        leftvertical = hardwareMap.dcMotor.get("lf");
-        rightvertical = hardwareMap.dcMotor.get("rr");
-        lefthorizontal = hardwareMap.dcMotor.get("lr");
-        righthorizontal = hardwareMap.dcMotor.get("rf");
+        Fvertical = hardwareMap.dcMotor.get("lr");
+        Bvertical = hardwareMap.dcMotor.get("rf");
+        Fhorizontal = hardwareMap.dcMotor.get("lf");
+        Bhorizontal = hardwareMap.dcMotor.get("rr");
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
-        leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
-        lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        Finger1 = hardwareMap.dcMotor.get("Pick");
+        //Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.dcMotor.get("Pick");
+
+        Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+        Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
 
         waitForStart();
 
@@ -73,6 +76,9 @@ public class Final_Auto extends LinearOpMode
         }
 
     }
+
+
+
 
     public void Camera() {
         telemetry.addData("Region 1", pipeline.region1Avg());
@@ -185,28 +191,6 @@ public class Final_Auto extends LinearOpMode
     }
 
 
-
-
-    public void DriveForward(double power, int distance) {
-        leftvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        leftvertical.setTargetPosition(distance * 31);
-        rightvertical.setTargetPosition(distance * 31);
-
-        leftvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //Set Power
-        leftvertical.setPower(power);
-        rightvertical.setPower(power);
-
-        while (leftvertical.isBusy() && rightvertical.isBusy()) {
-
-            StopDriving();
-        }
-    }
     public void Response() {
         if (region1Avg > region2Avg)
         {
@@ -214,7 +198,7 @@ public class Final_Auto extends LinearOpMode
             {
                 DriveForward(1,2);
                 DriveSide(1,3);
-                ArmPosTOP(1, 60);
+                ArmPosTOP(1, 150);
                 StopDriving();
 
             }
@@ -222,7 +206,7 @@ public class Final_Auto extends LinearOpMode
             {
                 DriveForward(1,2);
                 DriveSide(3,3);
-                ArmPosBOT(1, 20);
+                ArmPosBOT(1, 50);
                 StopDriving();
             }
 
@@ -232,101 +216,189 @@ public class Final_Auto extends LinearOpMode
             {
                 DriveForward(1,2);
                 DriveSide(1, 3);
-                ArmPosMid(1,40);
+                ArmPosMid(1,100);
                 StopDriving();
             } else
             {
                 DriveForward(1,2);
                 DriveSide(1, 3);
-                ArmPosBOT(1,20);
+                ArmPosBOT(1,50);
             }
         }
     }
 
-    public void DriveSide(double power, int distance) {
-        lefthorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        righthorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    public void DriveForward (double power, int distance) {
+        //reset encoder
+        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //Move to Position
-        lefthorizontal.setTargetPosition(distance * 31);
-        righthorizontal.setTargetPosition(distance * 31);
+        //set target position
+        Fvertical.setTargetPosition(distance * 31);
+        Bvertical.setTargetPosition(distance * 31);
 
-        lefthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        righthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        //Set Power
-        lefthorizontal.setPower(power);
-        righthorizontal.setPower(power);
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
 
-        while (lefthorizontal.isBusy() && righthorizontal.isBusy()) {
+        while (Fvertical.isBusy() && Bvertical.isBusy()){
 
-            StopDriving();
         }
+        StopDriving();
+
+    }
+    public void Arm (double power, int distance) {
+        //reset encoder
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        //set target position
+        Arm1.setTargetPosition(distance * 31);
+
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        //set power
+        Arm1.setPower(power);
+
+
+        while (Arm1.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+    public void RobotSpin (double power, int distance) {
+        //reset encoder
+        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Fvertical.setTargetPosition(distance * -31);
+        Bvertical.setTargetPosition(distance * 31);
+        Fhorizontal.setTargetPosition(distance * -31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+
+        while (Fvertical.isBusy() && Bvertical.isBusy() && Fhorizontal.isBusy() && Bhorizontal.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+    public void DriveSide (double power, int distance){
+        //reset
+        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        Fhorizontal.setTargetPosition(distance * 31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+
+        while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
+
+        }
+        StopDriving();
+    }
+
+    public void Spin(double power, int distance) {
+        //reset encoder
+        Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Top.setTargetPosition(distance * 31);
+        Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Top.setPower(power);
+
+        while (Top.isBusy()) {
+
+        }
+        StopDriving();
+
+    }
+    public void StopDriving(){
+
+        Fvertical.setPower(0);
+        Fhorizontal.setPower(0);
+        Bvertical.setPower(0);
+        Bhorizontal.setPower(0);
+        Top.setPower(0);
     }
 
     public void ArmPosTOP(double power, int degrees)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Finger1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Finger1.setTargetPosition(degrees * 31);
+        Pick.setTargetPosition(-degrees * 31);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Finger1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Arm1.setPower(1);
-        Finger1.setPower(1);
+        Pick.setPower(1);
 
     }
 
     public void ArmPosMid(double power, int degrees)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Finger1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Finger1.setTargetPosition(degrees * 31);
+        Pick.setTargetPosition(-degrees * 31);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Finger1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         Arm1.setPower(1);
-        Finger1.setPower(1);
+        Pick.setPower(1);
 
 
     }
     public void ArmPosBOT(double power, int degrees)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Finger1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Finger1.setTargetPosition(degrees * 31);
+        Pick.setTargetPosition(-degrees * 31);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Finger1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Arm1.setPower(1);
-        Finger1.setPower(1);
+        Pick.setPower(1);
 
 
     }
-
-
-    public void StopDriving(){
-
-        leftvertical.setPower(0);
-        righthorizontal.setPower(0);
-        rightvertical.setPower(0);
-        lefthorizontal.setPower(0);
-        Arm1.setPower(0);
-        Top.setPower(0);
-        Finger1.setPower(0);
-    }
-
 }
