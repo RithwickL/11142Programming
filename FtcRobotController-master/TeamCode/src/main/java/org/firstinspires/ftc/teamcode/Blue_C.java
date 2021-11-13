@@ -54,7 +54,6 @@ public class Blue_C extends LinearOpMode {    //Declare motors
             RobotSpin(0.5, -15);
             DriveForward(0.2, 28);
             DriveForward(0.2, -2);
-            //RobotSpin(0.5, -2);
             DriveSide(0.2,-130);
         }
     }
