@@ -15,9 +15,7 @@ public class VrayasFTC2021_2S2D extends OpMode {
     DcMotor righthorzontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Arm2;
     Servo Finger1;
-    Servo Finger2;
 
 
     public void init() {
@@ -25,9 +23,7 @@ public class VrayasFTC2021_2S2D extends OpMode {
         rightvertical = hardwareMap.dcMotor.get("rr");
         lefthorizontal = hardwareMap.dcMotor.get("lr");
         righthorzontal = hardwareMap.dcMotor.get("rf");
-        //Claw = hardwareMap.servo.get("Claw");
         Arm1 = hardwareMap.dcMotor.get("Spin1");
-        Arm2 = hardwareMap.dcMotor.get("Spin2");
         Top = hardwareMap.dcMotor.get("TOP");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -61,28 +57,23 @@ public class VrayasFTC2021_2S2D extends OpMode {
 
 
         if (gamepad2.b == true) {
-            Arm1.setPower(0.75);
+            Arm1.setTargetPosition(45);
         } else {
-            Arm1.setPower(0);
+            Arm1.setTargetPosition(0);
         }
 
         if (gamepad2.y == true) {
-            Arm2.setPower(-0.75);
+            Arm1.setTargetPosition(-45);
         } else {
-            Arm2.setPower(0);
+            Arm1.setTargetPosition(0);
         }
 
-        if (gamepad2.a == true) {
+        if (gamepad2.a) {
             Top.setPower(0.5);
         } else {
             Top.setPower(0);
         }
 
-        /*if (gamepad1.x == true) {
-
-        } else {
-
-        }*/
 
         if (gamepad1.x == true) {
             //Claw.setPosition(90);
