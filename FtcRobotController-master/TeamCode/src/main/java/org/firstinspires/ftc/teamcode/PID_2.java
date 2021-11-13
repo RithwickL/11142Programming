@@ -70,9 +70,12 @@ public class PID_2 extends OpMode {
         //Spin Carousel
         if (gamepad2.a) {
             Top.setPower(0.2);
-        } else {
+        } else if (gamepad2.y){
+            Top.setPower(-0.2);
+        }else{
             Top.setPower(0);
         }
+
         //Intake
         if (gamepad2.x) {
             Pick.setPower(1);

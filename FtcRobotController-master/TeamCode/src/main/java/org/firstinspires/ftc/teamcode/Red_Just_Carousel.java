@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="Red Carousel/Park")
-public class Red_C extends LinearOpMode {    //Declare motors
+@Autonomous(name="Red Just Carousel")
+public class Red_Just_Carousel extends LinearOpMode {    //Declare motors
     DcMotor Fvertical;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
@@ -56,8 +56,7 @@ public class Red_C extends LinearOpMode {    //Declare motors
             RobotSpin(0.5, 15);
             DriveForward(0.2, 28);
             DriveForward(0.2, -2);
-            DriveSide(0.4,110);
-            DriveSide(1,30);
+            DriveSide(0.4,20);
         }
     }
     public void DriveForward (double power, int distance) {

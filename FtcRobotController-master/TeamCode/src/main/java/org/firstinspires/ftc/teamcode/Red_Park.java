@@ -44,9 +44,9 @@ public class Red_Park extends LinearOpMode {    //Declare motors
         waitForStart();
 
         if (opModeIsActive()) {
-            sleep(100);
+            sleep(7000);
             DriveSide(0.4,135);
-            DriveForward(0.2,-20);
+            DriveForward(0.7,-40);
         }
     }
     public void DriveForward (double power, int distance) {

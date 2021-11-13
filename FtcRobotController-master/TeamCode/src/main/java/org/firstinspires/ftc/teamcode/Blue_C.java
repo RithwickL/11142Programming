@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="Blue Carousel")
+@Autonomous(name="Blue Carousel/Park")
 public class Blue_C extends LinearOpMode {    //Declare motors
     DcMotor Fvertical;
     DcMotor Fhorizontal;
