@@ -2,18 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -25,72 +16,63 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-
-@Autonomous(name = "Placing BLOCKS")
-public class OpenCV_Response extends LinearOpMode
-{
+@Autonomous
+public class OpenCV_Response extends LinearOpMode{
 
     OpenCvCamera webcam;
-    static actualColorCode.RingPipeline pipeline;
+    static RingPipeline pipeline;
 
     Hardware TIseBot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
-    public actualColorCode Detector;
-    public int region1Avg;
-    public int region2Avg;
-    public int region3Avg;
+
+    @Override
+    public void runOpMode() {
+        double drive;
+        double turn;
+        double strafe;
+        double fLeft;
+        double fRight;
+        double bLeft;
+        double bRight;
+        double max;
 
 
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        pipeline = new RingPipeline();
+        webcam.setPipeline(pipeline);
 
-    DcMotor leftvertical;
-    DcMotor rightvertical;
-    DcMotor lefthorizontal;
-    DcMotor righthorizontal;
-    DcMotor Top;
-    DcMotor Arm1;
-    DcMotor Finger1;
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+            }
 
+            @Override
+            public void onError(int errorCode)
+            {
+                /*
+                 * This will be called if the camera could not be opened
+                 */
+            }
+        });
 
-    public void runOpMode()
-    {
+        telemetry.addLine("Waiting for start");
+        telemetry.update();
 
-
-
-        leftvertical = hardwareMap.dcMotor.get("lf");
-        rightvertical = hardwareMap.dcMotor.get("rr");
-        lefthorizontal = hardwareMap.dcMotor.get("lr");
-        righthorizontal = hardwareMap.dcMotor.get("rf");
-        Arm1 = hardwareMap.dcMotor.get("Spin");
-        Top = hardwareMap.dcMotor.get("TOP");
-        leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
-        lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        Finger1 = hardwareMap.dcMotor.get("Pick");
-
-
+        /*
+         * Wait for the user to press start on the Driver Station
+         */
         waitForStart();
 
-        if (opModeIsActive())
-        {
-            Camera();
-            Response();
-            StopDriving();
+        while (opModeIsActive()) {
+            telemetry.addData("Region 1", pipeline.region1Avg());
+            telemetry.addData("Region 2", pipeline.region2Avg());
+            telemetry.addData("Region 3", pipeline.region3Avg());
 
-        }
-
-
-
-
-
-
-    }
-    public void Camera() {
-        telemetry.addData("Region 1", pipeline.region1Avg());
-        telemetry.addData("Region 2", pipeline.region2Avg());
-        telemetry.addData("Region 3", pipeline.region3Avg());
-
-        if ((pipeline.region1Avg() > pipeline.region2Avg()) && (pipeline.region1Avg() > pipeline.region3Avg())) telemetry.addLine("Bottom");
-        if ((pipeline.region2Avg() > pipeline.region1Avg()) && (pipeline.region2Avg() > pipeline.region3Avg())) telemetry.addLine("Middle");
-        if ((pipeline.region3Avg() > pipeline.region1Avg()) && (pipeline.region3Avg() > pipeline.region2Avg())) telemetry.addLine("Top");
+            if ((pipeline.region1Avg() > pipeline.region2Avg()) && (pipeline.region1Avg() > pipeline.region3Avg())) telemetry.addLine("Bottom");
+            if ((pipeline.region2Avg() > pipeline.region1Avg()) && (pipeline.region2Avg() > pipeline.region3Avg())) telemetry.addLine("Middle");
+            if ((pipeline.region3Avg() > pipeline.region1Avg()) && (pipeline.region3Avg() > pipeline.region2Avg())) telemetry.addLine("Top");
 
 
 
@@ -103,239 +85,104 @@ public class OpenCV_Response extends LinearOpMode
             telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
             */
 
-        telemetry.update();
+            telemetry.update();
 
-        sleep(20);
-         class RingPipeline extends OpenCvPipeline
+
+
+
+
+
+            sleep(20);
+        }
+    }
+
+    public static class RingPipeline extends OpenCvPipeline {
+
+        /** Most important section of the code: Colors **/
+        static final Scalar CRIMSON = new Scalar(220, 20, 60);
+        static final Scalar AQUA = new Scalar(79, 195, 247);
+        static final Scalar PARAKEET = new Scalar(3, 192, 74);
+        static final Scalar GOLD = new Scalar(255, 215, 0);
+        static final Scalar CYAN = new Scalar(0, 139, 139);
+
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0, 375);
+        static final int REGION1_WIDTH = 200;
+        static final int REGION1_HEIGHT = 200;
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(535,375);
+        static final int REGION2_WIDTH = 200;
+        static final int REGION2_HEIGHT = 200;
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,350);
+        static final int REGION3_WIDTH = 200;
+        static final int REGION3_HEIGHT = 200;
+
+
+        Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);
+        Point region1_pointB = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x + REGION1_WIDTH, REGION1_TOPLEFT_ANCHOR_POINT.y + REGION1_HEIGHT);
+
+        Point region2_pointA = new Point(REGION2_TOPLEFT_ANCHOR_POINT.x, REGION2_TOPLEFT_ANCHOR_POINT.y);
+        Point region2_pointB = new Point(REGION2_TOPLEFT_ANCHOR_POINT.x + REGION2_WIDTH, REGION2_TOPLEFT_ANCHOR_POINT.y + REGION2_HEIGHT);
+
+        Point region3_pointA = new Point(REGION3_TOPLEFT_ANCHOR_POINT.x, REGION3_TOPLEFT_ANCHOR_POINT.y);
+        Point region3_pointB = new Point(REGION3_TOPLEFT_ANCHOR_POINT.x + REGION3_WIDTH, REGION2_TOPLEFT_ANCHOR_POINT.y + REGION3_HEIGHT);
+
+        Mat region1_G, region2_G, region3_G;
+        Mat BGR = new Mat();
+        Mat G = new Mat();
+        int avg1, avg2, avg3;
+
+        /*
+         * This function takes the RGB frame, converts to YCrCb,
+         * and extracts the Cb channel to the 'Cb' variable
+         */
+        void inputToG(Mat input)
         {
-
-            /** Most important section of the code: Colors **/
-             final Scalar CRIMSON = new Scalar(220, 20, 60);
-             final Scalar AQUA = new Scalar(79, 195, 247);
-             final Scalar PARAKEET = new Scalar(3, 192, 74);
-             final Scalar GOLD = new Scalar(255, 215, 0);
-             final Scalar CYAN = new Scalar(0, 139, 139);
-
-             final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
-            static final int REGION1_WIDTH = 105;
-            static final int REGION1_HEIGHT = 105;
-             final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
-            static final int REGION2_WIDTH = 105;
-            static final int REGION2_HEIGHT = 105;
-             final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
-            static final int REGION3_WIDTH = 105;
-            static final int REGION3_HEIGHT = 105;
-
-
-            Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);
-            Point region1_pointB = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x + REGION1_WIDTH, REGION1_TOPLEFT_ANCHOR_POINT.y + REGION1_HEIGHT);
-
-            Point region2_pointA = new Point(REGION2_TOPLEFT_ANCHOR_POINT.x, REGION2_TOPLEFT_ANCHOR_POINT.y);
-            Point region2_pointB = new Point(REGION2_TOPLEFT_ANCHOR_POINT.x + REGION2_WIDTH, REGION2_TOPLEFT_ANCHOR_POINT.y + REGION2_HEIGHT);
-
-            Point region3_pointA = new Point(REGION3_TOPLEFT_ANCHOR_POINT.x, REGION3_TOPLEFT_ANCHOR_POINT.y);
-            Point region3_pointB = new Point(REGION3_TOPLEFT_ANCHOR_POINT.x + REGION3_WIDTH, REGION2_TOPLEFT_ANCHOR_POINT.y + REGION3_HEIGHT);
-
-            Mat region1_G, region2_G, region3_G;
-            Mat BGR = new Mat();
-            Mat G = new Mat();
-            int avg1, avg2, avg3;
-
-            /*
-             * This function takes the RGB frame, converts to YCrCb,
-             * and extracts the Cb channel to the 'Cb' variable
-             */
-            void inputToG(Mat input)
-            {
-                Imgproc.cvtColor(input, BGR, Imgproc.COLOR_RGB2BGR);
-                Core.extractChannel(BGR, G, 1);
-            }
-
-            @Override
-            public void init(Mat firstFrame)
-            {
-                inputToG(firstFrame);
-
-                region1_G = G.submat(new Rect(region1_pointA, region1_pointB));
-                region2_G = G.submat(new Rect(region2_pointA, region2_pointB));
-                region3_G = G.submat(new Rect(region3_pointA, region3_pointB));
-            }
-
-            @Override
-            public Mat processFrame(Mat input)
-            {
-
-                inputToG(input);
-
-                avg1 = (int) Core.mean(region1_G).val[0];
-                avg2 = (int) Core.mean(region2_G).val[0];
-                avg3 = (int) Core.mean(region3_G).val[0];
-
-
-                Imgproc.rectangle(input, region1_pointA, region1_pointB, CRIMSON,2);
-                Imgproc.rectangle(input, region2_pointA, region2_pointB, AQUA,2);
-                Imgproc.rectangle(input, region3_pointA, region3_pointB, PARAKEET,2);
-
-
-                return input;
-            }
-
-            public int region1Avg() {
-                return avg1;
-            }
-            public int region2Avg() {
-                return avg2;
-            }
-            public int region3Avg() {
-                return avg3;
-            }
-
+            Imgproc.cvtColor(input, BGR, Imgproc.COLOR_RGB2BGR);
+            Core.extractChannel(BGR, G, 1);
         }
-    }
 
+        @Override
+        public void init(Mat firstFrame) {
+            inputToG(firstFrame);
 
-
-
-    public void DriveForward(double power, int distance) {
-        leftvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        leftvertical.setTargetPosition(distance * 31);
-        rightvertical.setTargetPosition(distance * 31);
-
-        leftvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //Set Power
-        leftvertical.setPower(power);
-        rightvertical.setPower(power);
-
-        while (leftvertical.isBusy() && rightvertical.isBusy()) {
-
-            StopDriving();
+            region1_G = G.submat(new Rect(region1_pointA, region1_pointB));
+            region2_G = G.submat(new Rect(region2_pointA, region2_pointB));
+            region3_G = G.submat(new Rect(region3_pointA, region3_pointB));
         }
-    }
-    public void Response() {
-        if (region1Avg > region2Avg)
-        {
-            if (region1Avg > region3Avg)
-            {
-                DriveForward(1,2);
-                DriveSide(1,3);
-                ArmPosTOP(1, 60);
-                StopDriving();
 
-            }
-            else
-            {
-                DriveForward(1,2);
-                DriveSide(3,3);
-                ArmPosBOT(1, 20);
-                StopDriving();
-            }
+        @Override
+        public Mat processFrame(Mat input) {
 
-        }else
-        {
-            if (region2Avg > region3Avg)
-            {
-                DriveForward(1,2);
-                DriveSide(1, 3);
-                ArmPosMid(1,40);
-                StopDriving();
-            } else
-            {
-                DriveForward(1,2);
-                DriveSide(1, 3);
-                ArmPosBOT(1,20);
-            }
+            inputToG(input);
+
+            avg1 = (int) Core.mean(region1_G).val[0];
+            avg2 = (int) Core.mean(region2_G).val[0];
+            avg3 = (int) Core.mean(region3_G).val[0];
+
+
+            Imgproc.rectangle(input, region1_pointA, region1_pointB, CRIMSON,2);
+            Imgproc.rectangle(input, region2_pointA, region2_pointB, AQUA,2);
+            Imgproc.rectangle(input, region3_pointA, region3_pointB, PARAKEET,2);
+
+
+            return input;
         }
-    }
 
-    public void DriveSide(double power, int distance) {
-        lefthorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        righthorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        lefthorizontal.setTargetPosition(distance * 31);
-        righthorizontal.setTargetPosition(distance * 31);
-
-        lefthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        righthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //Set Power
-        lefthorizontal.setPower(power);
-        righthorizontal.setPower(power);
-
-        while (lefthorizontal.isBusy() && righthorizontal.isBusy()) {
-
-            StopDriving();
+        public int region1Avg() {
+            return avg1;
         }
-    }
-
-    public void ArmPosTOP(double power, int degrees)
-    {
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Finger1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        Arm1.setTargetPosition(degrees);
-        Finger1.setTargetPosition(degrees * 31);
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Finger1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        Arm1.setPower(1);
-        Finger1.setPower(1);
+        public int region2Avg() {
+            return avg2;
+        }
+        public int region3Avg() {
+            return avg3;
+        }
 
     }
 
-    public void ArmPosMid(double power, int degrees)
-    {
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Finger1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    /*public double calculateAngle(){ //check if this is right
+        Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        //Move to Position
-        Arm1.setTargetPosition(degrees);
-        Finger1.setTargetPosition(degrees * 31);
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Finger1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        Arm1.setPower(1);
-        Finger1.setPower(1);
-
-
+        return (angles.firstAngle - robot.straight.firstAngle);
     }
-    public void ArmPosBOT(double power, int degrees)
-    {
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Finger1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        Arm1.setTargetPosition(degrees);
-        Finger1.setTargetPosition(degrees * 31);
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Finger1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        Arm1.setPower(1);
-        Finger1.setPower(1);
-
-
-    }
-
-
-    public void StopDriving(){
-
-        leftvertical.setPower(0);
-        righthorizontal.setPower(0);
-        rightvertical.setPower(0);
-        lefthorizontal.setPower(0);
-        Arm1.setPower(0);
-        Top.setPower(0);
-        Finger1.setPower(0);
-    }
+     */
 }
-
