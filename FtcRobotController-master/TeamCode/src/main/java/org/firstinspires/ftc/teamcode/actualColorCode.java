@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -16,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
-@Disabled
+
 @Autonomous
 public class actualColorCode extends LinearOpMode{
 
@@ -107,14 +106,14 @@ public class actualColorCode extends LinearOpMode{
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
         static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
-        static final int REGION1_WIDTH = 105;
-        static final int REGION1_HEIGHT = 105;
+        static final int REGION1_WIDTH = 275;
+        static final int REGION1_HEIGHT = 275;
         static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
-        static final int REGION2_WIDTH = 105;
-        static final int REGION2_HEIGHT = 105;
+        static final int REGION2_WIDTH = 275;
+        static final int REGION2_HEIGHT = 275;
         static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
-        static final int REGION3_WIDTH = 105;
-        static final int REGION3_HEIGHT = 105;
+        static final int REGION3_WIDTH = 275;
+        static final int REGION3_HEIGHT = 275;
 
 
         Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);
