@@ -71,10 +71,10 @@ public class Hardware {
         backRightMotor.setPower(0);
         frontLeftMotor.setPower(0);
         frontRightMotor.setPower(0);
-        middleLeftMotor.setPower(0);
+       /* middleLeftMotor.setPower(0);
         middleRightMotor.setPower(0);
         sliderLift.setPower(0);
-        carouselSpinner.setPower(0);
+        carouselSpinner.setPower(0);*/
 
         // IMU Setup
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -98,11 +98,11 @@ public class Hardware {
         frontLeftMotor.setDirection(DcMotor.Direction.FORWARD);
         backRightMotor.setDirection(DcMotor.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotor.Direction.FORWARD);
-        middleLeftMotor.setDirection(DcMotor.Direction.REVERSE);
+        /*middleLeftMotor.setDirection(DcMotor.Direction.REVERSE);
         middleRightMotor.setDirection(DcMotor.Direction.FORWARD);
 
         sliderLift.setDirection(DcMotor.Direction.FORWARD);
-        carouselSpinner.setDirection(DcMotor.Direction.FORWARD);
+        carouselSpinner.setDirection(DcMotor.Direction.FORWARD);*/
 
 
 
@@ -111,11 +111,11 @@ public class Hardware {
         frontLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backRightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        middleLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        /*middleLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         middleRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         sliderLift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        carouselSpinner.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        carouselSpinner.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);*/
 
     }
 }
