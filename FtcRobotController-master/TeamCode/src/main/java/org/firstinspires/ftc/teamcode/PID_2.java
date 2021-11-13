@@ -69,7 +69,7 @@ public class PID_2 extends OpMode {
         rightvertical.setPower(gamepad1.right_trigger / 2);
         //Spin Carousel
         if (gamepad2.a) {
-            Top.setPower(0.3);
+            Top.setPower(0.2);
         } else {
             Top.setPower(0);
         }
