@@ -71,6 +71,10 @@ public class Final_Auto extends LinearOpMode
         {
             Camera();
             Response();
+            Drive_Backword(1,2);
+            DriveSide(1,8);
+            RobotSpin(1,20);
+            DriveSide(1,-15);
             StopDriving();
 
         }
@@ -79,6 +83,27 @@ public class Final_Auto extends LinearOpMode
 
 
 
+
+    public void Drive_Backword(int power, int distance)
+    {
+        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Fvertical.setTargetPosition(-distance * 31);
+        Bvertical.setTargetPosition(-distance * 31);
+
+        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
+
+        while (Fvertical.isBusy() && Bvertical.isBusy()){
+
+        }
+    }
 
     public void Camera() {
         telemetry.addData("Region 1", pipeline.region1Avg());
