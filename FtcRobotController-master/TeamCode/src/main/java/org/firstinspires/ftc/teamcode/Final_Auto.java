@@ -71,10 +71,10 @@ public class Final_Auto extends LinearOpMode
         {
             Camera();
             Response();
-            Drive_Backword(1,2);
-            DriveSide(1,8);
-            RobotSpin(1,20);
-            DriveSide(1,-15);
+            Drive_Backword(0.5,2);
+            DriveSide(0.5,8);
+            RobotSpin(0.5,20);
+            DriveSide(0.5,-15);
             StopDriving();
 
         }
@@ -84,7 +84,7 @@ public class Final_Auto extends LinearOpMode
 
 
 
-    public void Drive_Backword(int power, int distance)
+    public void Drive_Backword(double power, int distance)
     {
         Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -221,17 +221,17 @@ public class Final_Auto extends LinearOpMode
         {
             if (region1Avg > region3Avg)
             {
-                DriveForward(1,2);
-                DriveSide(1,3);
-                ArmPosTOP(1, 150);
+                DriveForward(.5,2);
+                DriveSide(.5,3);
+                ArmPosTOP(.5, 150);
                 StopDriving();
 
             }
             else
             {
-                DriveForward(1,2);
-                DriveSide(3,3);
-                ArmPosBOT(1, 50);
+                DriveForward(.5,2);
+                DriveSide(.5,3);
+                ArmPosBOT(.5, 50);
                 StopDriving();
             }
 
@@ -239,15 +239,15 @@ public class Final_Auto extends LinearOpMode
         {
             if (region2Avg > region3Avg)
             {
-                DriveForward(1,2);
-                DriveSide(1, 3);
-                ArmPosMid(1,100);
+                DriveForward(.5,2);
+                DriveSide(.5, 3);
+                ArmPosMid(.5,100);
                 StopDriving();
             } else
             {
-                DriveForward(1,2);
-                DriveSide(1, 3);
-                ArmPosBOT(1,50);
+                DriveForward(.5,2);
+                DriveSide(.5, 3);
+                ArmPosBOT(.5,50);
             }
         }
     }
