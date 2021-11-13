@@ -105,15 +105,15 @@ public class actualColorCode extends LinearOpMode{
         static final Scalar GOLD = new Scalar(255, 215, 0);
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0, 250);
-        static final int REGION1_WIDTH = 275;
-        static final int REGION1_HEIGHT = 275;
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(500,200);
-        static final int REGION2_WIDTH = 275;
-        static final int REGION2_HEIGHT = 275;
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(700,175);
-        static final int REGION3_WIDTH = 275;
-        static final int REGION3_HEIGHT = 275;
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0, 375);
+        static final int REGION1_WIDTH = 200;
+        static final int REGION1_HEIGHT = 200;
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(535,375);
+        static final int REGION2_WIDTH = 200;
+        static final int REGION2_HEIGHT = 200;
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,350);
+        static final int REGION3_WIDTH = 200;
+        static final int REGION3_HEIGHT = 200;
 
 
         Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);
