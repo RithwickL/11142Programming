@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name="REALDRIVER", group = "Default")
+@TeleOp(name="Driver_test1", group = "Default")
 public class Driver_Test extends OpMode {
     //Arm1
     private double liftPosScale = 50, liftPowScale = 0.0025;
