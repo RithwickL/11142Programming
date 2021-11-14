@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -14,21 +15,24 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
-@Disabled
+
 @Autonomous(name = "FINAl AUTO")
 public class Final_Auto extends LinearOpMode
 
 {
     OpenCvCamera webcam;
-    static actualColorCode.RingPipeline pipeline;
+    private actualColorCode.RingPipeline pipeline;
 
 
     private ElapsedTime runtime = new ElapsedTime();
     public actualColorCode Detector;
-    public int region1Avg;
-    public int region2Avg;
-    public int region3Avg;
+    int region1Avg;
+    int region2Avg;
+    int region3Avg;
+
 
 
 
@@ -95,7 +99,27 @@ public class Final_Auto extends LinearOpMode
         }
     }
 
-    public void Camera() {
+    public void Camera()
+    {
+
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
+        pipeline = new actualColorCode.RingPipeline();
+        webcam.setPipeline(pipeline);
+
+        webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+            @Override
+            public void onOpened() {
+                webcam.startStreaming(1280, 720, OpenCvCameraRotation.UPRIGHT);
+            }
+
+            @Override
+            public void onError(int errorCode)
+            {
+
+            }
+        });
+
         telemetry.addData("Region 1", pipeline.region1Avg());
         telemetry.addData("Region 2", pipeline.region2Avg());
         telemetry.addData("Region 3", pipeline.region3Avg());
@@ -141,15 +165,15 @@ public class Final_Auto extends LinearOpMode
             final Scalar GOLD = new Scalar(255, 215, 0);
             final Scalar CYAN = new Scalar(0, 139, 139);
 
-             final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(2, 135);
-            static final int REGION1_WIDTH = 275;
-            static final int REGION1_HEIGHT = 275;
-             final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(111,135);
-            static final int REGION2_WIDTH = 275;
-            static final int REGION2_HEIGHT = 275;
-             final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(214,135);
-            static final int REGION3_WIDTH = 275;
-            static final int REGION3_HEIGHT = 275;
+            final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0, 375);
+            static final int REGION1_WIDTH = 200;
+            static final int REGION1_HEIGHT = 200;
+            final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(535,375);
+            static final int REGION2_WIDTH = 200;
+            static final int REGION2_HEIGHT = 200;
+            final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,350);
+            static final int REGION3_WIDTH = 200;
+            static final int REGION3_HEIGHT = 200;
 
 
             Point region1_pointA = new Point(REGION1_TOPLEFT_ANCHOR_POINT.x, REGION1_TOPLEFT_ANCHOR_POINT.y);
@@ -223,9 +247,9 @@ public class Final_Auto extends LinearOpMode
 
 
     public void Response() {
-        if (region1Avg > region2Avg)
+        if (pipeline.region1Avg() > pipeline.region2Avg())
         {
-            if (region1Avg > region3Avg)
+            if (pipeline.region1Avg() > pipeline.region3Avg())
             {
                 DriveForward(.5,2);
                 DriveSide(.5,3);
@@ -243,7 +267,7 @@ public class Final_Auto extends LinearOpMode
 
         }else
         {
-            if (region2Avg > region3Avg)
+            if (pipeline.region2Avg() > pipeline.region3Avg())
             {
                 DriveForward(.5,2);
                 DriveSide(.5, 3);
