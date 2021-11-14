@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @TeleOp(name="REALDRIVER", group = "Default")
-public class PID_2 extends OpMode {
+public class Driver_Test extends OpMode {
     //Arm1
     private double liftPosScale = 50, liftPowScale = 0.0025;
     private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
@@ -46,6 +46,7 @@ public class PID_2 extends OpMode {
         Pick = hardwareMap.dcMotor.get("Pick");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+        Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void loop() {
@@ -79,12 +80,8 @@ public class PID_2 extends OpMode {
         //Intake
         if (gamepad2.x) {
             Pick.setPower(1);
-        } else {
-        Pick.setPower(0);
-        }
-        //Push out intake
-        if (gamepad2.b) {
-            Pick.setPower(-0.65);
+        } else if (gamepad2.b) {
+            Pick.setPower(-1);
         } else {
             Pick.setPower(0);
         }
