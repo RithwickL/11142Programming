@@ -56,6 +56,7 @@ public class Final_Auto extends LinearOpMode
         //Slide = hardwareMap.dcMotor.get("Slide");
         Pick = hardwareMap.dcMotor.get("Pick");
 
+
         Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
         Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
 
