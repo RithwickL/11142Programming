@@ -1,11 +1,11 @@
-package org.firstinspires.ftc.teamcode;
+/*package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 //import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
+
 
 @Disabled
 @Autonomous(name="MarkerPosition")
@@ -15,7 +15,7 @@ public class MarkerPosition extends LinearOpMode {    //Declare motors
     DcMotor Bvertical;
     DcMotor Bhorizontal;
     DcMotor UpDown;
-    Servo Claw;
+    DcMotor Claw;
 
     public void runOpMode() { //code will run once only
 
@@ -24,8 +24,8 @@ public class MarkerPosition extends LinearOpMode {    //Declare motors
         Bvertical = hardwareMap.dcMotor.get("rf");
         Fhorizontal = hardwareMap.dcMotor.get("lf");
         Bhorizontal = hardwareMap.dcMotor.get("rr");
-        UpDown = hardwareMap.dcMotor.get("");
-        Servo = hardwareMap.servo.get("");
+        UpDown = hardwareMap.dcMotor.get("Spin");
+        Claw = hardwareMap.dcMotor.get("pick");
 
 
         //set modes
@@ -34,6 +34,7 @@ public class MarkerPosition extends LinearOpMode {    //Declare motors
         Fhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         UpDown.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Claw.setMode(RunMode.RUN_USING_ENCODER);
 
 
         waitForStart();
@@ -41,16 +42,20 @@ public class MarkerPosition extends LinearOpMode {    //Declare motors
             DriveForwardA(0.5, 25);
             UpDown(0.5, 25);
             Claw(0.5, 25);
+            Claw(-0.5, 50);
         } else if (middle) {
             DriveForwardA(0.5, 50);
             UpDown(0.5, 50);
             Claw(0.5, 50);
+            Claw(-0.5, 50);
         } else (bottom) {
-                DriveForwardA(0.5, 75);
-        UpDown(0.5, 50);
-        Claw(0.5, 50);
+            DriveForwardA(0.5, 75);
+            UpDown(0.5, 50);
+            Claw(0.5, 50);
+            Claw(-0.5, 50);
         }
     }
+
 
     public void DriveForwardA(double power, int distance) {
         //reset encoder
@@ -86,6 +91,20 @@ public class MarkerPosition extends LinearOpMode {    //Declare motors
         while (UpDown.isBusy()) {
         }
     }
-}
+
+    public void Claw(double power, int distance) {
+
+        //reset encoder
+        Claw.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        //set target position
+        Claw.setTargetPosition(distance * 31);
+        Claw.setMode(RunMode.RUN_TO_POSITION);
+        //set power;
+        Claw.setPower(power);
+
+        while (Claw.isBusy()) {
+        }
+    }
+}*/
 
 
