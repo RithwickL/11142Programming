@@ -4,10 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="REALDRIVER", group = "Default")
-public class PID_2 extends OpMode {
+@TeleOp(name="Driver_test1", group = "Default")
+public class Driver_Test extends OpMode {
     //Arm1
     private double liftPosScale = 50, liftPowScale = 0.0025;
     private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
@@ -32,7 +31,7 @@ public class PID_2 extends OpMode {
     DcMotor Top;
     DcMotor Arm1;
     //DcMotor Slide;
-    Servo Pick;
+    DcMotor Pick;
 
 
     public void init() {
@@ -44,9 +43,10 @@ public class PID_2 extends OpMode {
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
         //Slide = hardwareMap.dcMotor.get("Slide");
-        Pick = hardwareMap.servo.get("Pick");
+        Pick = hardwareMap.dcMotor.get("Pick");
         leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
         lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+        Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void loop() {
@@ -70,17 +70,20 @@ public class PID_2 extends OpMode {
         rightvertical.setPower(gamepad1.right_trigger / 2);
         //Spin Carousel
         if (gamepad2.a) {
-            Top.setPower(0.5);
-        } else {
+            Top.setPower(0.2);
+        } else if (gamepad2.y){
+            Top.setPower(-0.2);
+        }else{
             Top.setPower(0);
         }
+
         //Intake
         if (gamepad2.x) {
-            Pick.setPosition(90);
-        }
-        //Push out intake
-        if (gamepad2.b) {
-            Pick.setPosition(0);
+            Pick.setPower(1);
+        } else if (gamepad2.b) {
+            Pick.setPower(-1);
+        } else {
+            Pick.setPower(0);
         }
 
         //PID for Arm1
