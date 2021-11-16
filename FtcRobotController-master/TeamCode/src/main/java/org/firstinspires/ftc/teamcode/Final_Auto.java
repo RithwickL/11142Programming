@@ -75,10 +75,6 @@ public class Final_Auto extends LinearOpMode
         }
 
     }
-
-
-
-
     public void DriveBackword(double power, int distance)
     {
         Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
