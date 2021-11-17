@@ -80,59 +80,36 @@ public class actualColorCode extends LinearOpMode{
         telemetry.addData("Region 2", pipeline.region2Avg());
         telemetry.addData("Region 3", pipeline.region3Avg());
 
-        if ((pipeline.region1Avg() > pipeline.region2Avg()) && (pipeline.region1Avg() > pipeline.region3Avg())) {
-
-            DriveForward(0.5, 2);
-            DriveSide(0.5,3);
-            ArmPosBOT(0.5,50);
-           /*DriveBackward(0.5,-2);
-            DriveSide(.5,-5);
-            RobotSpin(.1,20);*/
-            StopDriving();
-
-
-            while (Fvertical.isBusy() && Bvertical.isBusy() && Fhorizontal.isBusy() && Bhorizontal.isBusy()){
-
-            }
-            telemetry.addLine("Bottom");
-            telemetry.update();
-        }
-        else if ((pipeline.region2Avg() > pipeline.region1Avg()) && (pipeline.region2Avg() > pipeline.region3Avg())){
-
-            DriveForward(0.5, 2);
-            DriveSide(0.5,3);
-            ArmPosMid(0.5,100);
-            /*DriveBackward(0.5,-2);
-            DriveSide(.5,-5);
-            RobotSpin(.1,20);*/
-            StopDriving();
-
-            while (Fvertical.isBusy() && Bvertical.isBusy() && Fhorizontal.isBusy() && Bhorizontal.isBusy()){
-
-            }
-            telemetry.addLine("Middle");
-            telemetry.update();
-        }
-        else if ((pipeline.region3Avg() > pipeline.region1Avg()) && (pipeline.region3Avg() > pipeline.region2Avg())) {
-
-            DriveForward(0.5, 2);
-            DriveSide(0.5,3);
-            ArmPosTOP(0.5,150);
-            /*DriveBackward(0.5,-2);
-            DriveSide(.5,-5);
-            RobotSpin(.1,20);*/
-            StopDriving();
-
-            while (Fvertical.isBusy() && Bvertical.isBusy() && Fhorizontal.isBusy() && Bhorizontal.isBusy()){
-
-            }
-            telemetry.addLine("Top");
-            telemetry.update();
-        }else
+        if ((pipeline.region1Avg() > pipeline.region2Avg()))
+        {
+            if ((pipeline.region1Avg() > pipeline.region3Avg()))
             {
-            telemetry.addLine("unknown");
-            telemetry.update();
-            StopDriving();
+                DriveForward(.5,2);
+                DriveSide(.5,3);
+                ArmPosTOP(.5, 150);
+                StopDriving();
+
+            }
+            else
+            {
+                DriveForward(.5,2);
+                DriveSide(.5,3);
+                ArmPosBOT(.5, 50);
+                StopDriving();
+            }
+
+        }else {
+            if (pipeline.region2Avg() > pipeline.region3Avg()) {
+                DriveForward(.5, 2);
+                DriveSide(.5, 3);
+                ArmPosMid(.5, 100);
+                StopDriving();
+            } else
+                {
+                DriveForward(.5, 2);
+                DriveSide(.5, 3);
+                ArmPosBOT(.5, 50);
+            }
         }
 
 
