@@ -20,14 +20,14 @@ public class Hardware {
     public DcMotor frontLeftMotor;
     public DcMotor backRightMotor;
     public DcMotor backLeftMotor;
-    public DcMotor middleLeftMotor;
-    public DcMotor middleRightMotor;
-    public DcMotor sliderLift;
-    public DcMotor carouselSpinner;
+    //public DcMotor middleLeftMotor;
+    //public DcMotor middleRightMotor;
+    //public DcMotor sliderLift;
+    //public DcMotor carouselSpinner;
 
     // Define Servo Variables
-    public Servo claw;
-    public CRServo joint;
+    //public Servo claw;
+    //public CRServo joint;
 
 
     // Define Sensor Variables

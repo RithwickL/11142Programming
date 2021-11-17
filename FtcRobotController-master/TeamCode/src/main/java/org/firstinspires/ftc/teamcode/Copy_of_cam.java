@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,8 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "FINAl AUTO")
-public class Final_Auto extends LinearOpMode
+@Autonomous(name = "FINAl AUTO1")
+public class Copy_of_cam extends LinearOpMode
 
 {
     OpenCvCamera webcam;
@@ -66,11 +65,11 @@ public class Final_Auto extends LinearOpMode
         {
             Camera();
             Response();
-            DriveBackword(0.5,2);
+            /*DriveBackword(0.5,2);
             DriveSide(0.5,8);
             RobotSpin(0.5,20);
             DriveSide(0.5,-15);
-            StopDriving();
+            StopDriving();*/
 
         }
 
@@ -122,7 +121,7 @@ public class Final_Auto extends LinearOpMode
         telemetry.addData("Region 3", pipeline.region3Avg());
 
         if ((pipeline.region1Avg() > pipeline.region2Avg()) && (pipeline.region1Avg() > pipeline.region3Avg())) {
-           DriveForward(0.5,5);
+            DriveForward(0.5,5);
 
             telemetry.addLine("Bottom");
         }
@@ -246,8 +245,13 @@ public class Final_Auto extends LinearOpMode
     public void Response() {
         if (pipeline.region1Avg() > pipeline.region2Avg())
         {
+
+
             if (pipeline.region1Avg() > pipeline.region3Avg())
             {
+                telemetry.addLine("I am top1");
+                sleep(1000);
+                telemetry.update();
                 DriveForward(.5,2);
                 DriveSide(.5,3);
                 ArmPosTOP(.5, 150);
