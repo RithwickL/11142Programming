@@ -106,13 +106,13 @@ public class OpenCV_Response extends LinearOpMode{
         static final Scalar GOLD = new Scalar(255, 215, 0);
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0, 375);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(100, 400);
         static final int REGION1_WIDTH = 200;
         static final int REGION1_HEIGHT = 200;
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(535,375);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(575,400);
         static final int REGION2_WIDTH = 200;
         static final int REGION2_HEIGHT = 200;
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,350);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,340);
         static final int REGION3_WIDTH = 200;
         static final int REGION3_HEIGHT = 200;
 
