@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -18,8 +19,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous
-public class actualColorCode extends LinearOpMode{
+@Autonomous(name = "RedOpenCVDect")
+public class RedOpenCV extends LinearOpMode{
 
     OpenCvCamera webcam;
     static RingPipeline pipeline;
@@ -32,19 +33,21 @@ public class actualColorCode extends LinearOpMode{
     DcMotor Bhorizontal;
     DcMotor Top;
     DcMotor Arm1;
-    //DcMotor Slide;
-    DcMotor Pick;
+    DcMotor Intake;
 
     @Override
     public void runOpMode() {
-        Fvertical = hardwareMap.dcMotor.get("lr");
-        Bvertical = hardwareMap.dcMotor.get("rf");
-        Fhorizontal = hardwareMap.dcMotor.get("lf");
-        Bhorizontal = hardwareMap.dcMotor.get("rr");
+        Fvertical = hardwareMap.dcMotor.get("rr");
+        Bvertical = hardwareMap.dcMotor.get("lf");
+        Fhorizontal = hardwareMap.dcMotor.get("rf");
+        Bhorizontal = hardwareMap.dcMotor.get("lr");
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
         //Slide = hardwareMap.dcMotor.get("Slide");
-        Pick = hardwareMap.dcMotor.get("Pick");
+        Intake = hardwareMap.dcMotor.get("Pick");
+
+        Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
+        Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -84,48 +87,39 @@ public class actualColorCode extends LinearOpMode{
         {
             if ((pipeline.region1Avg() > pipeline.region3Avg()))
             {
-                DriveForward(.5,2);
-                DriveSide(.5,3);
-                ArmPosTOP(.5, 150);
+                DriveForward(.5,20);
+                DriveRight(.5,-30);
+                ArmPosTOP(.5, -1500, 0);
+                telemetry.addLine("Top");
+                telemetry.update();
+                sleep(1000);
                 StopDriving();
 
             }
             else
             {
-                DriveForward(.5,2);
-                DriveSide(.5,3);
-                ArmPosBOT(.5, 50);
+                DriveForward(.5,20);
+                DriveRight(.5,-300);
+                ArmPosBOT(.5, -500,0);
                 StopDriving();
             }
 
         }else {
             if (pipeline.region2Avg() > pipeline.region3Avg()) {
-                DriveForward(.5, 2);
-                DriveSide(.5, 3);
-                ArmPosMid(.5, 100);
+                DriveForward(.5, 20);
+                DriveRight(.5, -20);
+                ArmPosMid(.5, -1000,0);
                 StopDriving();
             } else
                 {
-                DriveForward(.5, 2);
-                DriveSide(.5, 3);
-                ArmPosBOT(.5, 50);
+                DriveForward(.5, 20);
+                DriveRight(.5, -300);
+                ArmPosBOT(.5, -500,0);
+                StopDriving();
             }
         }
 
-
-        /*
-        telemetry.addData("Frame Count", webcam.getFrameCount());
-        telemetry.addData("FPS", String.format("%.2f", webcam.getFps()));
-        telemetry.addData("Total frame time ms", webcam.getTotalFrameTimeMs());
-        telemetry.addData("Pipeline time ms", webcam.getPipelineTimeMs());
-        telemetry.addData("Overhead time ms", webcam.getOverheadTimeMs());
-        telemetry.addData("Theoretical max FPS", webcam.getCurrentPipelineMaxFps());
-        */
-
         telemetry.update();
-
-
-
 
 
 
@@ -144,13 +138,13 @@ public class actualColorCode extends LinearOpMode{
         static final Scalar GOLD = new Scalar(255, 215, 0);
         static final Scalar CYAN = new Scalar(0, 139, 139);
 
-        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(0, 375);
+        static final Point REGION1_TOPLEFT_ANCHOR_POINT = new Point(100, 400);
         static final int REGION1_WIDTH = 200;
         static final int REGION1_HEIGHT = 200;
-        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(535,375);
+        static final Point REGION2_TOPLEFT_ANCHOR_POINT = new Point(575,400);
         static final int REGION2_WIDTH = 200;
         static final int REGION2_HEIGHT = 200;
-        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,350);
+        static final Point REGION3_TOPLEFT_ANCHOR_POINT = new Point(1059,340);
         static final int REGION3_WIDTH = 200;
         static final int REGION3_HEIGHT = 200;
 
@@ -241,6 +235,11 @@ public class actualColorCode extends LinearOpMode{
         StopDriving();
     }
 
+    public void ResetArm (double power, int distance)
+    {
+
+    }
+
     public void DriveForward (double power, int distance) {
         //reset encoder
         Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -257,9 +256,15 @@ public class actualColorCode extends LinearOpMode{
         Fvertical.setPower(power);
         Bvertical.setPower(power);
 
+        telemetry.addLine("DriveForward");
+        telemetry.update();
+        sleep(1000);
+
         while (Fvertical.isBusy() && Bvertical.isBusy()){
 
         }
+
+
         StopDriving();
 
     }
@@ -315,7 +320,7 @@ public class actualColorCode extends LinearOpMode{
         StopDriving();
 
     }
-    public void DriveSide (double power, int distance){
+    public void DriveLeft (double power, int distance){
         //reset
         Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -337,7 +342,31 @@ public class actualColorCode extends LinearOpMode{
         StopDriving();
     }
 
-    public void Spin(double power, int distance) {
+    public void DriveRight(double power, int distance)
+    {
+
+        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        Fhorizontal.setTargetPosition(distance * 31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Drive Right");
+        telemetry.update();
+        sleep(1000);
+
+        //set power
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+    }
+
+    public void Spin(double power, int distance)
+    {
         //reset encoder
         Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -361,60 +390,76 @@ public class actualColorCode extends LinearOpMode{
         Bvertical.setPower(0);
         Bhorizontal.setPower(0);
         Top.setPower(0);
+        Arm1.setPower(0);
+        Intake.setPower(0);
     }
 
-    public void ArmPosTOP(double power, int degrees)
+    public void ArmPosTOP(double power, int degrees, int spin)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Pick.setTargetPosition(-degrees * 31);
+        Intake.setTargetPosition(-spin);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Arm1.setPower(1);
-        Pick.setPower(1);
+        Intake.setPower(1);
+
+        telemetry.addLine("Top");
+        telemetry.update();
+        sleep(1000);
 
         StopDriving();
 
     }
 
-    public void ArmPosMid(double power, int degrees)
+    public void ArmPosMid(double power, int degrees, int spin)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Pick.setTargetPosition(-degrees * 31);
+        Intake.setTargetPosition(-spin);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Middle");
+        telemetry.update();
+        sleep(1000);
 
 
         Arm1.setPower(1);
-        Pick.setPower(1);
+        Intake.setPower(1);
 
         StopDriving();
 
     }
-    public void ArmPosBOT(double power, int degrees)
+    public void ArmPosBOT(double power, int degrees, int spin)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Pick.setTargetPosition(-degrees * 31);
+        Intake.setTargetPosition(-spin);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Bottom");
+        telemetry.update();
+        sleep(1000);
 
         Arm1.setPower(1);
-        Pick.setPower(1);
+        Intake.setPower(1);
 
         StopDriving();
 

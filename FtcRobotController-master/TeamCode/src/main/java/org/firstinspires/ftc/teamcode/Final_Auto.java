@@ -24,11 +24,11 @@ public class Final_Auto extends LinearOpMode
 
 {
     OpenCvCamera webcam;
-    private actualColorCode.RingPipeline pipeline;
+    private RedOpenCV.RingPipeline pipeline;
 
 
     private ElapsedTime runtime = new ElapsedTime();
-    public actualColorCode Detector;
+    public RedOpenCV Detector;
     int region1Avg;
     int region2Avg;
     int region3Avg;
@@ -101,7 +101,7 @@ public class Final_Auto extends LinearOpMode
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
-        pipeline = new actualColorCode.RingPipeline();
+        pipeline = new RedOpenCV.RingPipeline();
         webcam.setPipeline(pipeline);
 
         webcam.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {

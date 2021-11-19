@@ -16,7 +16,6 @@ public class OpenCVDectactor extends OpenCvPipeline
     public String position = "LEFT";
     public OpenCVDectactor()
     {
-
     }
     @Override
     public final Mat processFrame(Mat input)
