@@ -18,8 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "RedOpenCVDect")
-public class RedOpenCV extends LinearOpMode{
+@Autonomous(name = "Definetly_Not_CamCode_Cleaned_up")
+public class Definetly_Not_CamCode_Cleaned_up extends LinearOpMode{
 
     OpenCvCamera webcam;
     static RingPipeline pipeline;
@@ -32,20 +32,30 @@ public class RedOpenCV extends LinearOpMode{
     DcMotor Bhorizontal;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Intake;
+    //DcMotor Slide;
+    DcMotor Pick;
 
     @Override
     public void runOpMode() {
-        Fvertical = hardwareMap.dcMotor.get("rr");
-        Bvertical = hardwareMap.dcMotor.get("lf");
-        Fhorizontal = hardwareMap.dcMotor.get("rf");
-        Bhorizontal = hardwareMap.dcMotor.get("lr");
+        Fvertical = hardwareMap.dcMotor.get("lr");
+        Bvertical = hardwareMap.dcMotor.get("rf");
+        Fhorizontal = hardwareMap.dcMotor.get("lf");
+        Bhorizontal = hardwareMap.dcMotor.get("rr");
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
-        Intake = hardwareMap.dcMotor.get("Pick");
+        //Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.dcMotor.get("Pick");
 
         Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
         Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
+        //set modes
+        Fvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -68,56 +78,49 @@ public class RedOpenCV extends LinearOpMode{
             }
         });
 
-        telemetry.addLine("Waiting for start");
-        telemetry.update();
-
+        telemetry.addData("Region 1", pipeline.region1Avg());
+        telemetry.addData("Region 2", pipeline.region2Avg());
+        telemetry.addData("Region 3", pipeline.region3Avg());
         /*
          * Wait for the user to press start on the Driver Station
          */
         waitForStart();
-
-
-        telemetry.addData("Region 1", pipeline.region1Avg());
-        telemetry.addData("Region 2", pipeline.region2Avg());
-        telemetry.addData("Region 3", pipeline.region3Avg());
-
-        if ((pipeline.region1Avg() > pipeline.region2Avg()))
-        {
-            if ((pipeline.region1Avg() > pipeline.region3Avg()))
+        if (opModeIsActive()) {
+            if ((pipeline.region1Avg() > pipeline.region2Avg()))
             {
-                DriveForward(.5,20);
-                DriveRight(.5,-30);
-                ArmPosTOP(.5, -1500, 0);
-                sleep(1000);
-                StopDriving();
-
-            }
-            else
-            {
-                DriveForward(.5,20);
-                DriveRight(.5,-300);
-                ArmPosBOT(.5, -500,0);
-                StopDriving();
-            }
-
-        }else {
-            if (pipeline.region2Avg() > pipeline.region3Avg()) {
-                DriveForward(.5, 20);
-                DriveRight(.5, -20);
-                ArmPosMid(.5, -1000,0);
-                StopDriving();
-            } else
+                if ((pipeline.region1Avg() > pipeline.region3Avg()))
                 {
+                    DriveForward(.5,20);
+                    DriveRight(.5,-30);
+                    ArmPosTOP(.5, -1500, 0);
+                    sleep(1000);
+                    StopDriving();
+
+                }
+                else
+                {
+                    DriveForward(.5,20);
+                    DriveRight(.5,-300);
+                    ArmPosBOT(.5, -500,0);
+                    StopDriving();
+                }
+            }else if (pipeline.region2Avg() > pipeline.region3Avg()) {
+                    DriveForward(.5, 20);
+                    DriveRight(.5, -20);
+                    ArmPosMid(.5, -1000,0);
+                    StopDriving();
+                } else{
                 DriveForward(.5, 20);
-                DriveRight(.5, -300);
-                ArmPosBOT(.5, -500,0);
-                StopDriving();
-            }
+                    DriveRight(.5, -300);
+                    ArmPosBOT(.5, -500,0);
+                    StopDriving();
+                }
+
+            telemetry.update();
+            //Now add after movement code
+
+
         }
-
-        telemetry.update();
-
-
 
         sleep(20);
     }
@@ -187,16 +190,12 @@ public class RedOpenCV extends LinearOpMode{
             avg2 = (int) Core.mean(region2_G).val[0];
             avg3 = (int) Core.mean(region3_G).val[0];
 
-
             Imgproc.rectangle(input, region1_pointA, region1_pointB, CRIMSON,2);
             Imgproc.rectangle(input, region2_pointA, region2_pointB, AQUA,2);
             Imgproc.rectangle(input, region3_pointA, region3_pointB, PARAKEET,2);
 
-
             return input;
-
         }
-
         public int region1Avg() {
             return avg1;
         }
@@ -206,37 +205,7 @@ public class RedOpenCV extends LinearOpMode{
         public int region3Avg() {
             return avg3;
         }
-
     }
-
-    public void DriveBackward (double power, int distance)
-    {
-        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //set target position
-        Fvertical.setTargetPosition(distance * 31);
-        Bvertical.setTargetPosition(distance * 31);
-
-        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //set power
-        Fvertical.setPower(power);
-        Bvertical.setPower(power);
-
-        while (Fvertical.isBusy() && Bvertical.isBusy()){
-
-        }
-        StopDriving();
-    }
-
-    public void ResetArm (double power, int distance)
-    {
-        Arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-    }
-
     public void DriveForward (double power, int distance) {
         //reset encoder
         Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -253,15 +222,9 @@ public class RedOpenCV extends LinearOpMode{
         Fvertical.setPower(power);
         Bvertical.setPower(power);
 
-        telemetry.addLine("DriveForward");
-        telemetry.update();
-        sleep(1000);
-
         while (Fvertical.isBusy() && Bvertical.isBusy()){
 
         }
-
-
         StopDriving();
 
     }
@@ -317,7 +280,7 @@ public class RedOpenCV extends LinearOpMode{
         StopDriving();
 
     }
-    public void DriveLeft (double power, int distance){
+    public void DriveSide (double power, int distance){
         //reset
         Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -339,31 +302,7 @@ public class RedOpenCV extends LinearOpMode{
         StopDriving();
     }
 
-    public void DriveRight(double power, int distance)
-    {
-
-        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //target position
-        Fhorizontal.setTargetPosition(distance * 31);
-        Bhorizontal.setTargetPosition(distance * 31);
-
-        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        telemetry.addLine("Drive Right");
-        telemetry.update();
-        sleep(1000);
-
-        //set power
-        Fhorizontal.setPower(power);
-        Bhorizontal.setPower(power);
-    }
-
-    public void Spin(double power, int distance)
-    {
+    public void Spin(double power, int distance) {
         //reset encoder
         Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -387,79 +326,6 @@ public class RedOpenCV extends LinearOpMode{
         Bvertical.setPower(0);
         Bhorizontal.setPower(0);
         Top.setPower(0);
-        Arm1.setPower(0);
-        Intake.setPower(0);
-    }
-
-    public void ArmPosTOP(double power, int degrees, int spin)
-    {
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        Arm1.setTargetPosition(degrees);
-        Intake.setTargetPosition(-spin);
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        Arm1.setPower(1);
-        Intake.setPower(1);
-
-        telemetry.addLine("Top");
-        telemetry.update();
-        sleep(1000);
-
-        StopDriving();
-
-    }
-
-    public void ArmPosMid(double power, int degrees, int spin)
-    {
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        Arm1.setTargetPosition(degrees);
-        Intake.setTargetPosition(-spin);
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        telemetry.addLine("Middle");
-        telemetry.update();
-        sleep(1000);
-
-
-        Arm1.setPower(1);
-        Intake.setPower(1);
-
-        StopDriving();
-
-    }
-    public void ArmPosBOT(double power, int degrees, int spin)
-    {
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //Move to Position
-        Arm1.setTargetPosition(degrees);
-        Intake.setTargetPosition(-spin);
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
-        telemetry.addLine("Bottom");
-        telemetry.update();
-        sleep(1000);
-
-        Arm1.setPower(1);
-        Intake.setPower(1);
-
-        StopDriving();
-
     }
 
 }
