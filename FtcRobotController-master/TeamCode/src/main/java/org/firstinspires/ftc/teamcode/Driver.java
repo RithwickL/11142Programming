@@ -59,15 +59,15 @@ public class Driver extends OpMode {
         righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin
-        lefthorizontal.setPower(gamepad1.left_trigger / 2);
-        righthorzontal.setPower(-gamepad1.left_trigger / 2);
-        leftvertical.setPower(gamepad1.left_trigger / 2);
-        rightvertical.setPower(-gamepad1.left_trigger / 2);
+        lefthorizontal.setPower(-gamepad1.left_trigger / 2);
+        righthorzontal.setPower(gamepad1.left_trigger / 2);
+        leftvertical.setPower(-gamepad1.left_trigger / 2);
+        rightvertical.setPower(gamepad1.left_trigger / 2);
         // Spin other way
-        lefthorizontal.setPower(-gamepad1.right_trigger / 2);
-        righthorzontal.setPower(gamepad1.right_trigger / 2);
-        leftvertical.setPower(-gamepad1.right_trigger / 2);
-        rightvertical.setPower(gamepad1.right_trigger / 2);
+        lefthorizontal.setPower(gamepad1.right_trigger / 2);
+        righthorzontal.setPower(-gamepad1.right_trigger / 2);
+        leftvertical.setPower(gamepad1.right_trigger / 2);
+        rightvertical.setPower(-gamepad1.right_trigger / 2);
         //Spin Carousel
         if (gamepad2.a) {
             Top.setPower(0.2);
