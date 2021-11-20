@@ -1,0 +1,284 @@
+
+
+
+
+
+NAME and CONFIG
+
+DcMotor LFront;
+DcMotor RFront;
+DcMotor LBack;
+DcMotor RBack;
+DcMotor Top;
+DcMotor Arm;
+DcMotor Intake;
+
+Fvertical = hardwareMap.dcMotor.get("rr");
+Bvertical = hardwareMap.dcMotor.get("lf");
+Fhorizontal = hardwareMap.dcMotor.get("rf");
+Bhorizontal = hardwareMap.dcMotor.get("lr");
+Arm1 = hardwareMap.dcMotor.get("Spin");
+Top = hardwareMap.dcMotor.get("TOP");
+Intake = hardwareMap.dcMotor.get("Pick");
+
+
+METHODS
+
+public void DriveBackward (double power, int distance)
+    {
+        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Fvertical.setTargetPosition(distance * 31);
+        Bvertical.setTargetPosition(distance * 31);
+
+        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
+
+        while (Fvertical.isBusy() && Bvertical.isBusy()){
+
+        }
+        StopDriving();
+    }
+
+    public void ResetArm (double power, int distance)
+    {
+        Arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+    }
+
+    public void DriveForward (double power, int distance)
+    {
+        //reset encoder
+        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Fvertical.setTargetPosition(distance * 31);
+        Bvertical.setTargetPosition(distance * 31);
+
+        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
+
+        telemetry.addLine("DriveForward");
+        telemetry.update();
+        sleep(1000);
+
+        while (Fvertical.isBusy() && Bvertical.isBusy()){
+
+        }
+
+
+        StopDriving();
+
+    }
+    public void Arm (double power, int distance)
+    {
+        //reset encoder
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        //set target position
+        Arm1.setTargetPosition(distance * 31);
+
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        //set power
+        Arm1.setPower(power);
+
+
+        while (Arm1.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+    public void RobotSpin (double power, int distance)
+    {
+        //reset encoder
+        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Fvertical.setTargetPosition(distance * -31);
+        Bvertical.setTargetPosition(distance * 31);
+        Fhorizontal.setTargetPosition(distance * -31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fvertical.setPower(power);
+        Bvertical.setPower(power);
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+
+        while (Fvertical.isBusy() && Bvertical.isBusy() && Fhorizontal.isBusy() && Bhorizontal.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+    public void DriveLeft (double power, int distance)
+    {
+        //reset
+        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        Fhorizontal.setTargetPosition(distance * 31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+
+        while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
+
+        }
+        StopDriving();
+    }
+
+    public void DriveRight(double power, int distance)
+    {
+        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //target position
+        Fhorizontal.setTargetPosition(distance * 31);
+        Bhorizontal.setTargetPosition(distance * 31);
+
+        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Drive Right");
+        telemetry.update();
+        sleep(1000);
+
+        //set power
+        Fhorizontal.setPower(power);
+        Bhorizontal.setPower(power);
+    }
+
+
+
+    public void Spin(double power, int distance)
+    {
+        //reset encoder
+        Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Top.setTargetPosition(distance * 31);
+        Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Top.setPower(power);
+
+        while (Top.isBusy()) {
+
+        }
+        StopDriving();
+
+    }
+    public void StopDriving(){
+
+        Fvertical.setPower(0);
+        Fhorizontal.setPower(0);
+        Bvertical.setPower(0);
+        Bhorizontal.setPower(0);
+
+        Top.setPower(0);
+        Arm1.setPower(0);https://files.slack.com/files-pri/TN5V1BL1M-F02MZFNJQGM/image.png
+        Intake.setPower(0);
+    }
+
+    public void ArmPosTOP(double power, int degrees, int spin)
+    {
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //Move to Position
+        Arm1.setTargetPosition(degrees);
+        Intake.setTargetPosition(-spin);
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        Arm1.setPower(1);
+        Intake.setPower(1);
+
+        telemetry.addLine("Top");
+        telemetry.update();
+        sleep(1000);
+
+        StopDriving();
+
+    }
+
+    public void ArmPosMid(double power, int degrees, int spin)
+    {
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //Move to Position
+        Arm1.setTargetPosition(degrees);
+        Intake.setTargetPosition(-spin);
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Middle");
+        telemetry.update();
+        sleep(1000);
+
+
+        Arm1.setPower(1);
+        Intake.setPower(1);
+
+        StopDriving();
+
+    }
+    public void ArmPosBOT(double power, int degrees, int spin)
+    {
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //Move to Position
+        Arm1.setTargetPosition(degrees);
+        Intake.setTargetPosition(-spin);
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Bottom");
+        telemetry.update();
+        sleep(1000);
+
+        Arm1.setPower(1);
+        Intake.setPower(1);
+
+        StopDriving();
+
+    }
