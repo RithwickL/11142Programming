@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -19,8 +18,9 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Autonomous(name = "RedOpenCVDect")
-public class RedOpenCV extends LinearOpMode{
+@Autonomous(name = "BlueOpenCVDect")
+public class BlueOpenCV extends LinearOpMode
+{
 
     OpenCvCamera webcam;
     static RingPipeline pipeline;
@@ -90,6 +90,8 @@ public class RedOpenCV extends LinearOpMode{
                 DriveForward(.5,20);
                 DriveRight(.5,-30);
                 ArmPosTOP(.5, -1500, 0);
+                telemetry.addLine("Top");
+                telemetry.update();
                 sleep(1000);
                 StopDriving();
 
@@ -109,7 +111,7 @@ public class RedOpenCV extends LinearOpMode{
                 ArmPosMid(.5, -1000,0);
                 StopDriving();
             } else
-                {
+            {
                 DriveForward(.5, 20);
                 DriveRight(.5, -300);
                 ArmPosBOT(.5, -500,0);
