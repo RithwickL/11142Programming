@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -43,7 +42,6 @@ public class RedOpenCV extends LinearOpMode{
         Bhorizontal = hardwareMap.dcMotor.get("lr");
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
-        //Slide = hardwareMap.dcMotor.get("Slide");
         Intake = hardwareMap.dcMotor.get("Pick");
 
         Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);

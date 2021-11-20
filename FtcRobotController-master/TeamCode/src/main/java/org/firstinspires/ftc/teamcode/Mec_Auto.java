@@ -41,9 +41,10 @@ public class Mec_Auto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-
+        //STUFF
         }
     }
+
     public void DriveSpin(double power, int distance) {
         //reset encoder
         BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -54,9 +55,9 @@ public class Mec_Auto extends LinearOpMode {
 
         //set target position
         BackLeft.setTargetPosition(distance * 31);
-        BackRight.setTargetPosition(distance * 31);
+        BackRight.setTargetPosition(-distance * 31);
         FrontLeft.setTargetPosition(distance * 31);
-        FrontRight.setTargetPosition(distance * 31);
+        FrontRight.setTargetPosition(-distance * 31);
 
         //Go to Position
         BackLeft.setMode(RunMode.RUN_TO_POSITION);
@@ -77,7 +78,7 @@ public class Mec_Auto extends LinearOpMode {
 
     }
 
-    public void DriveFrontBack (double power, int distance) {
+    public void DriveSlide(double power, int distance) {
         //reset encoder
         BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         BackRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -86,10 +87,10 @@ public class Mec_Auto extends LinearOpMode {
 
 
         //set target position
-        BackLeft.setTargetPosition(distance * 31);
+        BackLeft.setTargetPosition(-distance * 31);
         BackRight.setTargetPosition(distance * 31);
         FrontLeft.setTargetPosition(distance * 31);
-        FrontRight.setTargetPosition(distance * 31);
+        FrontRight.setTargetPosition(-distance * 31);
 
         //Go to Position
         BackLeft.setMode(RunMode.RUN_TO_POSITION);
@@ -103,29 +104,11 @@ public class Mec_Auto extends LinearOpMode {
         FrontLeft.setPower(power);
         FrontRight.setPower(power);
 
-        while (BackLeft.isBusy() && BackRight.isBusy() && FrontLeft.isBusy() && FrontRight.isBusy()){}
-        StopDriving();
-    }
-    public void DriveSide (double power, int distance){
-        //reset
-        FrontLeft.setMode(RunMode.STOP_AND_RESET_ENCODER);
-        FrontRight.setMode(RunMode.STOP_AND_RESET_ENCODER);
-
-        //target position
-        FrontLeft.setTargetPosition(distance * 31);
-        FrontRight.setTargetPosition(distance * 31);
-
-        FrontLeft.setMode(RunMode.RUN_TO_POSITION);
-        FrontRight.setMode(RunMode.RUN_TO_POSITION);
-
-        //set power
-        FrontLeft.setPower(power);
-        FrontRight.setPower(power);
-
-        while (FrontLeft.isBusy() && FrontRight.isBusy()) {
+        while (BackLeft.isBusy() && BackRight.isBusy() && FrontLeft.isBusy() && FrontRight.isBusy()){
 
         }
         StopDriving();
+
     }
 
     public void Caro(double power, int distance) {
@@ -146,7 +129,7 @@ public class Mec_Auto extends LinearOpMode {
 
     }
 
-    public void Arm (double power, int distance) {
+    public void Arm(double power, int distance) {
         //reset encoder
         Arm1.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
