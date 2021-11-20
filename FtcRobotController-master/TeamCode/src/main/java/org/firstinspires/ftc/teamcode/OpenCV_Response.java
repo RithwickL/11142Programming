@@ -23,7 +23,6 @@ public class OpenCV_Response extends LinearOpMode{
     OpenCvCamera webcam;
     static RingPipeline pipeline;
 
-    Hardware TIseBot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
