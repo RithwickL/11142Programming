@@ -91,8 +91,8 @@ public class Definetly_Not_CamCode_Cleaned_up extends LinearOpMode{
                 if ((pipeline.region1Avg() > pipeline.region3Avg()))
                 {
                     DriveForward(.5,20);
-                    DriveRight(.5,-30);
-                    ArmPosTOP(.5, -1500, 0);
+                    //DriveRight(.5,-30);
+                    //ArmPosTOP(.5, -1500, 0);
                     sleep(1000);
                     StopDriving();
 
@@ -100,19 +100,19 @@ public class Definetly_Not_CamCode_Cleaned_up extends LinearOpMode{
                 else
                 {
                     DriveForward(.5,20);
-                    DriveRight(.5,-300);
-                    ArmPosBOT(.5, -500,0);
+                    //DriveRight(.5,-300);
+                    //ArmPosBOT(.5, -500,0);
                     StopDriving();
                 }
             }else if (pipeline.region2Avg() > pipeline.region3Avg()) {
                     DriveForward(.5, 20);
-                    DriveRight(.5, -20);
-                    ArmPosMid(.5, -1000,0);
+                    //DriveRight(.5, -20);
+                    //ArmPosMid(.5, -1000,0);
                     StopDriving();
                 } else{
                 DriveForward(.5, 20);
-                    DriveRight(.5, -300);
-                    ArmPosBOT(.5, -500,0);
+                    //DriveRight(.5, -300);
+                    //ArmPosBOT(.5, -500,0);
                     StopDriving();
                 }
 
