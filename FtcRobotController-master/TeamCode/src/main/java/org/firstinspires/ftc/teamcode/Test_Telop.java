@@ -42,6 +42,8 @@ public class Test_Telop extends OpMode {
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
+
 
     }
         public void loop () {
@@ -64,16 +66,6 @@ public class Test_Telop extends OpMode {
             leftBackPower -= -x1;
             rightFrontPower -= -x1;
             rightBackPower += -x1;
-            // Handle clockwise turning movement
-            leftFrontPower += r2 * 0;
-            leftBackPower += r2 * 0;
-            rightFrontPower += r2 * 0;
-            rightBackPower += r2 * 0;
-            // Handle counterclockwise turning movement
-            leftFrontPower += r2 * 0;
-            leftBackPower += r2 * 0;
-            rightFrontPower += r2 * 0;
-            rightBackPower += r2 * 0;
 
             leftFront.setPower(gamepad1.left_trigger / 2);
             leftRear.setPower(gamepad1.left_trigger / 2);
