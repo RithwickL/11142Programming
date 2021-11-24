@@ -1,17 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
-import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+
+
 @TeleOp(name="Mec_Driver", group = "Default")
 public class Mec_Driver extends OpMode {
     /*Arm1 PID
@@ -54,11 +52,10 @@ public class Mec_Driver extends OpMode {
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
         Pick = hardwareMap.dcMotor.get("Pick");
-        BackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         FrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
     }
-    public void initGyro(HardwareMap hw)
+    /*public void initGyro(HardwareMap hw)
     {
         hard = hw;
 
@@ -87,10 +84,10 @@ public class Mec_Driver extends OpMode {
     Orientation getAngles()
     {
         return (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES));
-    }
+    }*/
 
     public void loop() {
-        angles = getAngles();
+        /*angles = getAngles();
         float ang = angles.firstAngle;
         double ang2 = ang;
         telemetry.addData("ANGLE READ ",ang);
@@ -98,7 +95,7 @@ public class Mec_Driver extends OpMode {
 
         if(angles.firstAngle == 1){
 
-        }
+        }*/
         //Forward and Back
         FrontLeft.setPower(gamepad1.right_stick_y);
         FrontRight.setPower(gamepad1.right_stick_y);
@@ -106,10 +103,10 @@ public class Mec_Driver extends OpMode {
         BackRight.setPower(gamepad1.right_stick_y);
 
         //Slide
-        FrontLeft.setPower(gamepad1.right_stick_x);
-        FrontRight.setPower(-gamepad1.right_stick_x);
-        BackLeft.setPower(-gamepad1.right_stick_x);
-        BackRight.setPower(gamepad1.right_stick_x);
+        FrontLeft.setPower(gamepad1.left_stick_x);
+        FrontRight.setPower(-gamepad1.left_stick_x);
+        BackLeft.setPower(-gamepad1.left_stick_x);
+        BackRight.setPower(gamepad1.left_stick_x);
 
         //Spin
         FrontLeft.setPower(gamepad1.left_trigger/2);
@@ -124,7 +121,7 @@ public class Mec_Driver extends OpMode {
         BackRight.setPower(gamepad1.right_trigger/2);
 
         //Spin Carousel
-        if (gamepad2.a) {
+        /*if (gamepad2.a) {
             Top.setPower(0.2);
         } else if (gamepad2.y){
             Top.setPower(-0.2);
@@ -139,7 +136,7 @@ public class Mec_Driver extends OpMode {
             Pick.setPower(-1);
         } else {
             Pick.setPower(0);
-        }
+        }*/
 
         //PID for Arm1
         /*liftPosCurrent = Arm1.getCurrentPosition();

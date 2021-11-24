@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+
 @Autonomous(name="Mec_Auto")
 public class Mec_Auto extends LinearOpMode {    
     //Declare motorsnames
@@ -20,16 +21,19 @@ public class Mec_Auto extends LinearOpMode {
     
     public void runOpMode() { //code will run once only
         //Config
-        BackLeft = hardwareMap.dcMotor.get("lf");
-        BackRight = hardwareMap.dcMotor.get("rr");
-        FrontLeft = hardwareMap.dcMotor.get("lr");
-        FrontRight = hardwareMap.dcMotor.get("rf");
-        Arm1 = hardwareMap.dcMotor.get("Spin");
-        Top = hardwareMap.dcMotor.get("TOP");
-        Pick = hardwareMap.dcMotor.get("Pick");
-        BackLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        FrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
-        Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront = hardwareMap.dcMotor.get("lf");
+        leftRear = hardwareMap.dcMotor.get("lr");
+        rightRear = hardwareMap.dcMotor.get("rr");
+        rightFront = hardwareMap.dcMotor.get("rf");
+        Arm1 = hardwareMap.dcMotor.get("arm");
+        Top = hardwareMap.dcMotor.get("carousel");
+        //Slide = hardwareMap.dcMotor.get("Slide");
+        Pick = hardwareMap.dcMotor.get("intake");
+
+        //this puts the motors in reverse
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         
         //set modes for encoders
         BackLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
