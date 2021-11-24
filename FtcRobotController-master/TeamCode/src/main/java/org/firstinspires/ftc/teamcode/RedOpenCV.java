@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Disabled
+
 @Autonomous(name = "RedOpenCVDect")
 public class RedOpenCV extends LinearOpMode{
 
@@ -28,7 +28,7 @@ public class RedOpenCV extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor B;
+    DcMotor Fvertical;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
     DcMotor Bhorizontal;
