@@ -1,10 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 @TeleOp(name="Mec_Driver", group = "Default")
 public class Mec_Driver extends OpMode {
     /*Arm1 PID
@@ -32,7 +39,11 @@ public class Mec_Driver extends OpMode {
     DcMotor Top;
     DcMotor Arm1;
     DcMotor Pick;
+    //gyro init
+    public BNO055IMU imu;
+    public Orientation angles;
 
+    HardwareMap hard;
 
     public void init() {
         //Config
@@ -47,9 +58,47 @@ public class Mec_Driver extends OpMode {
         FrontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
     }
+    public void initGyro(HardwareMap hw)
+    {
+        hard = hw;
+
+        // Set up the parameters with which we will use our IMU. Note that integration
+        // algorithm here just reports accelerations to the logcat log; it doesn't actually
+        // provide positional information.
+
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit = com.qualcomm.hardware.bosch.BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit = com.qualcomm.hardware.bosch.BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled = true;
+        parameters.loggingTag = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+
+        imu = hard.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
+
+        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+    }
+
+    Orientation getAngles()
+    {
+        return (imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES));
+    }
 
     public void loop() {
+        angles = getAngles();
+        float ang = angles.firstAngle;
+        double ang2 = ang;
+        telemetry.addData("ANGLE READ ",ang);
+        telemetry.update();
 
+        if(angles.firstAngle == 1){
+
+        }
         //Forward and Back
         FrontLeft.setPower(gamepad1.right_stick_y);
         FrontRight.setPower(gamepad1.right_stick_y);
