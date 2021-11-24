@@ -26,7 +26,7 @@ public class RedOpenCV extends LinearOpMode{
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor Fvertical;
+    DcMotor B;
     DcMotor Fhorizontal;
     DcMotor Bvertical;
     DcMotor Bhorizontal;

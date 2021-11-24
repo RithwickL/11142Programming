@@ -5,6 +5,7 @@
 
 NAME and CONFIG
 
+New
 DcMotor LFront;
 DcMotor RFront;
 DcMotor LBack;
@@ -13,34 +14,63 @@ DcMotor Top;
 DcMotor Arm;
 DcMotor Intake;
 
+Past
+DcMotor Fvertical;
+    DcMotor Fhorizontal;
+    DcMotor Bvertical;
+    DcMotor Bhorizontal;
+    DcMotor Top;
+    DcMotor Arm1;
+    //DcMotor Slide;
+    DcMotor Pick;
+
 Fvertical = hardwareMap.dcMotor.get("rr");
 Bvertical = hardwareMap.dcMotor.get("lf");
 Fhorizontal = hardwareMap.dcMotor.get("rf");
 Bhorizontal = hardwareMap.dcMotor.get("lr");
 Arm1 = hardwareMap.dcMotor.get("Spin");
 Top = hardwareMap.dcMotor.get("TOP");
-Intake = hardwareMap.dcMotor.get("Pick");
+Pick = hardwareMap.dcMotor.get("Pick");
 
+LFront = hardwareMap.dcMotor.get("rr");
+RFront = hardwareMap.dcMotor.get("lf");
+LBack = hardwareMap.dcMotor.get("rf");
+RBack = hardwareMap.dcMotor.get("lr");
+Arm = hardwareMap.dcMotor.get("Spin");
+Top = hardwareMap.dcMotor.get("TOP");
+Intake = hardwareMap.dcMotor.get("Pick");
 
 METHODS
 
-public void DriveBackward (double power, int distance)
+public void Forward_Backward (double power, int distance)
     {
-        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        LBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
 
         //set target position
-        Fvertical.setTargetPosition(distance * 31);
-        Bvertical.setTargetPosition(distance * 31);
 
-        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        LFront.setTargetPosition(distance * 31);
+        RFront.setTargetPosition(distance * 31);
+        LBack.setTargetPosition(distance * 31);
+        RBack.setTargetPosition(distance * 31);
+
+
+        LFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        LBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        RBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
-        Fvertical.setPower(power);
-        Bvertical.setPower(power);
+        LFront.setPower(power);
+        RFront.setPower(power);
+        LBack.setPower(power);
+        RBack.setPower(power);
 
-        while (Fvertical.isBusy() && Bvertical.isBusy()){
+        while (LFront.isBusy() && RFront.isBusy() && LBack.isBusy() && RBack.isBusy())
+        {
 
         }
         StopDriving();
