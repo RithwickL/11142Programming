@@ -45,14 +45,14 @@ public class Test_Telop extends OpMode {
 
     }
         public void loop () {
-            float y1 = gamepad1.left_stick_x;
-            float x1 = gamepad1.right_stick_y/2;
-            float r1 = gamepad1.left_trigger;
-            float r2 = gamepad1.right_trigger;
+            double y1 = gamepad1.left_stick_x;
+            double x1 = gamepad1.right_stick_y/2;
+            double r1 = gamepad1.left_trigger;
+            double r2 = gamepad1.right_trigger;
             // Reset variables
-            float leftFrontPower = 0;
-            float leftBackPower = 0;
-            float rightFrontPower = 0;
+            double leftFrontPower = 0;
+            double leftBackPower = 0;
+            double rightFrontPower = 0;
             float rightBackPower = 0;
             // Handle regular movement
             leftFrontPower += y1;
@@ -65,15 +65,25 @@ public class Test_Telop extends OpMode {
             rightFrontPower -= -x1;
             rightBackPower += -x1;
             // Handle clockwise turning movement
-            leftFrontPower -= r1 * -0.75;
-            leftBackPower -= r1 * -0.75;
-            rightFrontPower += r1 * 0.75;
-            rightBackPower += r1 * 0.75;
+            leftFrontPower += r2 * 0;
+            leftBackPower += r2 * 0;
+            rightFrontPower += r2 * 0;
+            rightBackPower += r2 * 0;
             // Handle counterclockwise turning movement
-            leftFrontPower += r2 * -0.75;
-            leftBackPower += r2 * -0.75;
-            rightFrontPower -= r2 * 0.75;
-            rightBackPower -= r2 * 0.75;
+            leftFrontPower += r2 * 0;
+            leftBackPower += r2 * 0;
+            rightFrontPower += r2 * 0;
+            rightBackPower += r2 * 0;
+
+            leftFront.setPower(gamepad1.left_trigger / 2);
+            leftRear.setPower(gamepad1.left_trigger / 2);
+            rightRear.setPower(-gamepad1.left_trigger / 2);
+            rightFront.setPower(-gamepad1.left_trigger / 2);
+            // Spin other way
+            leftFront.setPower(-gamepad1.left_trigger / 2);
+            leftRear.setPower(-gamepad1.left_trigger / 2);
+            rightRear.setPower(gamepad1.left_trigger / 2);
+            rightFront.setPower(gamepad1.left_trigger / 2);
 
             if (gamepad2.a) {
                 Top.setPower(0.2);
