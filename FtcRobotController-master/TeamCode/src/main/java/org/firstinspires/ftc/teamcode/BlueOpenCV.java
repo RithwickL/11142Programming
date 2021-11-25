@@ -102,9 +102,14 @@ public class BlueOpenCV extends LinearOpMode
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5,50);
-                DriveSlide(.5,50);
-                ArmPosBOT(.25, -1500, 100);
+                DriveForward(.25,50);
+                telemetry.addLine("Forward");
+                telemetry.update();
+                sleep(3000);
+                DriveSlide(.25,20);
+                telemetry.addLine("Slide");
+                telemetry.update();
+                sleep(3000);
                 StopDriving();
 
             }
@@ -142,9 +147,14 @@ public class BlueOpenCV extends LinearOpMode
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5, 50);
-                DriveSlide(.5, 50);
-                ArmPosMid(.25, -1000,100);
+                DriveForward(.25,50);
+                telemetry.addLine("Forward");
+                telemetry.update();
+                sleep(3000);
+                DriveSlide(.25,20);
+                telemetry.addLine("Slide");
+                telemetry.update();
+                sleep(3000);
                 StopDriving();
             } else
             {
@@ -157,7 +167,7 @@ public class BlueOpenCV extends LinearOpMode
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.25,20);
+                DriveForward(.25,50);
                 telemetry.addLine("Forward");
                 telemetry.update();
                 sleep(3000);
@@ -312,10 +322,10 @@ public class BlueOpenCV extends LinearOpMode
         rightFront.setTargetPosition(distance * 31);
 
         //Go to Position
-        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
         leftRear.setPower(power);
