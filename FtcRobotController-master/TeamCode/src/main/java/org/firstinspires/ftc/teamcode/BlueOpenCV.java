@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -96,11 +95,25 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.addLine("Bottom");
                 telemetry.update();
                 sleep(1000);
+
                 DriveForward(.05,10);
                 telemetry.addLine("Forward");
                 telemetry.update();
                 sleep(3000);
                 DriveSlide(.15,20);
+
+
+                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                DriveForward(.5,50);
+                telemetry.addLine("Forward");
+                telemetry.update();
+                sleep(3000);
+                DriveSlide(.5,20);
+
                 telemetry.addLine("Slide");
                 telemetry.update();
                 sleep(3000);
