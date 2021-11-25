@@ -62,6 +62,11 @@ public class Definetly_Not_CamCode_Cleaned_up extends LinearOpMode
         Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
+        telemetry.addData("Region 1", pipeline.region1Avg());
+        telemetry.addData("Region 2", pipeline.region2Avg());
+        telemetry.addData("Region 3", pipeline.region3Avg());
+        waitForStart();
+
         if (opModeIsActive()) {
             int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
             webcam = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -77,10 +82,6 @@ public class Definetly_Not_CamCode_Cleaned_up extends LinearOpMode
                 {
                 }
             });
-            telemetry.addData("Region 1", pipeline.region1Avg());
-            telemetry.addData("Region 2", pipeline.region2Avg());
-            telemetry.addData("Region 3", pipeline.region3Avg());
-            waitForStart();
             if ((pipeline.region1Avg() > pipeline.region2Avg()))
             {
                 if ((pipeline.region1Avg() > pipeline.region3Avg()))
