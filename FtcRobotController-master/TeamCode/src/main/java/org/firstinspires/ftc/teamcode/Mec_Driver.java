@@ -67,11 +67,14 @@ public class Mec_Driver extends OpMode {
         rightFrontPower -= -x1;
         rightBackPower += -x1;
 
+        leftFront.setPower(-gamepad1.left_trigger / 2);
         leftRear.setPower(gamepad1.left_trigger / 2);
+        rightRear.setPower(gamepad1.left_trigger / 2);
         rightFront.setPower(-gamepad1.left_trigger / 2);
         // Spin other way
-
+        leftFront.setPower(gamepad1.right_trigger / 2);
         leftRear.setPower(-gamepad1.right_trigger / 2);
+        rightRear.setPower(-gamepad1.right_trigger / 2);
         rightFront.setPower(gamepad1.right_trigger / 2);
 
         if (gamepad2.a) {

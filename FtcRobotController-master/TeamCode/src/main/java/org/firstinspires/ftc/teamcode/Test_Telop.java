@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
-
+@Disabled
 @TeleOp(name = "Luna Teleop")
 public class Test_Telop extends OpMode {
     //Arm1
@@ -67,11 +68,14 @@ public class Test_Telop extends OpMode {
             rightFrontPower -= -x1;
             rightBackPower += -x1;
 
+            leftFront.setPower(-gamepad1.left_trigger / 2);
             leftRear.setPower(gamepad1.left_trigger / 2);
+            rightRear.setPower(gamepad1.left_trigger / 2);
             rightFront.setPower(-gamepad1.left_trigger / 2);
             // Spin other way
-
+            leftFront.setPower(gamepad1.right_trigger / 2);
             leftRear.setPower(-gamepad1.right_trigger / 2);
+            rightRear.setPower(-gamepad1.right_trigger / 2);
             rightFront.setPower(gamepad1.right_trigger / 2);
 
             if (gamepad2.a) {
