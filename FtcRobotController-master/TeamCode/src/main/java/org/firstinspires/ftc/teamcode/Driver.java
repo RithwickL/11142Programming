@@ -55,8 +55,8 @@ public class Driver extends OpMode {
         leftvertical.setPower(gamepad1.right_stick_x*-1);
         rightvertical.setPower(gamepad1.right_stick_x*-1);
         //Forward and Backward - left stick - up/down
-        lefthorizontal.setPower(gamepad1.right_stick_y);
-        righthorzontal.setPower(gamepad1.right_stick_y);
+        lefthorizontal.setPower(gamepad1.left_stick_y);
+        righthorzontal.setPower(gamepad1.left_stick_y);
 
         //Spin
         lefthorizontal.setPower(-gamepad1.left_trigger / 2);
