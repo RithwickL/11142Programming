@@ -98,7 +98,7 @@ public class BlueOpenCV extends LinearOpMode
                 sleep(1000);
                 DriveForward(.5,20);
                 DriveSlide(.5,-30);
-                ArmPosBOT(.25, 1500, 0);
+                ArmPosBOT(.25, -1500, 0);
                 StopDriving();
 
             }
@@ -107,9 +107,10 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.addLine("Top");
                 telemetry.update();
                 sleep(1000);
-                DriveForward(.5,200);
-                DriveSlide(.5,-3000);
-                ArmPosTOP(.5, 500,0);
+                DriveForward(.5,20);
+                sleep(1000);
+                DriveSlide(.5,-300);
+                ArmPosTOP(.5, -500,0);
                 StopDriving();
             }
 
@@ -119,17 +120,18 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.addLine("Middle");
                 telemetry.update();
                 sleep(1000);
-                DriveForward(.5, 200);
-                DriveSlide(.5, -200);
-                ArmPosMid(.5, 1000,0);
+                DriveForward(.5, 20);
+                DriveSlide(.5, -30);
+                ArmPosMid(.5, -1000,0);
                 StopDriving();
             } else
             {
                 telemetry.addLine("Top");
                 telemetry.update();
                 sleep(1000);
-                DriveForward(.5, 200);
-                DriveSlide(.5, -300);
+                DriveForward(.5, 20);
+                sleep(1000);
+                DriveSlide(.5, -30);
                 ArmPosTOP(.5, -500,0);
                 StopDriving();
             }
@@ -270,6 +272,11 @@ public class BlueOpenCV extends LinearOpMode
 
     public void DriveForward(double power, int distance)
     {
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         //reset encoder
         leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -303,6 +310,12 @@ public class BlueOpenCV extends LinearOpMode
     }
 
     public void DriveSlide(double power, int distance) {
+
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         //reset encoder
         leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -383,6 +396,9 @@ public class BlueOpenCV extends LinearOpMode
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         //Move to Position
         Arm1.setTargetPosition(degrees);
         Pick.setTargetPosition(-spin);
@@ -429,6 +445,8 @@ public class BlueOpenCV extends LinearOpMode
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        Arm1.setMode(Dc)
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
