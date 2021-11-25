@@ -102,8 +102,8 @@ public class BlueOpenCV extends LinearOpMode
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5,20);
-                DriveSlide(.5,-30);
+                DriveForward(.5,50);
+                DriveSlide(.5,50);
                 ArmPosBOT(.25, -1500, 100);
                 StopDriving();
 
@@ -119,8 +119,8 @@ public class BlueOpenCV extends LinearOpMode
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5,20);
-                DriveSlide(.5,-30);
+                DriveForward(.5,50);
+                DriveSlide(.5,50);
                 ArmPosTOP(.25, -500,100);
                 StopDriving();
             }
@@ -137,8 +137,8 @@ public class BlueOpenCV extends LinearOpMode
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5, 20);
-                DriveSlide(.5, -30);
+                DriveForward(.5, 50);
+                DriveSlide(.5, 50);
                 ArmPosMid(.25, -1000,100);
                 StopDriving();
             } else
