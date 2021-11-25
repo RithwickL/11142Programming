@@ -19,7 +19,7 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-@Disabled
+
 @Autonomous(name = "BlueOpenCVDect")
 public class BlueOpenCV extends LinearOpMode
 {
@@ -29,27 +29,31 @@ public class BlueOpenCV extends LinearOpMode
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    DcMotor Fvertical;
-    DcMotor Fhorizontal;
-    DcMotor Bvertical;
-    DcMotor Bhorizontal;
+    DcMotor rightFront;
+    DcMotor leftFront;
+    DcMotor leftRear;
+    DcMotor rightRear;
     DcMotor Top;
     DcMotor Arm1;
-    DcMotor Intake;
+    //DcMotor Slide;
+    DcMotor Pick;
 
     @Override
     public void runOpMode() {
-        Fvertical = hardwareMap.dcMotor.get("rr");
-        Bvertical = hardwareMap.dcMotor.get("lf");
-        Fhorizontal = hardwareMap.dcMotor.get("rf");
-        Bhorizontal = hardwareMap.dcMotor.get("lr");
-        Arm1 = hardwareMap.dcMotor.get("Spin");
-        Top = hardwareMap.dcMotor.get("TOP");
+        // defining all the hardware
+        leftFront = hardwareMap.dcMotor.get("lf");
+        leftRear = hardwareMap.dcMotor.get("lr");
+        rightRear = hardwareMap.dcMotor.get("rr");
+        rightFront = hardwareMap.dcMotor.get("rf");
+        Arm1 = hardwareMap.dcMotor.get("arm");
+        Top = hardwareMap.dcMotor.get("carousel");
         //Slide = hardwareMap.dcMotor.get("Slide");
-        Intake = hardwareMap.dcMotor.get("Pick");
+        Pick = hardwareMap.dcMotor.get("intake");
 
-        Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
+        //this puts the motors in reverse
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -89,10 +93,10 @@ public class BlueOpenCV extends LinearOpMode
         {
             if ((pipeline.region1Avg() > pipeline.region3Avg()))
             {
-                DriveForward(.5,20);
-                DriveRight(.5,-30);
-                ArmPosTOP(.5, -1500, 0);
-                telemetry.addLine("Top");
+                DriveForward(.5,200);
+                DriveSlide(.5,-300);
+                ArmPosBOT(.5, 1500, 0);
+                telemetry.addLine("Bottom");
                 telemetry.update();
                 sleep(1000);
                 StopDriving();
@@ -100,23 +104,32 @@ public class BlueOpenCV extends LinearOpMode
             }
             else
             {
-                DriveForward(.5,20);
-                DriveRight(.5,-300);
-                ArmPosBOT(.5, -500,0);
+                DriveForward(.5,200);
+                DriveSlide(.5,-3000);
+                ArmPosTOP(.5, 500,0);
+                telemetry.addLine("Top");
+                telemetry.update();
+                sleep(1000);
                 StopDriving();
             }
 
         }else {
             if (pipeline.region2Avg() > pipeline.region3Avg()) {
-                DriveForward(.5, 20);
-                DriveRight(.5, -20);
-                ArmPosMid(.5, -1000,0);
+                DriveForward(.5, 200);
+                DriveSlide(.5, -200);
+                ArmPosMid(.5, 1000,0);
+                telemetry.addLine("Middle");
+                telemetry.update();
+                sleep(1000);
                 StopDriving();
             } else
             {
-                DriveForward(.5, 20);
-                DriveRight(.5, -300);
-                ArmPosBOT(.5, -500,0);
+                DriveForward(.5, 200);
+                DriveSlide(.5, -3000);
+                ArmPosTOP(.5, -500,0);
+                telemetry.addLine("Top");
+                telemetry.update();
+                sleep(1000);
                 StopDriving();
             }
         }
@@ -215,161 +228,113 @@ public class BlueOpenCV extends LinearOpMode
 
     }
 
-    public void DriveBackward (double power, int distance)
-    {
-        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //set target position
-        Fvertical.setTargetPosition(distance * 31);
-        Bvertical.setTargetPosition(distance * 31);
-
-        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //set power
-        Fvertical.setPower(power);
-        Bvertical.setPower(power);
-
-        while (Fvertical.isBusy() && Bvertical.isBusy()){
-
-        }
-        StopDriving();
-    }
-
     public void ResetArm (double power, int distance)
     {
         Arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
     }
 
-    public void DriveForward (double power, int distance) {
+    public void DriveSpin(double power, int distance) {
         //reset encoder
-        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //set target position
-        Fvertical.setTargetPosition(distance * 31);
-        Bvertical.setTargetPosition(distance * 31);
-
-        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //set power
-        Fvertical.setPower(power);
-        Bvertical.setPower(power);
-
-        telemetry.addLine("DriveForward");
-        telemetry.update();
-        sleep(1000);
-
-        while (Fvertical.isBusy() && Bvertical.isBusy()){
-
-        }
-
-
-        StopDriving();
-
-    }
-    public void Arm (double power, int distance) {
-        //reset encoder
-        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         //set target position
-        Arm1.setTargetPosition(distance * 31);
+        leftRear.setTargetPosition(distance * 31);
+        rightRear.setTargetPosition(-distance * 31);
+        leftFront.setTargetPosition(distance * 31);
+        rightFront.setTargetPosition(-distance * 31);
 
-
-        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+        //Go to Position
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
-        Arm1.setPower(power);
+        leftRear.setPower(power);
+        rightRear.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
 
-
-        while (Arm1.isBusy()){
+        while (leftRear.isBusy() && rightRear.isBusy() && leftFront.isBusy() && rightFront.isBusy()){
 
         }
         StopDriving();
 
     }
-    public void RobotSpin (double power, int distance) {
-        //reset encoder
-        Fvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bvertical.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        //set target position
-        Fvertical.setTargetPosition(distance * -31);
-        Bvertical.setTargetPosition(distance * 31);
-        Fhorizontal.setTargetPosition(distance * -31);
-        Bhorizontal.setTargetPosition(distance * 31);
-
-        Fvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //set power
-        Fvertical.setPower(power);
-        Bvertical.setPower(power);
-        Fhorizontal.setPower(power);
-        Bhorizontal.setPower(power);
-
-        while (Fvertical.isBusy() && Bvertical.isBusy() && Fhorizontal.isBusy() && Bhorizontal.isBusy()){
-
-        }
-        StopDriving();
-
-    }
-    public void DriveLeft (double power, int distance){
-        //reset
-        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //target position
-        Fhorizontal.setTargetPosition(distance * 31);
-        Bhorizontal.setTargetPosition(distance * 31);
-
-        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        //set power
-        Fhorizontal.setPower(power);
-        Bhorizontal.setPower(power);
-
-        while (Fhorizontal.isBusy() && Bhorizontal.isBusy()) {
-
-        }
-        StopDriving();
-    }
-
-    public void DriveRight(double power, int distance)
+    public void DriveForward(double power, int distance)
     {
-
-        Fhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Bhorizontal.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        //target position
-        Fhorizontal.setTargetPosition(distance * 31);
-        Bhorizontal.setTargetPosition(distance * 31);
-
-        Fhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Bhorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //reset encoder
+        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-        telemetry.addLine("Drive Right");
-        telemetry.update();
-        sleep(1000);
+        //set target position
+        leftRear.setTargetPosition(distance * 31);
+        rightRear.setTargetPosition(distance * 31);
+        leftFront.setTargetPosition(distance * 31);
+        rightFront.setTargetPosition(distance * 31);
+
+        //Go to Position
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
-        Fhorizontal.setPower(power);
-        Bhorizontal.setPower(power);
+        leftRear.setPower(power);
+        rightRear.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+
+        while (leftRear.isBusy() && rightRear.isBusy() && leftFront.isBusy() && rightFront.isBusy()){
+
+        }
+        StopDriving();
+
     }
 
-    public void Spin(double power, int distance)
-    {
+    public void DriveSlide(double power, int distance) {
+        //reset encoder
+        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
+        //set target position
+        leftRear.setTargetPosition(-distance * 31);
+        rightRear.setTargetPosition(distance * 31);
+        leftFront.setTargetPosition(distance * 31);
+        rightFront.setTargetPosition(-distance * 31);
+
+        //Go to Position
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        leftRear.setPower(power);
+        rightRear.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+
+        while (leftRear.isBusy() && rightRear.isBusy() && leftFront.isBusy() && rightFront.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+
+    public void Caro(double power, int distance) {
         //reset encoder
         Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -386,31 +351,46 @@ public class BlueOpenCV extends LinearOpMode
         StopDriving();
 
     }
+
+    public void Arm(double power, int distance) {
+        //reset encoder
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        Arm1.setTargetPosition(distance * 31);
+
+        //Go to Pos
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        Arm1.setPower(power);
+        //Wait
+        while (Arm1.isBusy()){}
+        StopDriving();
+    }
     public void StopDriving(){
 
-        Fvertical.setPower(0);
-        Fhorizontal.setPower(0);
-        Bvertical.setPower(0);
-        Bhorizontal.setPower(0);
+        leftRear.setPower(0);
+        rightRear.setPower(0);
+        leftFront.setPower(0);
+        rightFront.setPower(0);
         Top.setPower(0);
-        Arm1.setPower(0);
-        Intake.setPower(0);
     }
 
     public void ArmPosTOP(double power, int degrees, int spin)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Intake.setTargetPosition(-spin);
+        Pick.setTargetPosition(-spin);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Arm1.setPower(1);
-        Intake.setPower(1);
+        Pick.setPower(1);
 
         telemetry.addLine("Top");
         telemetry.update();
@@ -423,14 +403,14 @@ public class BlueOpenCV extends LinearOpMode
     public void ArmPosMid(double power, int degrees, int spin)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Intake.setTargetPosition(-spin);
+        Pick.setTargetPosition(-spin);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         telemetry.addLine("Middle");
@@ -439,7 +419,7 @@ public class BlueOpenCV extends LinearOpMode
 
 
         Arm1.setPower(1);
-        Intake.setPower(1);
+        Pick.setPower(1);
 
         StopDriving();
 
@@ -447,14 +427,14 @@ public class BlueOpenCV extends LinearOpMode
     public void ArmPosBOT(double power, int degrees, int spin)
     {
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        Intake.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //Move to Position
         Arm1.setTargetPosition(degrees);
-        Intake.setTargetPosition(-spin);
+        Pick.setTargetPosition(-spin);
 
         Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         telemetry.addLine("Bottom");
@@ -462,7 +442,7 @@ public class BlueOpenCV extends LinearOpMode
         sleep(1000);
 
         Arm1.setPower(1);
-        Intake.setPower(1);
+        Pick.setPower(1);
 
         StopDriving();
 
