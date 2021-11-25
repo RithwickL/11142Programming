@@ -95,7 +95,7 @@ public class BlueOpenCV extends LinearOpMode
             {
                 telemetry.addLine("Bottom");
                 telemetry.update();
-                sleep(10000);
+                sleep(1000);
 
                 leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -112,16 +112,21 @@ public class BlueOpenCV extends LinearOpMode
             {
                 telemetry.addLine("Top");
                 telemetry.update();
-                sleep(10000);
+                sleep(1000);
 
                 leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5,50);
-                DriveSlide(.5,50);
-                ArmPosTOP(.25, -500,100);
+                DriveForward(.25,20);
+                telemetry.addLine("Forward");
+                telemetry.update();
+                sleep(3000);
+                DriveSlide(.25,20);
+                telemetry.addLine("Slide");
+                telemetry.update();
+                sleep(3000);
                 StopDriving();
             }
 
@@ -130,7 +135,7 @@ public class BlueOpenCV extends LinearOpMode
 
                 telemetry.addLine("Middle");
                 telemetry.update();
-                sleep(10000);
+                sleep(1000);
 
                 leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -145,16 +150,21 @@ public class BlueOpenCV extends LinearOpMode
             {
                 telemetry.addLine("Top");
                 telemetry.update();
-                sleep(10000);
+                sleep(1000);
 
                 leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-                DriveForward(.5, 20);
-                DriveSlide(.5, -30);
-                ArmPosTOP(.5, -500,100);
+                DriveForward(.25,20);
+                telemetry.addLine("Forward");
+                telemetry.update();
+                sleep(3000);
+                DriveSlide(.25,20);
+                telemetry.addLine("Slide");
+                telemetry.update();
+                sleep(3000);
                 StopDriving();
             }
         }
