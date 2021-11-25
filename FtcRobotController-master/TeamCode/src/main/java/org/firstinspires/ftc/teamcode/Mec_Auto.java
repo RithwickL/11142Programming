@@ -34,7 +34,6 @@ public class Mec_Auto extends LinearOpMode {
         //this puts the motors in reverse
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
         
         //set modes for encoders
         leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
