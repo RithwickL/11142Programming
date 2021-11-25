@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
@@ -51,23 +50,57 @@ public class Mec_Auto extends LinearOpMode {
 
     public void DriveSpin(double power, int distance) {
         //reset encoder
-        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         //set target position
         leftRear.setTargetPosition(distance * 31);
-        rightRear.setTargetPosition(-distance * 31);
+        rightRear.setTargetPosition(distance * -31);
         leftFront.setTargetPosition(distance * 31);
-        rightFront.setTargetPosition(-distance * 31);
+        rightFront.setTargetPosition(distance * -31);
 
         //Go to Position
-        leftRear.setMode(RunMode.RUN_TO_POSITION);
-        rightRear.setMode(RunMode.RUN_TO_POSITION);
-        leftFront.setMode(RunMode.RUN_TO_POSITION);
-        rightFront.setMode(RunMode.RUN_TO_POSITION);
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        leftRear.setPower(power);
+        rightRear.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+
+        while (leftRear.isBusy() && rightRear.isBusy() && leftFront.isBusy() && rightFront.isBusy()){
+
+        }
+        StopDriving();
+
+    }
+
+    public void DriveForward(double power, int distance)
+    {
+        //reset encoder
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        //set target position
+        leftRear.setTargetPosition(distance * 31);
+        rightRear.setTargetPosition(distance * 31);
+        leftFront.setTargetPosition(distance * 31);
+        rightFront.setTargetPosition(distance * 31);
+
+        //Go to Position
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //set power
         leftRear.setPower(power);
@@ -84,23 +117,23 @@ public class Mec_Auto extends LinearOpMode {
 
     public void DriveSlide(double power, int distance) {
         //reset encoder
-        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
 
         //set target position
-        leftRear.setTargetPosition(-distance * 31);
+        leftRear.setTargetPosition(distance * -31);
         rightRear.setTargetPosition(distance * 31);
         leftFront.setTargetPosition(distance * 31);
-        rightFront.setTargetPosition(-distance * 31);
+        rightFront.setTargetPosition(distance * -31);
 
         //Go to Position
-        leftRear.setMode(RunMode.RUN_TO_POSITION);
-        rightRear.setMode(RunMode.RUN_TO_POSITION);
-        leftFront.setMode(RunMode.RUN_TO_POSITION);
-        rightFront.setMode(RunMode.RUN_TO_POSITION);
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
         leftRear.setPower(power);
@@ -117,11 +150,12 @@ public class Mec_Auto extends LinearOpMode {
 
     public void Caro(double power, int distance) {
         //reset encoder
-        Top.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //set target position
         Top.setTargetPosition(distance * 31);
-        Top.setMode(RunMode.RUN_TO_POSITION);
+
+        Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
         Top.setPower(power);
@@ -135,13 +169,13 @@ public class Mec_Auto extends LinearOpMode {
 
     public void Arm(double power, int distance) {
         //reset encoder
-        Arm1.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //set target position
         Arm1.setTargetPosition(distance * 31);
 
         //Go to Pos
-        Arm1.setMode(RunMode.RUN_TO_POSITION);
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
         Arm1.setPower(power);
@@ -149,6 +183,7 @@ public class Mec_Auto extends LinearOpMode {
         while (Arm1.isBusy()){}
         StopDriving();
     }
+
     public void StopDriving(){
 
         leftRear.setPower(0);
