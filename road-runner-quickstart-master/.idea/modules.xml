@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/road-runner-quickstart-master.iml" filepath="$PROJECT_DIR$/.idea/modules/road-runner-quickstart-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FtcRobotController/road-runner-quickstart-master.FtcRobotController.iml" filepath="$PROJECT_DIR$/.idea/modules/FtcRobotController/road-runner-quickstart-master.FtcRobotController.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TeamCode/road-runner-quickstart-master.TeamCode.iml" filepath="$PROJECT_DIR$/.idea/modules/TeamCode/road-runner-quickstart-master.TeamCode.iml" />
     </modules>
   </component>
 </project>
