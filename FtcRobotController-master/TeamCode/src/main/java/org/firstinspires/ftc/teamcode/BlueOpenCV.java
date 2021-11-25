@@ -51,7 +51,7 @@ public class BlueOpenCV extends LinearOpMode
         Pick = hardwareMap.dcMotor.get("intake");
 
         //this puts the motors in reverse
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
         leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
@@ -93,43 +93,44 @@ public class BlueOpenCV extends LinearOpMode
         {
             if ((pipeline.region1Avg() > pipeline.region3Avg()))
             {
-                DriveForward(.5,200);
-                DriveSlide(.5,-300);
-                ArmPosBOT(.5, 1500, 0);
                 telemetry.addLine("Bottom");
                 telemetry.update();
                 sleep(1000);
+                DriveForward(.5,20);
+                DriveSlide(.5,-30);
+                ArmPosBOT(.25, 1500, 0);
                 StopDriving();
 
             }
             else
             {
-                DriveForward(.5,200);
-                DriveSlide(.5,-3000);
-                ArmPosTOP(.5, 500,0);
                 telemetry.addLine("Top");
                 telemetry.update();
                 sleep(1000);
+                DriveForward(.5,200);
+                DriveSlide(.5,-3000);
+                ArmPosTOP(.5, 500,0);
                 StopDriving();
             }
 
         }else {
             if (pipeline.region2Avg() > pipeline.region3Avg()) {
-                DriveForward(.5, 200);
-                DriveSlide(.5, -200);
-                ArmPosMid(.5, 1000,0);
+
                 telemetry.addLine("Middle");
                 telemetry.update();
                 sleep(1000);
+                DriveForward(.5, 200);
+                DriveSlide(.5, -200);
+                ArmPosMid(.5, 1000,0);
                 StopDriving();
             } else
             {
-                DriveForward(.5, 200);
-                DriveSlide(.5, -3000);
-                ArmPosTOP(.5, -500,0);
                 telemetry.addLine("Top");
                 telemetry.update();
                 sleep(1000);
+                DriveForward(.5, 200);
+                DriveSlide(.5, -300);
+                ArmPosTOP(.5, -500,0);
                 StopDriving();
             }
         }
