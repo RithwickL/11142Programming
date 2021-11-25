@@ -147,14 +147,12 @@ public class Mec_Auto extends LinearOpMode {
         StopDriving();
 
     }
-
     public void Caro(double power, int distance) {
         //reset encoder
         Top.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //set target position
         Top.setTargetPosition(distance * 31);
-
         Top.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
@@ -167,7 +165,7 @@ public class Mec_Auto extends LinearOpMode {
 
     }
 
-    public void Arm(double power, int distance) {
+    /*public void Arm(double power, int distance) {
         //reset encoder
         Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -182,6 +180,79 @@ public class Mec_Auto extends LinearOpMode {
         //Wait
         while (Arm1.isBusy()){}
         StopDriving();
+    }*/
+
+    public void ArmPosTOP(double power, int degrees, int intake)
+    {
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+
+        //Move to Position
+        Arm1.setTargetPosition(degrees);
+        Pick.setTargetPosition(-intake);
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        Arm1.setPower(power);
+        Pick.setPower(power);
+
+        telemetry.addLine("Top");
+        telemetry.update();
+        sleep(1000);
+
+        StopDriving();
+
+    }
+
+    public void ArmPosMid(double power, int degrees, int intake)
+    {
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //Move to Position
+        Arm1.setTargetPosition(degrees);
+        Pick.setTargetPosition(-intake);
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Middle");
+        telemetry.update();
+        sleep(1000);
+
+
+        Arm1.setPower(power);
+        Pick.setPower(power);
+
+        StopDriving();
+
+    }
+    public void ArmPosBOT(double power, int degrees, int intake)
+    {
+        Arm1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Pick.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //Move to Position
+        Arm1.setTargetPosition(degrees);
+        Pick.setTargetPosition(-intake);
+
+        Arm1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Pick.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+        telemetry.addLine("Bottom");
+        telemetry.update();
+        sleep(1000);
+
+        Arm1.setPower(power);
+        Pick.setPower(power);
+
+        StopDriving();
+
     }
 
     public void StopDriving(){
