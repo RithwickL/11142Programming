@@ -67,16 +67,12 @@ public class Test_Telop extends OpMode {
             rightFrontPower -= -x1;
             rightBackPower += -x1;
 
-            leftFront.setPower(gamepad1.left_trigger / 2);
-            leftRear.setPower(gamepad1.left_trigger / 2);
-            rightRear.setPower(-gamepad1.left_trigger / 2);
-            rightFront.setPower(-gamepad1.left_trigger / 2);
-            // Spin other way
             leftFront.setPower(-gamepad1.left_trigger / 2);
-            leftRear.setPower(-gamepad1.left_trigger / 2);
             rightRear.setPower(gamepad1.left_trigger / 2);
-            rightFront.setPower(gamepad1.left_trigger / 2);
-
+            // Spin other way
+            leftFront.setPower(gamepad1.right_trigger / 2);
+            rightRear.setPower(-gamepad1.right_trigger / 2);
+            //Carousel
             if (gamepad2.a) {
                 Top.setPower(0.2);
             } else if (gamepad2.y){
@@ -84,7 +80,8 @@ public class Test_Telop extends OpMode {
             }else{
                 Top.setPower(0);
             }
-            Arm1.setPower(-gamepad2.right_stick_y);
+            //Arm
+            Arm1.setPower(gamepad2.right_stick_y/2);
             //Intake
             if (gamepad2.x) {
                 Pick.setPower(1);
