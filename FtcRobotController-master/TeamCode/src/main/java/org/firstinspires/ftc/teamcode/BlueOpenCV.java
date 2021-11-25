@@ -96,17 +96,11 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.addLine("Bottom");
                 telemetry.update();
                 sleep(1000);
-
-                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-                DriveForward(.25,50);
+                DriveForward(.05,10);
                 telemetry.addLine("Forward");
                 telemetry.update();
                 sleep(3000);
-                DriveSlide(.25,20);
+                DriveSlide(.15,20);
                 telemetry.addLine("Slide");
                 telemetry.update();
                 sleep(3000);
@@ -119,10 +113,7 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
                 DriveForward(.25,20);
                 telemetry.addLine("Forward");
@@ -142,10 +133,8 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
 
                 DriveForward(.25,50);
                 telemetry.addLine("Forward");
@@ -162,10 +151,7 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
                 DriveForward(.25,50);
                 telemetry.addLine("Forward");
@@ -313,7 +299,11 @@ public class BlueOpenCV extends LinearOpMode
         rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
+        //run with Encoders
+        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         //set target position
         leftRear.setTargetPosition(distance * 31);
@@ -346,8 +336,6 @@ public class BlueOpenCV extends LinearOpMode
         rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-
         //set target position
         leftRear.setTargetPosition(distance * -31);
         rightRear.setTargetPosition(distance * 31);
