@@ -95,10 +95,16 @@ public class BlueOpenCV extends LinearOpMode
             {
                 telemetry.addLine("Bottom");
                 telemetry.update();
-                sleep(1000);
+                sleep(10000);
+
+                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
                 DriveForward(.5,20);
-                DriveSlide(.5,30);
-                ArmPosBOT(.25, -1500, 0);
+                DriveSlide(.5,-30);
+                ArmPosBOT(.25, -1500, 100);
                 StopDriving();
 
             }
@@ -106,11 +112,16 @@ public class BlueOpenCV extends LinearOpMode
             {
                 telemetry.addLine("Top");
                 telemetry.update();
-                sleep(1000);
+                sleep(10000);
+
+                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
                 DriveForward(.5,20);
-                sleep(1000);
-                DriveSlide(.5,-300);
-                ArmPosTOP(.5, -500,100);
+                DriveSlide(.5,-30);
+                ArmPosTOP(.25, -500,100);
                 StopDriving();
             }
 
@@ -119,22 +130,31 @@ public class BlueOpenCV extends LinearOpMode
 
                 telemetry.addLine("Middle");
                 telemetry.update();
-                sleep(1000);
+                sleep(10000);
+
+                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
                 DriveForward(.5, 20);
                 DriveSlide(.5, -30);
-                ArmPosMid(.5, -1000,100);
+                ArmPosMid(.25, -1000,100);
                 StopDriving();
             } else
             {
                 telemetry.addLine("Top");
                 telemetry.update();
-                sleep(1000);
-                DriveForward(.5, 20);
-                sleep(1000);
-                DriveSlide(.5, -30);
-                DriveSpin(.5,10);
-                ArmPosTOP(.5, -500,100);
+                sleep(10000);
 
+                leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+                DriveForward(.5, 20);
+                DriveSlide(.5, -30);
+                ArmPosTOP(.5, -500,100);
                 StopDriving();
             }
         }
