@@ -104,7 +104,8 @@ public class BlueOpenCV extends LinearOpMode
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
                 telemetry.update();
-                DriveSlide(0.2,10);
+                sleep(1000);
+                DriveRight(0.2,10);
                 sleep(3000);
 
 
@@ -117,11 +118,9 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-
-
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
-                DriveSlide(0.2,100);
+                DriveRight(0.2,100);
                 telemetry.update();
                 sleep(3000);
             }
@@ -133,12 +132,9 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-
-
-
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
-                DriveSlide(0.2,100);
+                DriveRight(0.2,100);
                 telemetry.update();
                 sleep(3000);
             } else
@@ -147,11 +143,9 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-
-
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
-                DriveSlide(0.2,100);
+                DriveRight(0.2,100);
                 telemetry.update();
                 sleep(3000);
             }
@@ -282,11 +276,8 @@ public class BlueOpenCV extends LinearOpMode
         StopDriving();
     }
 
-    public void DriveSlide(double power, int distance) {
-        telemetry.addLine("IN SlIDE");
-        telemetry.update();
-        //reset encoder
-
+    public void DriveLeft(double power, int distance)
+    {
         leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -295,6 +286,36 @@ public class BlueOpenCV extends LinearOpMode
         //set target position
         leftRear.setTargetPosition(distance * 5);
         rightRear.setTargetPosition(distance * -5);
+        leftFront.setTargetPosition(distance * -5);
+        rightFront.setTargetPosition(distance * 5);
+
+        //Go to Position
+        leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        //set power
+        leftRear.setPower(power);
+        rightRear.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+
+        while (leftRear.isBusy() && rightRear.isBusy() && leftFront.isBusy() && rightFront.isBusy()){
+        }
+        StopDriving();
+    }
+
+    public void DriveRight(double power, int distance) {
+
+        leftRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        //set target position
+        leftRear.setTargetPosition(distance * -5);
+        rightRear.setTargetPosition(distance * 5);
         leftFront.setTargetPosition(distance * 5);
         rightFront.setTargetPosition(distance * -5);
 
@@ -323,10 +344,10 @@ public class BlueOpenCV extends LinearOpMode
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         //set target position
-        leftRear.setTargetPosition(distance * 31);
-        rightRear.setTargetPosition(distance * -31);
-        leftFront.setTargetPosition(distance * 31);
-        rightFront.setTargetPosition(distance * -31);
+        leftRear.setTargetPosition(distance * 5);
+        rightRear.setTargetPosition(distance * -5);
+        leftFront.setTargetPosition(distance * 5);
+        rightFront.setTargetPosition(distance * -5);
 
         //Go to Position
         leftRear.setMode(DcMotor.RunMode.RUN_TO_POSITION);
