@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name = "Driver")
-public class Mec_Driver extends OpMode {
+public class OmniDrive extends OpMode {
     //Arm1
     /*private double liftPosScale = 50, liftPowScale = 0.0025;
     private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
@@ -16,10 +16,10 @@ public class Mec_Driver extends OpMode {
     double rotPos = 0, foundPos = 1;
     int shootPos = 0;*/
 
-    DcMotor rightFront;
-    DcMotor leftFront;
-    DcMotor leftRear;
-    DcMotor rightRear;
+    DcMotor leftvertical;
+    DcMotor rightvertical;
+    DcMotor lefthorizontal;
+    DcMotor righthorzontal;
     DcMotor Top;
     DcMotor Arm1;
     //DcMotor Slide;
@@ -29,26 +29,22 @@ public class Mec_Driver extends OpMode {
     @Override
     public void init() {
         // defining all the hardware
-        leftFront = hardwareMap.dcMotor.get("lf");
-        leftRear = hardwareMap.dcMotor.get("lr");
-        rightRear = hardwareMap.dcMotor.get("rr");
-        rightFront = hardwareMap.dcMotor.get("rf");
-        Arm1 = hardwareMap.dcMotor.get("arm");
-        Top = hardwareMap.dcMotor.get("carousel");
+        leftvertical = hardwareMap.dcMotor.get("lf");
+        rightvertical = hardwareMap.dcMotor.get("rr");
+        lefthorizontal = hardwareMap.dcMotor.get("lr");
+        righthorzontal = hardwareMap.dcMotor.get("rf");
+        Arm1 = hardwareMap.dcMotor.get("Spin");
+        Top = hardwareMap.dcMotor.get("TOP");
         //Slide = hardwareMap.dcMotor.get("Slide");
-        Pick = hardwareMap.dcMotor.get("intake");
-
-        //this puts the motors in reverse
-        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        Pick = hardwareMap.dcMotor.get("Pick");
+        leftvertical.setDirection(DcMotorSimple.Direction.REVERSE);
+        lefthorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
         Arm1.setDirection(DcMotorSimple.Direction.REVERSE);
-
 
     }
     public void loop () {
         float y1 = gamepad1.left_stick_x;
-        float x1 = gamepad1.right_stick_y/2;
+        float x1 = gamepad1.left_stick_y;
         float r1 = gamepad1.left_trigger;
         float r2 = gamepad1.right_trigger;
         // Reset variables
@@ -59,23 +55,20 @@ public class Mec_Driver extends OpMode {
         // Handle regular movement
         leftFrontPower += y1;
         leftBackPower += y1;
-        rightFrontPower += y1;
-        rightBackPower += y1;
         // Handle strafing movement
-        leftFrontPower += -x1;
-        leftBackPower -= -x1;
-        rightFrontPower -= -x1;
-        rightBackPower += -x1;
+        rightFrontPower += x1;
+        rightBackPower += x1;
 
-        leftFront.setPower(-gamepad1.left_trigger / 2);
-        leftRear.setPower(gamepad1.left_trigger / 2);
-        rightRear.setPower(gamepad1.left_trigger / 2);
-        rightFront.setPower(-gamepad1.left_trigger / 2);
+        //Spin
+        lefthorizontal.setPower(-gamepad1.left_trigger / 2);
+        righthorzontal.setPower(gamepad1.left_trigger / 2);
+        leftvertical.setPower(-gamepad1.left_trigger / 2);
+        rightvertical.setPower(gamepad1.left_trigger / 2);
         // Spin other way
-        leftFront.setPower(gamepad1.right_trigger / 2);
-        leftRear.setPower(-gamepad1.right_trigger / 2);
-        rightRear.setPower(-gamepad1.right_trigger / 2);
-        rightFront.setPower(gamepad1.right_trigger / 2);
+        lefthorizontal.setPower(gamepad1.right_trigger / 2);
+        righthorzontal.setPower(-gamepad1.right_trigger / 2);
+        leftvertical.setPower(gamepad1.right_trigger / 2);
+        rightvertical.setPower(-gamepad1.right_trigger / 2);
 
         if (gamepad2.a) {
             Top.setPower(0.2);
@@ -84,7 +77,9 @@ public class Mec_Driver extends OpMode {
         }else{
             Top.setPower(0);
         }
+
         Arm1.setPower(gamepad2.right_stick_y);
+
         //Intake
         if (gamepad2.x) {
             Pick.setPower(1);
@@ -103,10 +98,10 @@ public class Mec_Driver extends OpMode {
             rightFrontPower = (float) Range.scale(rightFrontPower, -max, max, -.30, .30);
             rightBackPower = (float) Range.scale(rightBackPower, -max, max, -.30, .30);
         }
-        leftRear.setPower(-leftBackPower);
-        leftFront.setPower(-leftFrontPower);
-        rightFront.setPower(-rightFrontPower);
-        rightRear.setPower(-rightBackPower);
+        leftvertical.setPower(-leftBackPower);
+        rightvertical.setPower(-leftFrontPower);
+        lefthorizontal.setPower(-rightFrontPower);
+        righthorzontal.setPower(-rightBackPower);
 
             /*PID for Arm1
             liftPosCurrent = Arm1.getCurrentPosition();
