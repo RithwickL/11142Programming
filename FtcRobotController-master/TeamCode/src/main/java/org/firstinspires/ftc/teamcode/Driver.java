@@ -69,11 +69,12 @@ public class Driver extends OpMode {
         righthorzontal.setPower(-gamepad1.right_trigger / 2);
         leftvertical.setPower(gamepad1.right_trigger / 2);
         rightvertical.setPower(-gamepad1.right_trigger / 2);
+
         //Spin Carousel
         if (gamepad1.a) {
-            Top.setPower(0.2);
+            Top.setPower(0.25);
         } else if (gamepad1.y){
-            Top.setPower(-0.2);
+            Top.setPower(-0.25);
         }else{
             Top.setPower(0);
         }

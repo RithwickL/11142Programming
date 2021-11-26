@@ -71,9 +71,9 @@ public class OmniDrive extends OpMode {
         rightvertical.setPower(-gamepad1.right_trigger / 2);
 
         if (gamepad1.a) {
-            Top.setPower(0.4);
+            Top.setPower(0.25);
         } else if (gamepad1.y){
-            Top.setPower(-0.4);
+            Top.setPower(-0.25);
         }else{
             Top.setPower(0);
         }
