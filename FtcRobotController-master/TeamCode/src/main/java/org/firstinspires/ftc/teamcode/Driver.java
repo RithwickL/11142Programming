@@ -1,12 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Disabled
+
 @TeleOp(name="REALDRIVER", group = "Default")
 public class Driver extends OpMode {
     //Arm1
@@ -57,8 +56,8 @@ public class Driver extends OpMode {
         leftvertical.setPower(gamepad1.right_stick_x*-1);
         rightvertical.setPower(gamepad1.right_stick_x*-1);
         //Forward and Backward - left stick - up/down
-        lefthorizontal.setPower(gamepad1.left_stick_y);
-        righthorzontal.setPower(gamepad1.left_stick_y);
+        lefthorizontal.setPower(gamepad1.right_stick_y);
+        righthorzontal.setPower(gamepad1.right_stick_y);
 
         //Spin
         lefthorizontal.setPower(-gamepad1.left_trigger / 2);
@@ -71,18 +70,18 @@ public class Driver extends OpMode {
         leftvertical.setPower(gamepad1.right_trigger / 2);
         rightvertical.setPower(-gamepad1.right_trigger / 2);
         //Spin Carousel
-        if (gamepad2.a) {
+        if (gamepad1.a) {
             Top.setPower(0.2);
-        } else if (gamepad2.y){
+        } else if (gamepad1.y){
             Top.setPower(-0.2);
         }else{
             Top.setPower(0);
         }
 
         //Intake
-        if (gamepad2.x) {
+        if (gamepad1.x) {
             Pick.setPower(1);
-        } else if (gamepad2.b) {
+        } else if (gamepad1.b) {
             Pick.setPower(-1);
         } else {
             Pick.setPower(0);
