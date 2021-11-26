@@ -108,9 +108,6 @@ public class BlueOpenCV extends LinearOpMode
                 DriveRight(0.2,10);
                 sleep(3000);
 
-
-
-
             }
             else
             {
