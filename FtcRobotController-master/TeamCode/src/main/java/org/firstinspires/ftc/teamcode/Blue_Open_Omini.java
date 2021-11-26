@@ -18,7 +18,12 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+<<<<<<< Updated upstream
 @Autonomous(name = "OMINI DECT")
+=======
+
+@Autonomous(name = "Omini DECt")
+>>>>>>> Stashed changes
 public class Blue_Open_Omini extends LinearOpMode
 {
     OpenCvCamera webcam;
@@ -247,16 +252,13 @@ public class Blue_Open_Omini extends LinearOpMode
         rightvertical.setTargetPosition(distance * 31);
 
         //Go to Position
-        lefthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         leftvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        righthorzontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         //set power
-        lefthorizontal.setPower(power);
         leftvertical.setPower(power);
         rightvertical.setPower(power);
-        righthorzontal.setPower(power);
 
         while (leftvertical.isBusy() && lefthorizontal.isBusy() && righthorzontal.isBusy() && rightvertical.isBusy()){
         }
@@ -275,16 +277,12 @@ public class Blue_Open_Omini extends LinearOpMode
 
         //Go to Position
         lefthorizontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        leftvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightvertical.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         righthorzontal.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         //set power
         lefthorizontal.setPower(power);
-        leftvertical.setPower(power);
-        rightvertical.setPower(power);
         righthorzontal.setPower(power);
 
-        while (leftvertical.isBusy() && lefthorizontal.isBusy() && righthorzontal.isBusy() && rightvertical.isBusy()){
+        while( lefthorizontal.isBusy() && righthorzontal.isBusy()){
         }
         StopDriving();
     }
@@ -306,7 +304,8 @@ public class Blue_Open_Omini extends LinearOpMode
         lefthorizontal.setPower(power);
         righthorzontal.setPower(power);
 
-        while (leftvertical.isBusy() && lefthorizontal.isBusy() && righthorzontal.isBusy() && rightvertical.isBusy()){
+        while (lefthorizontal.isBusy() && righthorzontal.isBusy()){
+
         }
         StopDriving();
     }
