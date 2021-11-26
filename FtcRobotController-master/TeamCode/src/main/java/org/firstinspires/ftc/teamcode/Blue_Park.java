@@ -46,7 +46,7 @@ public class Blue_Park extends LinearOpMode {    //Declare motors
 
         if (opModeIsActive()) {
             sleep(7000);
-            DriveSide(0.4,-135);
+            DriveSide(0.4,135);
             DriveForward(0.4,-40);
         }
     }
