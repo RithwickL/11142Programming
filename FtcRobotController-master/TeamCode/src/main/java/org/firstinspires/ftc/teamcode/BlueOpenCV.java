@@ -107,17 +107,12 @@ public class BlueOpenCV extends LinearOpMode
                 DriveSlide(0.2,10);
                 sleep(3000);
 
-
-
-
             }
             else
             {
                 telemetry.addLine("Top");
                 telemetry.update();
                 sleep(1000);
-
-
 
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
@@ -133,9 +128,6 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-
-
-
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
                 DriveSlide(0.2,100);
@@ -146,8 +138,6 @@ public class BlueOpenCV extends LinearOpMode
                 telemetry.addLine("Top");
                 telemetry.update();
                 sleep(1000);
-
-
 
                 DriveForward(0.2,10);
                 telemetry.addLine("Forward");
