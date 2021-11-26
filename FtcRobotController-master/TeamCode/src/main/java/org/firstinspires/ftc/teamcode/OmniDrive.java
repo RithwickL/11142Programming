@@ -43,7 +43,7 @@ public class OmniDrive extends OpMode {
 
     }
     public void loop () {
-        float y1 = gamepad1.right_stick_x;
+        float y1 = -gamepad1.right_stick_x;
         float x1 = gamepad1.right_stick_y;
         float r1 = gamepad1.left_trigger;
         float r2 = gamepad1.right_trigger;
@@ -71,9 +71,9 @@ public class OmniDrive extends OpMode {
         rightvertical.setPower(-gamepad1.right_trigger / 2);
 
         if (gamepad1.a) {
-            Top.setPower(0.2);
+            Top.setPower(0.4);
         } else if (gamepad1.y){
-            Top.setPower(-0.2);
+            Top.setPower(-0.4);
         }else{
             Top.setPower(0);
         }
