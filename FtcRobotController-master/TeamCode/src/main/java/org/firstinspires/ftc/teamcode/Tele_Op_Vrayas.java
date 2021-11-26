@@ -46,6 +46,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
                 double frontRightPower = (y - x - rx) / denominator;
                 double backRightPower = (y + x - rx) / denominator;
 
+                leftFront.setPower(frontLeftPower);
+                leftRear.setPower(backLeftPower);
+                rightFront.setPower(frontRightPower);
+                rightRear.setPower(backRightPower);
+
 
             }
         }
