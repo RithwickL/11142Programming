@@ -5,14 +5,14 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotor.RunMode;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 @Autonomous(name="Blue Carousel/Park")
 public class Blue_C extends LinearOpMode {    //Declare motors
-    DcMotor Fvertical;
-    DcMotor Fhorizontal;
-    DcMotor Bvertical;
-    DcMotor Bhorizontal;
+    DcMotorEx Fvertical;
+    DcMotorEx Fhorizontal;
+    DcMotorEx Bvertical;
+    DcMotorEx Bhorizontal;
     DcMotor Top;
     DcMotor Arm1;
     //DcMotor Slide;
@@ -21,18 +21,22 @@ public class Blue_C extends LinearOpMode {    //Declare motors
     public void runOpMode() { //code will run once only
 
         //initilize motors
-        Fvertical = hardwareMap.dcMotor.get("lr");
-        Bvertical = hardwareMap.dcMotor.get("rf");
-        Fhorizontal = hardwareMap.dcMotor.get("lf");
-        Bhorizontal = hardwareMap.dcMotor.get("rr");
+        Fvertical = (DcMotorEx) hardwareMap.dcMotor.get("lr");
+        Bvertical = (DcMotorEx) hardwareMap.dcMotor.get("rf");
+        Fhorizontal = (DcMotorEx) hardwareMap.dcMotor.get("lf");
+        Bhorizontal = (DcMotorEx) hardwareMap.dcMotor.get("rr");
         Arm1 = hardwareMap.dcMotor.get("Spin");
         Top = hardwareMap.dcMotor.get("TOP");
         //Slide = hardwareMap.dcMotor.get("Slide");
         Pick = hardwareMap.dcMotor.get("Pick");
 
-        Bhorizontal.setDirection(DcMotorSimple.Direction.REVERSE);
-        Bvertical.setDirection(DcMotorSimple.Direction.REVERSE);
+        Bhorizontal.setDirection(DcMotor.Direction.REVERSE);
+        Bvertical.setDirection(DcMotor.Direction.REVERSE);
 
+        Fvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Bvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Fhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
+        Bhorizontal.setMode(RunMode.STOP_AND_RESET_ENCODER);
 
         //set modes
         Fvertical.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -40,16 +44,18 @@ public class Blue_C extends LinearOpMode {    //Declare motors
         Fhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Bhorizontal.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         Top.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Pick.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Arm1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
         if (opModeIsActive()) {
 
-            Arm(0.5, 20);
+            //Arm(0.5, 20);
             DriveForward(0.1, -30);
             Spin(0.1, 25);
             DriveSide(0.5,-20);
-            Arm(0.5, -20);
+            //Arm(0.5, -20);
             DriveForward(0.2, 23);
             RobotSpin(0.5, -15);
             DriveForward(0.2, 28);
