@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name = "Driver")
+@TeleOp(name = "OmniDriver")
 public class OmniDrive extends OpMode {
     //Arm1
     /*private double liftPosScale = 50, liftPowScale = 0.0025;
@@ -43,8 +43,8 @@ public class OmniDrive extends OpMode {
 
     }
     public void loop () {
-        float y1 = gamepad1.left_stick_x;
-        float x1 = gamepad1.left_stick_y;
+        float y1 = gamepad1.right_stick_x;
+        float x1 = gamepad1.right_stick_y;
         float r1 = gamepad1.left_trigger;
         float r2 = gamepad1.right_trigger;
         // Reset variables
@@ -70,20 +70,20 @@ public class OmniDrive extends OpMode {
         leftvertical.setPower(gamepad1.right_trigger / 2);
         rightvertical.setPower(-gamepad1.right_trigger / 2);
 
-        if (gamepad2.a) {
+        if (gamepad1.a) {
             Top.setPower(0.2);
-        } else if (gamepad2.y){
+        } else if (gamepad1.y){
             Top.setPower(-0.2);
         }else{
             Top.setPower(0);
         }
 
-        Arm1.setPower(gamepad2.right_stick_y);
+        //Arm1.setPower(gamepad2.right_stick_y);
 
         //Intake
-        if (gamepad2.x) {
+        if (gamepad1.x) {
             Pick.setPower(1);
-        } else if (gamepad2.b) {
+        } else if (gamepad1.b) {
             Pick.setPower(-1);
         } else {
             Pick.setPower(0);
