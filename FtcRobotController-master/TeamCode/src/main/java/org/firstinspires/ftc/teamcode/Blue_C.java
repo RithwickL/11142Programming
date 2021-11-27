@@ -51,28 +51,23 @@ public class Blue_C extends LinearOpMode {    //Declare motors
 
         if (opModeIsActive()) {
 
-            //Arm(0.5, 20);
-            DriveSide(0.1,-30);
-            RobotSpin(0.2,15);
-            Spin(0.2,30);
+            DriveForward(-1, -0.5,400);
+            RobotSpin(-0.1, 5);
+            Spin(0.05, -25);
+            DriveSide(0.1,20);
+            /*DriveForward(1, 0.5,500);
+            RobotSpin(0.1, 15);
+            DriveForward(-0.5, -0.25,1000);
+            DriveForward(-0.2, -0.1,100);
+            DriveSide(0.1,110);
+            DriveSide(1,30);*/
 
         }
     }
-    public void DriveForward (double power, int distance) {
-        //reset encoder
-        Fvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
-        Bvertical.setMode(RunMode.STOP_AND_RESET_ENCODER);
-
-        //set target position
-        Fvertical.setTargetPosition(distance * 31);
-        Bvertical.setTargetPosition(distance * 31);
-
-        Fvertical.setMode(RunMode.RUN_TO_POSITION);
-        Bvertical.setMode(RunMode.RUN_TO_POSITION);
-
-        //set power
+    public void DriveForward (double power, double power2, int distance) {
         Fvertical.setPower(power);
-        Bvertical.setPower(power);
+        Bvertical.setPower(power2);
+        sleep(distance);
 
         while (Fvertical.isBusy() && Bvertical.isBusy()){
 
@@ -173,6 +168,11 @@ public class Blue_C extends LinearOpMode {    //Declare motors
     }
     public void StopDriving(){
 
+        Fvertical.setPower(-1);
+        Fhorizontal.setPower(-1);
+        Bvertical.setPower(-1);
+        Bhorizontal.setPower(-1);
+        sleep(100);
         Fvertical.setPower(0);
         Fhorizontal.setPower(0);
         Bvertical.setPower(0);
