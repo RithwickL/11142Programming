@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
 @Disabled
 
@@ -25,7 +26,10 @@ public class Mec_Driver extends OpMode {
     DcMotor Top;
     DcMotor Arm1;
     //DcMotor Slide;
-    DcMotor Pick;
+    DcMotor Spin;
+    Servo intake;
+    Servo drop;
+
 
     // above initializes all the aspects we need to make our robot function
     @Override
@@ -37,8 +41,9 @@ public class Mec_Driver extends OpMode {
         rightFront = hardwareMap.dcMotor.get("rf");
         Arm1 = hardwareMap.dcMotor.get("arm");
         Top = hardwareMap.dcMotor.get("carousel");
-        //Slide = hardwareMap.dcMotor.get("Slide");
-        Pick = hardwareMap.dcMotor.get("intake");
+        Spin = hardwareMap.dcMotor.get("spin");
+        intake = hardwareMap.servo.get("intake");
+        drop = hardwareMap.servo.get("drop");
 
         //this puts the motors in reverse
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -86,18 +91,21 @@ public class Mec_Driver extends OpMode {
         }else{
             Top.setPower(0);
         }
+
         Arm1.setPower(gamepad2.right_stick_y);
+        Spin.setPower(-gamepad2.right_stick_x/4);
+
         //Intake
         if (gamepad2.x) {
-            Pick.setPower(1);
-        } else if (gamepad2.b) {
-            Pick.setPower(-1);
-        } else {
-            Pick.setPower(0);
+            intake.setPosition(0.1);
         }
 
+        if (gamepad2.b){
+            drop.setPosition(0.5);
+        } else{
+            drop.setPosition(0);
+        }
 
-        Arm
 
         // Scale movement
         double max = Math.max(Math.abs(leftFrontPower), Math.max(Math.abs(leftBackPower),
