@@ -18,12 +18,8 @@ import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
-<<<<<<< Updated upstream
-@Autonomous(name = "OMINI DECT")
-=======
 
 @Autonomous(name = "Omini DECt")
->>>>>>> Stashed changes
 public class Blue_Open_Omini extends LinearOpMode
 {
     OpenCvCamera webcam;
@@ -101,11 +97,11 @@ public class Blue_Open_Omini extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                DriveForward(0.2,10);
+                DriveForward(0.2,-5);
                 telemetry.addLine("Forward");
                 telemetry.update();
                 sleep(1000);
-                DriveLeft(0.2,10);
+                DriveLeft(0.2,-5);
 
             }
             else
@@ -114,9 +110,9 @@ public class Blue_Open_Omini extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                DriveForward(0.2,10);
+                DriveForward(0.2,-5);
                 telemetry.addLine("Forward");
-                DriveLeft(0.2,100);
+                DriveLeft(0.2,-5);
                 telemetry.update();
             }
 
@@ -127,9 +123,9 @@ public class Blue_Open_Omini extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                DriveForward(0.2,10);
+                DriveForward(0.2,-10);
                 telemetry.addLine("Forward");
-                DriveLeft(0.2,100);
+                DriveLeft(0.2,-10);
                 telemetry.update();
             } else
             {
@@ -137,9 +133,9 @@ public class Blue_Open_Omini extends LinearOpMode
                 telemetry.update();
                 sleep(1000);
 
-                DriveForward(0.2,10);
+                DriveForward(0.2,-10);
                 telemetry.addLine("Forward");
-                DriveLeft(0.2,100);
+                DriveLeft(0.2,-10);
                 telemetry.update();
             }
         }
