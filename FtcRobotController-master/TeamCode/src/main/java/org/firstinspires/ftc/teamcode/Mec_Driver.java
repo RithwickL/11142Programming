@@ -96,6 +96,9 @@ public class Mec_Driver extends OpMode {
             Pick.setPower(0);
         }
 
+
+        Arm
+
         // Scale movement
         double max = Math.max(Math.abs(leftFrontPower), Math.max(Math.abs(leftBackPower),
                 Math.max(Math.abs(rightFrontPower), Math.abs(rightBackPower))));
