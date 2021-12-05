@@ -5,8 +5,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.Range;
-@TeleOp(name = "Luna Teleop")
-public class LunaTeleop extends OpMode {
+@TeleOp(name = "Luna Teleop2")
+public class LunaTeleop2 extends OpMode {
     private double liftPosScale = 50, liftPowScale = 0.0025;
     private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
     private double integrater = 0.001, intpower = 0.00075;
@@ -14,7 +14,11 @@ public class LunaTeleop extends OpMode {
     boolean turtle = false, sloth = false;
     double rotPos = 0, foundPos = 1;
     int shootPos = 0;
-
+    float xx;
+    float yy;
+    float RR;
+    float Ll;
+    boolean slow = false;
     DcMotor rightFront;
     DcMotor leftFront;
     DcMotor leftRear;
@@ -25,8 +29,8 @@ public class LunaTeleop extends OpMode {
     DcMotor arm;
     //DcMotor Slide;
     DcMotor spin;
-    CRServo intake;
-    Servo drop;
+    //Servo intake;
+    //Servo drop;
     // above initializes all the aspects we need to make our robot function
     /*private double liftPosScale = 50, liftPowScale = 0.0025;
     private double liftPosCurrent=0, liftPosDes=0, liftPosError=0, liftPow=0;
@@ -42,9 +46,9 @@ public class LunaTeleop extends OpMode {
         leftRear = hardwareMap.dcMotor.get("lr");
         rightRear = hardwareMap.dcMotor.get("rr");
         rightFront = hardwareMap.dcMotor.get("rf");
-        intake = hardwareMap.crservo.get("intake");
+        //intake = hardwareMap.servo.get("intake");
         arm = hardwareMap.dcMotor.get("arm");
-        drop = hardwareMap.servo.get("drop");
+        //drop = hardwareMap.servo.get("drop");
         spin = hardwareMap.dcMotor.get("spin");
         carousel = hardwareMap.dcMotor.get("carousel");
         //this puts the motors in reverse
@@ -54,12 +58,24 @@ public class LunaTeleop extends OpMode {
     }
     @Override
     public void loop() {
-        float x1 = gamepad1.right_stick_x;
-        float y1 = -gamepad1.left_stick_y;
-        float r1 = -gamepad1.right_trigger;
-        float r2 = -gamepad1.left_trigger;
-        float i = gamepad2.left_stick_y/2;
-        float s = gamepad2.left_stick_x/2;
+        if(gamepad1.a){
+            slow =!slow;
+        }
+        if(slow){
+            xx = gamepad1.right_stick_x/4;
+            yy = -gamepad1.left_stick_y/4;
+            RR = -gamepad1.right_trigger/4;
+            Ll = -gamepad1.left_trigger/4;
+        } else{
+            xx = gamepad1.right_stick_x;
+            yy = -gamepad1.left_stick_y;
+            RR = -gamepad1.right_trigger;
+            Ll = -gamepad1.left_trigger;
+        }
+        float x1 = xx;
+        float y1 = yy;
+        float r1 = RR;
+        float r2 = Ll;
         telemetry.update();
         // Reset variables
         float leftFrontPower = 0;
@@ -95,13 +111,10 @@ public class LunaTeleop extends OpMode {
         }else{
             carousel.setPower(0);
         }
-            //spin.setPower(-gamepad2.right_stick_x/4);
-        
-
-
-
+        spin.setPower(gamepad2.right_stick_x/4);
+        //arm.setPower(gamepad2.right_stick_y/2);
         //spin.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        if (gamepad2.x) {
+        /*if (gamepad2.x) {
             drop.setPosition(0.5);
         }else{
             drop.setPosition(0);
@@ -112,7 +125,7 @@ public class LunaTeleop extends OpMode {
             intake.setPower(-1);
         } else{
             intake.setPower(0);
-        }
+        }*/
         // Scale movement
         double max = Math.max(Math.abs(leftFrontPower), Math.max(Math.abs(leftBackPower),
                 Math.max(Math.abs(rightFrontPower), Math.abs(rightBackPower))));
@@ -127,13 +140,13 @@ public class LunaTeleop extends OpMode {
         rightFront.setPower(-rightFrontPower);
         rightRear.setPower(-rightBackPower);
 
-        liftPosCurrent = spin.getCurrentPosition();
-        liftPosDes += speedK*liftPosScale*-gamepad2.right_stick_x/4;                //input scale factor
+        liftPosCurrent = arm.getCurrentPosition();
+        liftPosDes += speedK*liftPosScale*gamepad2.right_stick_y/2;                //input scale factor
         liftPosError = liftPosDes - liftPosCurrent;
 //      integrater += liftPosError;                                             //unnecessary
         liftPow = Math.min(Math.max(liftPowScale*liftPosError, -1.00), 1.00);   //proportional gain
         if(liftPow >= 1){ liftPosDes = liftPosCurrent+(1/liftPowScale); }       //AntiWindup Code
         if(liftPow <= -1) {liftPosDes = liftPosCurrent-(1/liftPowScale); }      //AntiWindup Code
-        spin.setPower(liftPow);
+        arm.setPower(liftPow);
     }
 }
