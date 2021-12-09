@@ -16,18 +16,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class Hardware {
 
     // Define Motor Variables
-    //DcMotor rightFront;
-    //DcMotor leftFront;
-    //DcMotor leftRear;
-    //DcMotor rightRear;
-    //DcMotor intake;
-    //DcMotor arm;
+    DcMotor rightFront;
+    DcMotor leftFront;
+    DcMotor leftRear;
+    DcMotor rightRear;
     DcMotor carousel;
     DcMotor arm;
-    //DcMotor Slide;
     DcMotor spin;
-    //CRServo intake;
-    //Servo drop;
+    CRServo intake;
+    Servo drop;
 
     // Define Servo Variables
     //public Servo claw;
@@ -52,16 +49,16 @@ public class Hardware {
         hardwareMap = hwMap;
 
         // Find Motors in phone config
-        /*rightFront = hardwareMap.get(DcMotor.class, "frontRight");
-        rightRear = hardwareMap.get(DcMotor.class, "frontLeft");
-        leftFront = hardwareMap.get(DcMotor.class, "backRight");
-        leftRear = hardwareMap.get(DcMotor.class, "backLeft");*/
+        rightFront = hardwareMap.get(DcMotor.class, "rf");
+        rightRear = hardwareMap.get(DcMotor.class, "rr");
+        leftFront = hardwareMap.get(DcMotor.class, "lf");
+        leftRear = hardwareMap.get(DcMotor.class, "lr");
         carousel = hardwareMap.get(DcMotor.class, "carousel");
         arm = hardwareMap.get(DcMotor.class, "arm");
 
         // Find Servos in phone config
-        //drop = hardwareMap.get(Servo.class,"drop");
-        //intake = hardwareMap.get(CRServo.class,"intake");
+        drop = hardwareMap.get(Servo.class,"drop");
+        intake = hardwareMap.get(CRServo.class,"intake");
 
 
         //Find Sensors in phone config
@@ -69,10 +66,10 @@ public class Hardware {
 
 
         // Set all motors to zero power
-        //rightRear.setPower(0);
-        //rightRear.setPower(0);
-        //leftRear.setPower(0);
-        //leftFront.setPower(0);
+        rightRear.setPower(0);
+        rightRear.setPower(0);
+        leftRear.setPower(0);
+        leftFront.setPower(0);
         carousel.setPower(0);
         arm.setPower(0);
 
@@ -94,22 +91,25 @@ public class Hardware {
 
 
         // Set Motor Direction
-        //leftFront.setDirection(DcMotor.Direction.REVERSE);
-        //leftRear.setDirection(DcMotor.Direction.FORWARD);
-        //rightFront.setDirection(DcMotor.Direction.REVERSE);
-        //rightRear.setDirection(DcMotor.Direction.FORWARD);
+        leftFront.setDirection(DcMotor.Direction.REVERSE);
+        leftRear.setDirection(DcMotor.Direction.FORWARD);
+        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        rightRear.setDirection(DcMotor.Direction.FORWARD);
         arm.setDirection(DcMotor.Direction.REVERSE);
         carousel.setDirection(DcMotor.Direction.FORWARD);
 
 
 
         // Set the Motor's Encoder Setting
-        //leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         carousel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //
+
 
     }
 }

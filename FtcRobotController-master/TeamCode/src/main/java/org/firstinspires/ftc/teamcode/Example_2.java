@@ -20,7 +20,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
 @Autonomous
-public class Example extends LinearOpMode {
+public class Example_2 extends LinearOpMode {
 
     Hardware TIseBot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -76,7 +76,6 @@ public class Example extends LinearOpMode {
                 telemetry.update());
 
         waitForStart();
-        telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
 
         //Dectecting Bottom
         if ((pipeline.region1Avg() > pipeline.region2Avg()))
@@ -84,81 +83,38 @@ public class Example extends LinearOpMode {
             if ((pipeline.region1Avg() > pipeline.region3Avg()))
             {
                 telemetry.addLine("Entering Bottom");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
                 telemetry.update();
                 sleep(1000);
 
                 DriveForward(0.2,100);
                 telemetry.addLine("Forward");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
                 telemetry.update();
                 sleep(1000);
 
-                encoderArm(10, 0.1);
+                PIDDrive(10, 0.5);
                 sleep(100);
                 telemetry.addLine("leaving if");
                 sleep(2000);
             }
             //dectecting top
-            else
-            {
+            else {
                 telemetry.addLine(" Entering Top");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
                 telemetry.update();
                 sleep(1000);
 
-                DriveForward(0.2,100);
+                DriveForward(0.2, 100);
                 telemetry.addLine("Forward");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
                 telemetry.update();
                 sleep(1000);
 
-               encoderArm(10, 0.1);
+                PIDDrive(10, 0.5);
                 sleep(100);
                 telemetry.addLine("leaving if");
                 sleep(2000);
             }
 
-        }else {
-            //dectecting middle
-            if (pipeline.region2Avg() > pipeline.region3Avg()) {
 
-                telemetry.addLine("Entering Middle");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
-                telemetry.update();
-                sleep(1000);
 
-                DriveForward(0.2,100);
-                telemetry.addLine("Forward");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
-                telemetry.update();
-                sleep(1000);
-
-                encoderArm(10, 0.1);
-                sleep(100);
-                telemetry.addLine("leaving if");
-                sleep(2000);
-
-            } else
-            {
-                //dectecting top
-                telemetry.addLine("Entering Top");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
-                telemetry.update();
-                sleep(1000);
-
-                DriveForward(0.2,100);
-                telemetry.addLine("Forward");
-                telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
-                telemetry.update();
-                sleep(1000);
-
-                encoderArm(10, 0.1);
-                sleep(100);
-                telemetry.addLine("Leaving if");
-                sleep(2000);
-
-            }
         }
 
         telemetry.update();
@@ -249,28 +205,7 @@ public class Example extends LinearOpMode {
 
     }
 
-    public void encoderArm(double distanceCM, double speed){
-        int newArmTarget = 0;
 
-        if (opModeIsActive()) {
-            newArmTarget  = TIseBot.arm.getCurrentPosition() + (int) (distanceCM * COUNTS_PER_CM);
-
-            TIseBot.arm.setTargetPosition(newArmTarget);
-            TIseBot.arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        }
-
-        TIseBot.arm.setPower(speed);
-
-        while (TIseBot.arm.isBusy()){
-            telemetry.addData("Target Position: ", newArmTarget);
-            telemetry.addData("Current Position: ", TIseBot.arm.getCurrentPosition());
-            telemetry.update();
-        }
-
-        TIseBot.arm.setPower(0);
-        TIseBot.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        TIseBot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
     public void PIDDrive(double distanceCM, double tolerance) { // TODO: Adjust Tolerance
 
         int[] newWheelTarget = new int[1];
@@ -305,7 +240,7 @@ public class Example extends LinearOpMode {
                 telemetry.addData("Path1", "Running to %7d ", newWheelTarget[0]); //newWheelTarget[1], newWheelTarget[2], newWheelTarget[3]);
                 telemetry.addData("Path2", "Running at %7d ", wheels[0].getCurrentPosition());// wheels[1].getCurrentPosition(), wheels[2].getCurrentPosition(), wheels[3].getCurrentPosition());
 
-                        telemetry.addData("DistanceCM: ", (int) (distanceCM * COUNTS_PER_CM));
+                telemetry.addData("DistanceCM: ", (int) (distanceCM * COUNTS_PER_CM));
 
                 telemetry.addData("power: ", power[0]);
 
@@ -416,7 +351,8 @@ public class Example extends LinearOpMode {
         //TIseBot.arm.setPower(0);
     }
 
-    }
+}
+
 
 
 
