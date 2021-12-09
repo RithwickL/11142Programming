@@ -72,11 +72,10 @@ public class Example extends LinearOpMode {
         }
 
         telemetry.addData("Path0",  "Starting at %7d ", TIseBot.arm.getCurrentPosition(), //TIseBot.rightFront.getCurrentPosition(), TIseBot.leftRear.getCurrentPosition(), TIseBot.rightRear.getCurrentPosition());
-
                 telemetry.update());
 
         waitForStart();
-        telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
+        //telemetry.addData("whole error",(10*COUNTS_PER_CM)-wheels[0].getCurrentPosition());
 
         //Dectecting Bottom
         if ((pipeline.region1Avg() > pipeline.region2Avg()))
@@ -271,7 +270,7 @@ public class Example extends LinearOpMode {
         TIseBot.arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         TIseBot.arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
-    public void PIDDrive(double distanceCM, double tolerance) { // TODO: Adjust Tolerance
+    /*public void PIDDrive(double distanceCM, double tolerance) { // TODO: Adjust Tolerance
 
         int[] newWheelTarget = new int[1];
 
@@ -371,10 +370,9 @@ public class Example extends LinearOpMode {
                 wheels[0].setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 wheels[0].setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            }
-        }
+            }*/
 
-    }
+
 
     public void DriveForward(double power,int distance)
     {

@@ -53,7 +53,7 @@ public class Hardware {
         rightRear = hardwareMap.get(DcMotor.class, "rr");
         leftFront = hardwareMap.get(DcMotor.class, "lf");
         leftRear = hardwareMap.get(DcMotor.class, "lr");
-        carousel = hardwareMap.get(DcMotor.class, "carousel");
+        carousel = hardwareMap.get(DcMotor.class, "TOP");
         arm = hardwareMap.get(DcMotor.class, "arm");
 
         // Find Servos in phone config
@@ -95,7 +95,7 @@ public class Hardware {
         leftRear.setDirection(DcMotor.Direction.FORWARD);
         rightFront.setDirection(DcMotor.Direction.REVERSE);
         rightRear.setDirection(DcMotor.Direction.FORWARD);
-        arm.setDirection(DcMotor.Direction.REVERSE);
+        //arm.setDirection(DcMotor.Direction.REVERSE);
         carousel.setDirection(DcMotor.Direction.FORWARD);
 
 
@@ -105,7 +105,7 @@ public class Hardware {
         leftRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRear.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         carousel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         //
